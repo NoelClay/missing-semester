@@ -462,53 +462,53 @@ tmux와 SSH를 당신의 도구 키트에 가지고, 당신은 어떤 머신에�
 
 # 셸 커스터마이징
 
-다양한 명령줄 프로그램들은 _dotfile_로 알려진 일반 텍스트 파일들을 사용하여 구성됩니다(파일 이름들이 `.`로 시작되기 때문에, 예: `~/.vimrc`. 그래서 그들은 기본적으로 `ls` 디렉터리 나열에서 숨겨집니다).
+많은 명령줄 프로그램들은 _dotfile_이라는 일반 텍스트 파일로 설정합니다(파일명이 `.`으로 시작하기 때문에, 예: `~/.vimrc`. 기본적으로 `ls` 명령으로 나열할 때는 숨겨집니다).
 
-> Dotfile은 또 다른 셸 관례입니다. 앞의 점은 나열할 때 그들을 "숨기기"를 위해서입니다(예, 또 다른 관례).
+> Dotfile도 셸의 관례 중 하나입니다. 점으로 시작하는 이름은 나열할 때 그 파일들을 "숨기기" 위함입니다(또 다른 관례네요).
 
-셸은 그러한 파일들로 구성되는 프로그램의 한 예입니다. 시작할 때, 당신의 셸은 그 구성을 로드하기 위해 많은 파일들을 읽을 것입니다. 셸과 당신이 로그인 그리고/또는 대화형 세션을 시작하는지 여부에 따라, 전체 프로세스는 상당히 복잡할 수 있습니다. [여기](https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html)는 주제에 대한 훌륭한 자료입니다.
+셸도 이러한 파일들로 설정하는 프로그램의 예입니다. 셸이 시작될 때 설정을 불러오기 위해 여러 파일들을 읽습니다. 셸의 종류와 로그인 세션 또는 대화형 세션을 어떻게 시작하느냐에 따라 이 과정은 꽤 복잡할 수 있습니다. [이 글](https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html)에서 자세히 설명합니다.
 
-`bash`의 경우, `.bashrc` 또는 `.bash_profile`을 편집하는 것이 대부분의 시스템에서 작동할 것입니다. dotfile들로 구성될 수 있는 다른 도구들의 일부 예들은:
+`bash`를 사용한다면 `.bashrc` 또는 `.bash_profile`을 편집하는 것이 대부분의 시스템에서 작동합니다. dotfile로 설정할 수 있는 다른 도구들의 예는:
 
 - `bash` - `~/.bashrc`, `~/.bash_profile`
 - `git` - `~/.gitconfig`
-- `vim` - `~/.vimrc`와 `~/.vim` 폴더
+- `vim` - `~/.vimrc`와 `~/.vim` 디렉토리
 - `ssh` - `~/.ssh/config`
 - `tmux` - `~/.tmux.conf`
 
-공통적인 구성 변경은 셸이 프로그램들을 찾을 수 있는 새로운 위치들을 추가하는 것입니다. 당신은 소프트웨어를 설치할 때 이 패턴을 마주칠 것입니다:
+흔한 설정 변경은 셸이 프로그램들을 찾을 수 있는 새로운 경로를 추가하는 것입니다. 소프트웨어를 설치할 때 다음 패턴을 자주 봅니다:
 
 ```shell
 export PATH="$PATH:path/to/append"
 ```
 
-여기서, 우리는 셸에게 $PATH 변수의 값을 그것의 현재 값 더하기 새로운 경로로 설정하도록 말하고 있으며, 모든 자식 프로세스들이 이 새로운 PATH 값을 상속할 것입니다. 이것은 자식 프로세스들이 `path/to/append` 아래에 있는 프로그램들을 찾을 수 있게 할 것입니다.
+이는 $PATH 변수의 값을 기존 값에 새로운 경로를 더한 것으로 설정하고, 모든 자식 프로세스가 이 새로운 PATH를 상속하도록 합니다. 따라서 자식 프로세스들이 `path/to/append` 아래의 프로그램들을 찾을 수 있게 됩니다.
 
-셸 커스터마이징은 종종 새로운 명령줄 도구들을 설치하는 것을 의미합니다. 패키지 매니저들은 이것을 쉽게 만듭니다. 그들은 소프트웨어를 다운로드, 설치, 그리고 업데이트하는 것을 처리합니다. 다양한 운영 체제들은 다양한 패키지 매니저들을 가집니다: macOS는 [Homebrew](https://brew.sh/)를 사용하고, Ubuntu/Debian은 `apt`를 사용하고, Fedora는 `dnf`를 사용하고, Arch는 `pacman`을 사용합니다. 우리는 배송 코드 강의에서 패키지 매니저들을 더 깊게 다룰 것입니다.
+셸을 커스터마이징하려면 보통 새로운 명령줄 도구들을 설치해야 합니다. 패키지 매니저가 이를 쉽게 해줍니다. 소프트웨어를 다운로드, 설치, 업데이트하는 과정을 자동화합니다. 운영 체제마다 다른 패키지 매니저를 사용합니다: macOS는 [Homebrew](https://brew.sh/), Ubuntu/Debian은 `apt`, Fedora는 `dnf`, Arch는 `pacman`을 씁니다. 패키지 매니저에 대해서는 shipping code 강의에서 더 자세히 다룹니다.
 
-macOS의 Homebrew를 사용하여 두 개의 유용한 도구들을 설치하는 방법입니다:
+macOS에서 Homebrew로 유용한 두 도구를 설치하는 방법입니다:
 
 ```shell
-# ripgrep: a faster grep with better defaults
+# ripgrep: 더 빠르고 기본 설정이 좋은 grep
 brew install ripgrep
 
-# fd: a faster, user-friendly find
+# fd: 더 빠르고 사용하기 쉬운 find
 brew install fd
 ```
 
-이들이 설치되면, 당신은 `grep` 대신 `rg`를 사용할 수 있고, `find` 대신 `fd`를 사용할 수 있습니다.
+이렇게 설치하면 `grep` 대신 `rg`를, `find` 대신 `fd`를 사용할 수 있습니다.
 
-> **`curl | bash`에 대한 경고**: 당신은 종종 `curl -fsSL https://example.com/install.sh | bash` 같은 설치 지시사항들을 볼 것입니다. 이 패턴은 스크립트를 다운로드하고 즉시 실행합니다. 이것은 편리하지만 위험합니다. 당신은 검사하지 않은 코드를 실행 중입니다. 더 안전한 접근 방식은 먼저 다운로드하고, 검토한 다음, 실행하는 것입니다:
+> **`curl | bash` 경고**: `curl -fsSL https://example.com/install.sh | bash`처럼 스크립트를 다운로드한 후 바로 실행하는 방식을 자주 봅니다. 편리하지만 위험합니다. 검사하지 않은 코드를 실행하기 때문입니다. 더 안전한 방법은 먼저 다운로드하고, 검토한 후 실행하는 것입니다:
 > ```shell
 > curl -fsSL https://example.com/install.sh -o install.sh
-> less install.sh  # review the script
+> less install.sh  # 스크립트 확인
 > bash install.sh
 > ```
-> 일부 설치 프로그램들은 약간 더 안전한 변형을 사용합니다: `/bin/bash -c "$(curl -fsSL https://url)"` 이것은 최소한 당신의 현재 셸이 아닌 bash가 스크립트를 해석하도록 보장합니다.
+> 일부 설치 프로그램은 조금 더 안전한 방식을 사용합니다: `/bin/bash -c "$(curl -fsSL https://url)"`. 이 방식은 최소한 현재 셸이 아닌 bash가 스크립트를 실행하도록 보장합니다.
 
-당신이 설치되지 않은 명령을 실행하려고 할 때, 당신의 셸이 `command not found`를 표시할 것입니다. 웹사이트 [command-not-found.com](https://command-not-found.com)은 당신이 모든 명령을 검색할 수 있는 유용한 자료입니다. 그것을 다양한 패키지 매니저들과 배포판들에 걸쳐 설치하는 방법을 찾을 수 있습니다.
+설치되지 않은 명령을 실행하면 셸에서 `command not found`를 표시합니다. [command-not-found.com](https://command-not-found.com)은 명령어를 검색하고 다양한 패키지 매니저와 배포판에서 설치하는 방법을 찾을 수 있는 유용한 웹사이트입니다.
 
-또 다른 유용한 도구는 [`tldr`](https://tldr.sh/)입니다. 이것은 단순화되고 예제 중심의 man 페이지들을 제공합니다. 길고 긴 문서를 읽는 대신, 당신은 빠르게 공통적인 사용 패턴들을 볼 수 있습니다:
+또 유용한 도구는 [`tldr`](https://tldr.sh/)입니다. 긴 문서 대신 간단하고 예제 중심의 man 페이지를 제공합니다. 흔한 사용 패턴을 빠르게 확인할 수 있습니다:
 
 ```console
 $ tldr fd
@@ -525,17 +525,17 @@ $ tldr fd
       fd --extension txt
 ```
 
-때때로 당신은 특정 플래그들이 있는 기존 명령을 위한 새로운 프로그램이 아니라 단지 바로 가기가 필요합니다. 그것이 별칭이 나오는 곳입니다.
+때로는 특정 플래그를 항상 붙이는 기존 명령에 새로운 단축명이 필요할 수 있습니다. 이때 별칭(alias)을 사용합니다.
 
-우리는 또한 `alias` 셸 내장을 사용하여 우리 자신의 명령 별칭들을 생성할 수 있습니다. 셸 별칭은 당신의 셸이 표현을 평가하기 전에 자동으로 바꿀 다른 명령에 대한 짧은 형식입니다. 예를 들어, bash의 별칭은 다음의 구조를 가집니다:
+`alias` 셸 내장 명령으로 자신만의 별칭을 만들 수 있습니다. 셸 별칭은 셸이 표현을 평가하기 전에 자동으로 치환할 다른 명령의 짧은 형식입니다. bash에서 별칭의 구조는:
 
 ```bash
 alias alias_name="command_to_alias arg1 arg2"
 ```
 
-> `=` 주변에는 공간이 없음을 주의하십시오. 왜냐하면 [`alias`](https://www.man7.org/linux/man-pages/man1/alias.1p.html)는 단일 인수를 취하는 셸 명령이기 때문입니다.
+> `=` 주위에 공백이 없어야 합니다. [`alias`](https://www.man7.org/linux/man-pages/man1/alias.1p.html)는 단일 인수를 받는 셸 명령이기 때문입니다.
 
-별칭은 많은 편리한 기능들을 가집니다:
+별칭은 여러 유용한 기능들을 제공합니다:
 
 ```bash
 # Make shorthands for common flags
@@ -567,45 +567,45 @@ alias ll
 # Will print ll='ls -lh'
 ```
 
-별칭은 제한 사항들을 가집니다: 그들은 명령의 중간에 인수들을 취할 수 없습니다. 더 복잡한 동작을 위해, 당신은 셸 함수들을 대신 사용해야 합니다.
+별칭에는 제한이 있습니다. 명령의 중간에 인수를 삽입할 수 없습니다. 더 복잡한 동작이 필요하면 셸 함수를 사용해야 합니다.
 
-대부분의 셸은 역방향 이력 검색을 위해 `Ctrl-R`을 지원합니다. `Ctrl-R`을 입력하고 이전 명령들을 통해 검색하기 시작 입력하세요. 앞서, 우리는 퍼지 파인더로 `fzf`를 소개했습니다. fzf의 셸 통합이 구성되었다면, `Ctrl-R`은 당신의 전체 이력을 통해 대화형 퍼지 검색이 되며, 기본값보다 훨씬 강력합니다.
+대부분의 셸에서 `Ctrl-R`로 역방향 이력 검색을 합니다. `Ctrl-R`을 누르고 이전 명령들을 검색하면 됩니다. 앞에서 소개한 퍼지 파인더 `fzf`를 셸과 통합하면 `Ctrl-R`이 전체 이력에서 대화형 퍼지 검색을 하게 되어 기본 기능보다 훨씬 강력합니다.
 
-당신은 어떻게 당신의 dotfile들을 정리해야 할까요? 그들은 자신의 폴더에 있어야 하고, 버전 제어 아래에 있어야 하고, 스크립트를 사용하여 제자리에 **심볼릭으로 링크**되어야 합니다. 이것은 다음의 이점을 가집니다:
+dotfile들을 어떻게 관리해야 할까요? 별도의 폴더에서 버전 제어하고, 스크립트로 제자리에 **심볼 링크**를 만들어야 합니다. 이렇게 하면 다음과 같은 이점이 있습니다:
 
-- **쉬운 설치**: 새로운 머신에 로그인하면, 당신의 커스터마이제이션을 적용하는 데는 단지 1분이 걸릴 것입니다.
-- **이식성**: 당신의 도구들은 어디서나 같은 방식으로 작동할 것입니다.
-- **동기화**: 당신은 어디서나 당신의 dotfile들을 업데이트하고, 그들 모두를 동기화된 상태로 유지할 수 있습니다.
-- **변경 추적**: 당신은 아마도 당신의 프로그래밍 경력 전체에 당신의 dotfile들을 유지할 것이고, 장기 프로젝트들을 위해 버전 이력을 가지는 것은 좋습니다.
+- **쉬운 설치**: 새로운 머신에 로그인하면 1분 안에 설정을 적용할 수 있습니다.
+- **이식성**: 어디서든 도구들이 같은 방식으로 동작합니다.
+- **동기화**: 어디서든 dotfile들을 업데이트하고 모든 장치에서 동기화 상태를 유지할 수 있습니다.
+- **변경 추적**: 프로그래밍 경력 전체에 걸쳐 dotfile들을 관리하게 되므로 버전 이력이 있으면 유용합니다.
 
-당신은 당신의 dotfile들에 무엇을 넣어야 할까요? 온라인 문서를 읽거나 [man 페이지들](https://en.wikipedia.org/wiki/Man_page)을 읽음으로써 당신의 도구의 설정들에 대해 배울 수 있습니다. 또 다른 좋은 방법은 특정 프로그램들에 대한 블로그 포스트들을 인터넷에서 검색하는 것입니다. 여기서 저자들이 그들의 선호하는 커스터마이제이션들을 말할 것입니다. 커스터마이제이션들에 대해 배우는 또 다른 방법은 다른 사람들의 dotfile들을 통해 보는 것입니다. 당신은 GitHub에서 [dotfile 저장소들](https://github.com/search?o=desc&q=dotfiles&s=stars&type=Repositories)의 톤을 찾을 수 있습니다 --- 가장 인기 있는 것을 [여기](https://github.com/mathiasbynens/dotfiles)서 보세요(우리는 당신이 맹목적으로 구성들을 복사하지 않도록 조언합니다). [여기](https://dotfiles.github.io/)는 주제에 대한 또 다른 좋은 자료입니다.
+dotfile에 무엇을 넣을까요? 온라인 문서나 [man 페이지](https://en.wikipedia.org/wiki/Man_page)를 읽어 각 도구의 설정을 배울 수 있습니다. 또 다른 좋은 방법은 특정 프로그램에 관한 블로그 포스트를 검색하는 것입니다. 저자들이 선호하는 설정들을 공유합니다. 다른 사람의 dotfile들을 살펴보는 것도 도움이 됩니다. GitHub에서 [dotfile 저장소](https://github.com/search?o=desc&q=dotfiles&s=stars&type=Repositories)를 수많이 찾을 수 있습니다. [가장 인기 있는 저장소](https://github.com/mathiasbynens/dotfiles)를 참고하되, 맹목적으로 설정을 복사하지 않도록 주의하세요. [이 글](https://dotfiles.github.io/)도 좋은 자료입니다.
 
-클래스 강사들의 모두는 그들의 dotfile들을 GitHub에서 공개적으로 접근할 수 있도록 가지고 있습니다: [Anish](https://github.com/anishathalye/dotfiles), [Jon](https://github.com/jonhoo/configs), [Jose](https://github.com/jjgo/dotfiles).
+이 강의의 강사들도 GitHub에서 자신의 dotfile들을 공개합니다: [Anish](https://github.com/anishathalye/dotfiles), [Jon](https://github.com/jonhoo/configs), [Jose](https://github.com/jjgo/dotfiles).
 
-**프레임워크와 플러그인들**은 또한 당신의 셸을 개선할 수 있습니다. 일부 인기 있는 일반 프레임워크들은 [prezto](https://github.com/sorin-ionescu/prezto) 또는 [oh-my-zsh](https://ohmyz.sh/)이고, 특정 기능들에 초점을 맞춘 작은 플러그인들입니다:
+**프레임워크와 플러그인**도 셸을 개선할 수 있습니다. 인기 있는 프레임워크로는 [prezto](https://github.com/sorin-ionescu/prezto)나 [oh-my-zsh](https://ohmyz.sh/)가 있고, 특정 기능에만 초점을 맞춘 작은 플러그인들도 있습니다:
 
-- [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - 입력할 때 유효/무효 명령들을 색칠합니다
-- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - 입력할 때 이력에서 명령들을 제안합니다
+- [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - 입력하는 동안 유효/무효한 명령을 색칠합니다
+- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - 입력하는 동안 이력에서 명령을 제안합니다
 - [zsh-completions](https://github.com/zsh-users/zsh-completions) - 추가 완성 정의들
-- [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) - fish 같은 이력 검색
-- [powerlevel10k](https://github.com/romkatv/powerlevel10k) - 빠른, 커스터마이징 가능한 프롬프트 테마
+- [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) - fish처럼 동작하는 이력 검색
+- [powerlevel10k](https://github.com/romkatv/powerlevel10k) - 빠르고 커스터마이징 가능한 프롬프트 테마
 
-[fish](https://fishshell.com/) 같은 셸들은 기본적으로 이들 기능들의 많은 것들을 포함합니다.
+[fish](https://fishshell.com/)와 같은 셸들은 많은 기능을 기본 제공합니다.
 
-> 당신은 이들 기능들을 얻기 위해 oh-my-zsh 같은 거대한 프레임워크가 필요하지 않습니다. 개별 플러그인들을 설치하는 것은 종종 더 빠르고 더 많은 제어를 제공합니다. 큰 프레임워크들은 셸 시작 시간을 크게 느리게 할 수 있으므로, 당신이 실제로 사용하는 것만 설치하는 것을 고려하세요.
+> 이러한 기능들을 얻으려고 oh-my-zsh 같은 거대한 프레임워크를 꼭 설치할 필요는 없습니다. 필요한 플러그인만 개별 설치하는 것이 더 빠르고 제어하기도 쉽습니다. 큰 프레임워크는 셸 시작 시간을 크게 늘릴 수 있으므로 실제로 사용할 것들만 설치하는 것을 권장합니다.
 
-# 셸의 AI
+# 셸과 AI
 
-셸에서 AI 도구를 통합하는 많은 방법들이 있습니다. 여기는 통합의 다양한 수준에서의 몇 가지 예제들입니다:
+셸에서 AI 도구를 통합하는 많은 방법이 있습니다. 몇 가지 예시입니다:
 
-**명령 생성**: [`simonw/llm`](https://github.com/simonw/llm) 같은 도구들은 자연어 설명들로부터 셸 명령들을 생성하는 데 도움이 될 수 있습니다:
+**명령 생성**: [`simonw/llm`](https://github.com/simonw/llm) 같은 도구들은 자연어 설명으로부터 셸 명령을 생성하는 데 도움이 됩니다:
 
 ```console
 $ llm cmd "find all python files modified in the last week"
 find . -name "*.py" -mtime -7
 ```
 
-**파이프라인 통합**: LLM들은 데이터를 처리하고 변환하기 위해 셸 파이프라인들로 통합될 수 있습니다. 그들은 특히 regex가 고통스러울 비일관된 형식들로부터 정보를 추출할 필요가 있을 때 유용합니다:
+**파이프라인 통합**: LLM을 셸 파이프라인에 통합해 데이터를 처리하고 변환할 수 있습니다. regex가 복잡한 비일관된 형식에서 정보를 추출할 때 특히 유용합니다:
 
 ```console
 $ cat users.txt
@@ -625,36 +625,36 @@ mike_wilson
 sarah.connor
 ```
 
-우리가 `"$INSTRUCTIONS"`(인용)을 사용하는 방식에 주의하세요. 왜냐하면 변수가 공간을 포함하고 있고, 파일의 내용을 stdin으로 리다이렉트하기 위해 `< users.txt`를 사용합니다.
+`"$INSTRUCTIONS"`를 따옴표로 감싼 이유는 변수에 공백이 포함되어 있기 때문입니다. `< users.txt`는 파일 내용을 stdin으로 리다이렉트합니다.
 
-**AI 셸**: [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 같은 도구들은 영어 명령들을 받아서 그들을 셸 작업들, 파일 편집들, 그리고 더 복잡한 다중 단계 작업들로 번역하는 메타 셸처럼 작동합니다.
+**AI 셸**: [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 같은 도구들은 영어 명령을 받아 셸 작업, 파일 편집, 복잡한 다중 단계 작업 등으로 변환하는 메타 셸처럼 동작합니다.
 
 # 터미널 에뮬레이터
 
-당신의 셸을 커스터마이징하는 것과 함께, 당신의 **터미널 에뮬레이터**의 선택과 그 설정들을 파악하는 데 어떤 시간을 보내는 것이 가치가 있습니다. 터미널 에뮬레이터는 당신의 셸이 실행되는 텍스트 기반 인터페이스를 제공하는 GUI 프로그램입니다. 거기에는 많은 터미널 에뮬레이터들이 있습니다.
+셸을 커스터마이징하는 것만큼 **터미널 에뮬레이터** 선택과 설정도 중요합니다. 터미널 에뮬레이터는 셸이 실행되는 텍스트 기반 인터페이스를 제공하는 GUI 프로그램입니다. 여러 종류가 있습니다.
 
-당신이 당신의 터미널에서 수백에서 수천 시간을 보낼 수 있기 때문에, 그 설정들을 들여다보는 것이 가치가 있습니다. 당신의 터미널에서 수정하고 싶을 수 있는 일부 측면들은:
+터미널에서 수백 시간에서 수천 시간을 보내므로 설정을 세심하게 조정할 가치가 있습니다. 터미널에서 커스터마이징할 수 있는 항목들:
 
 - 폰트 선택
 - 색 구성표
-- 키보드 바로 가기
+- 키보드 단축키
 - 탭/창 지원
-- 스크롤백 구성
-- 성능(일부 더 새로운 터미널들 같은 [Alacritty](https://github.com/alacritty/alacritty) 또는 [Ghostty](https://ghostty.org/)는 GPU 가속을 제공합니다).
+- 스크롤백 설정
+- 성능(새로운 터미널 [Alacritty](https://github.com/alacritty/alacritty)나 [Ghostty](https://ghostty.org/)는 GPU 가속을 지원합니다).
 
 # 연습
 
 ## 인수와 글롭
 
-1. 당신은 `cmd --flag -- --notaflag` 같은 명령들을 볼 수 있습니다. `--`는 프로그램이 플래그들을 파싱하는 것을 중단하도록 알려주는 특수한 인수입니다. `--` 이후의 모든 것은 위치 인수로 취급됩니다. 이것이 왜 유용할 수 있을까요? `touch -- -myfile`을 실행해 보고, 그 다음 `--` 없이 그것을 제거해 보세요.
+1. `cmd --flag -- --notaflag` 같은 명령을 볼 수 있습니다. `--`는 프로그램이 플래그 파싱을 멈추도록 알려주는 특수 인수입니다. `--` 이후의 모든 것은 위치 인수로 취급됩니다. 왜 유용할까요? `touch -- -myfile`을 실행한 후, `--` 없이 삭제해 보세요.
 
-1. [`man ls`](https://www.man7.org/linux/man-pages/man1/ls.1.html)를 읽고 다음 방식으로 파일들을 나열하는 `ls` 명령을 작성하세요:
-    - 숨김 파일들을 포함한 모든 파일들을 포함합니다
-    - 크기들이 인간 읽을 수 있는 형식으로 나열됩니다(예: 454M 대신 454279954)
-    - 파일들이 최근별로 정렬됩니다
-    - 출력이 색칠됩니다
+1. [`man ls`](https://www.man7.org/linux/man-pages/man1/ls.1.html)를 읽고 다음과 같이 파일을 나열하는 `ls` 명령을 작성하세요:
+    - 숨김 파일을 포함한 모든 파일을 표시합니다
+    - 파일 크기를 인간 읽을 수 있는 형식으로 표시합니다(예: 454279954 대신 454M)
+    - 파일을 수정 시간 순서로 정렬합니다
+    - 출력을 색칠합니다
 
-    샘플 출력은 다음과 같이 보일 것입니다:
+    샘플 출력:
 
     ```
     -rw-r--r--   1 user group 1.1M Jan 14 09:53 baz
@@ -668,11 +668,11 @@ sarah.connor
 
 ## 환경 변수
 
-1. bash 함수들 `marco`과 `polo`를 작성하세요. 다음을 합니다: 당신이 `marco`를 실행할 때마다 현재 작업 디렉터리가 어떤 방식으로 저장되어야 하고, 그 다음 당신이 `polo`를 실행할 때, 당신이 어떤 디렉터리에 있든 상관없이, `polo`는 당신을 당신이 `marco`를 실행한 디렉터리로 `cd`해야 합니다. 디버깅의 편의를 위해, 당신은 파일 `marco.sh`에 코드를 작성하고, `source marco.sh`를 실행하여 당신의 셸에 정의들을 (다시)로드할 수 있습니다.
+1. bash 함수 `marco`와 `polo`를 작성하세요. `marco`를 실행하면 현재 디렉토리를 저장하고, 나중에 어느 디렉토리에 있든 `polo`를 실행하면 `marco`를 실행했던 디렉토리로 돌아갑니다. 코드는 `marco.sh` 파일에 작성하고, `source marco.sh`로 셸에 로드할 수 있습니다.
 
 ## 반환 코드
 
-1. 당신이 드물게 실패하는 명령을 가지고 있다고 합시다. 그것을 디버그하려면, 당신은 그것의 출력을 캡처해야 하지만 실패 실행을 얻는 것이 시간이 소비될 수 있습니다. 다음 스크립트가 실패할 때까지 실행하고, 그것의 표준 출력과 오류 스트림들을 파일들로 캡처하고, 마지막에 모든 것을 인쇄하는 bash 스크립트를 작성하세요. 보너스 포인트들은 스크립트가 실패하기까지 몇 번의 실행이 걸렸는지도 보고할 수 있으면 가능합니다.
+1. 가끔씩 실패하는 명령을 디버그해야 한다고 합시다. 실패할 때까지 계속 실행하고 그때의 표준 출력과 표준 오류를 파일로 저장한 후 마지막에 모두 출력하는 bash 스크립트를 작성하세요. 보너스: 실패하기까지 몇 번 실행했는지도 보고하세요.
 
     ```bash
     #!/usr/bin/env bash
@@ -690,45 +690,45 @@ sarah.connor
 
 ## 신호와 작업 제어
 
-1. `sleep 10000` 작업을 터미널에서 시작하고, `Ctrl-Z`로 백그라운드하고, `bg`로 그것의 실행을 계속하세요. 이제 [`pgrep`](https://www.man7.org/linux/man-pages/man1/pgrep.1.html)을 사용하여 그것의 pid를 찾고 [`pkill`](https://man7.org/linux/man-pages/man1/pgrep.1.html)을 사용하여 pid 자체를 입력하지 않고 그것을 종료하세요. (힌트: `-af` 플래그들을 사용하세요).
+1. 터미널에서 `sleep 10000`을 시작하고, `Ctrl-Z`로 일시 중지한 후, `bg`로 백그라운드 실행하세요. 그 다음 [`pgrep`](https://www.man7.org/linux/man-pages/man1/pgrep.1.html)으로 PID를 찾고, [`pkill`](https://man7.org/linux/man-pages/man1/pgrep.1.html)으로 직접 PID를 입력하지 않고 종료하세요. (힌트: `-af` 플래그 사용)
 
-1. 당신이 한 프로세스가 완료될 때까지 다른 프로세스를 시작하고 싶지 않다고 합시다. 당신은 어떻게 그것에 대해 갈 것입니까? 이 연습에서, 우리의 제한 프로세스는 항상 `sleep 60 &`일 것입니다. 이것을 달성하는 한 가지 방법은 [`wait`](https://www.man7.org/linux/man-pages/man1/wait.1p.html) 명령을 사용하는 것입니다. 수면 명령을 시작하고, 백그라운드 프로세스가 완료될 때까지 대기하는 `ls`를 가지세요.
+1. 한 프로세스가 완료될 때까지 다른 프로세스를 시작하지 않으려면 어떻게 할까요? 이 연습에서 제한 프로세스는 `sleep 60 &`입니다. [`wait`](https://www.man7.org/linux/man-pages/man1/wait.1p.html) 명령을 사용하여 sleep을 시작하고 백그라운드 프로세스가 완료될 때까지 대기한 후 `ls`를 실행하세요.
 
-    하지만, 이 전략은 우리가 다른 bash 세션에서 시작하면 실패할 것입니다. `wait`은 자식 프로세스에 대해서만 작동하기 때문입니다. 우리가 주목들에서 논의하지 않은 한 가지 기능은 `kill` 명령의 종료 상태가 성공 시 0이 될 것이고 그렇지 않으면 0이 아닐 것입니다. `kill -0`은 신호를 보내지 않지만, 프로세스가 존재하지 않으면 0이 아닌 종료 상태를 줄 것입니다. pid를 취하고, 주어진 프로세스가 완료될 때까지 대기하는 `pidwait`라는 bash 함수를 작성하세요. 당신은 불필요하게 CPU를 낭비하지 않도록 `sleep`을 사용해야 합니다.
+    하지만 다른 bash 세션에서는 `wait`이 작동하지 않습니다. `wait`은 자식 프로세스에만 작동하기 때문입니다. 주의: `kill` 명령은 성공하면 0, 실패하면 0이 아닌 종료 상태를 반환합니다. `kill -0`은 신호를 보내지 않지만 프로세스가 없으면 0이 아닌 상태를 반환합니다. PID를 받아 주어진 프로세스가 완료될 때까지 대기하는 `pidwait` bash 함수를 작성하세요. 불필요한 CPU 소비를 피하려면 `sleep`을 사용하세요.
 
 ## 파일과 권한
 
-1. (고급) 명령이나 스크립트를 재귀적으로 찾으려면 디렉터리에서 가장 최근에 수정된 파일을 찾으세요. 더 일반적으로, 당신은 최근별로 모든 파일들을 나열할 수 있습니까?
+1. (고급) 재귀적으로 디렉토리에서 가장 최근에 수정된 파일을 찾으세요. 더 일반적으로, 모든 파일을 수정 시간 순서로 나열할 수 있을까요?
 
 ## 터미널 멀티플렉서
 
-1. 이 `tmux` [튜토리얼](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/)을 따르고, 그 다음 [이들 단계들](https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/)을 따르는 일부 기본 커스터마이제이션들을 배우세요.
+1. 이 `tmux` [튜토리얼](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/)을 따르고, [이 가이드](https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/)로 기본적인 커스터마이징을 배우세요.
 
 ## 별칭과 Dotfile
 
-1. `cd` 오타를 입력했을 때 해결하는 `dc` 별칭을 만드세요.
+1. `cd` 오타를 자동으로 고쳐주는 `dc` 별칭을 만드세요.
 
-1. `history | awk '{$1="";print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10`을 실행하여 당신의 가장 많이 사용되는 명령들의 상위 10개를 얻고, 그들을 위해 더 짧은 별칭들을 작성하는 것을 고려하세요. 주의: 이것이 Bash을 위해 작동합니다. 당신이 ZSH을 사용 중이라면, `history` 대신 `history 1`을 사용하세요.
+1. `history | awk '{$1="";print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10`을 실행해 가장 자주 사용하는 명령 10개를 확인하고, 이들을 위한 단축 별칭을 만들어 보세요. 참고: Bash 용입니다. ZSH 사용자는 `history` 대신 `history 1`을 사용하세요.
 
-1. 당신의 dotfile들을 위한 폴더를 만들고 버전 제어를 설정하세요.
+1. dotfile들을 관리할 폴더를 만들고 버전 제어를 설정하세요.
 
-1. 최소한 한 프로그램(예: 당신의 셸)에 대한 구성을 추가하세요. 일부 커스터마이제이션(시작하려면, `$PS1`을 설정하여 셸 프롬프트를 커스터마이징하는 것만큼 간단할 수 있습니다).
+1. 최소한 하나의 프로그램(예: 셸)에 대한 설정을 추가하세요. 시작은 `$PS1`을 설정해 프롬프트를 커스터마이징하는 정도면 충분합니다.
 
-1. 새로운 머신에서 당신의 dotfile들을 빠르게(그리고 수동 노력 없이) 설치하는 방법을 설정하세요. 이것은 각 파일을 위해 `ln -s`를 호출하는 셸 스크립트만큼 간단하거나, 당신은 [특수화된 유틸리티](https://dotfiles.github.io/utilities/)를 사용할 수 있습니다.
+1. 새로운 머신에서 빠르고 자동으로 dotfile들을 설치하는 방법을 만드세요. 각 파일마다 `ln -s`를 호출하는 셸 스크립트를 만들거나, [전문 유틸리티](https://dotfiles.github.io/utilities/)를 사용할 수 있습니다.
 
-1. 신선한 가상 머신에서 당신의 설치 스크립트를 테스트하세요.
+1. 깨끗한 가상 머신에서 설치 스크립트를 테스트하세요.
 
-1. 모든 당신의 현재 도구 구성들을 당신의 dotfile 저장소로 마이그레이션하세요.
+1. 현재 도구 설정들을 모두 dotfile 저장소로 옮기세요.
 
-1. GitHub에 당신의 dotfile들을 출판하세요.
+1. GitHub에 dotfile들을 공개하세요.
 
 ## 원격 머신(SSH)
 
-이들 연습을 위해 Linux 가상 머신을 설치하세요(또는 이미 존재하는 것을 사용하세요). 당신이 가상 머신들과 친숙하지 않다면, [이것](https://hibbard.eu/install-ubuntu-virtual-box/) 튜토리얼을 하나 설치하기 위해 확인하세요.
+이 연습을 위해 Linux 가상 머신을 설치하거나 기존 것을 사용하세요. 가상 머신이 처음이라면 [이 튜토리얼](https://hibbard.eu/install-ubuntu-virtual-box/)을 확인하세요.
 
-1. `~/.ssh/`로 이동하고, 당신이 거기에 SSH 키의 쌍을 가지고 있는지 확인하세요. 그렇지 않으면, `ssh-keygen -a 100 -t ed25519`로 생성하세요. 당신이 암호 문구를 사용하고 `ssh-agent`를 사용하는 것이 권장되며, 더 많은 정보는 [여기](https://www.ssh.com/ssh/agent)입니다.
+1. `~/.ssh/`로 이동해 SSH 키 쌍이 있는지 확인하세요. 없으면 `ssh-keygen -a 100 -t ed25519`로 생성하세요. 암호 문구를 사용하고 `ssh-agent`를 사용하기를 권장합니다. [여기](https://www.ssh.com/ssh/agent)를 참고하세요.
 
-1. `.ssh/config`을 다음과 같이 입력이 있도록 편집하세요:
+1. `.ssh/config`을 다음과 같이 편집하세요:
 
     ```bash
     Host vm
@@ -738,12 +738,12 @@ sarah.connor
         LocalForward 9999 localhost:8888
     ```
 
-1. 당신의 ssh 키를 서버로 복사하기 위해 `ssh-copy-id vm`을 사용하세요.
+1. `ssh-copy-id vm`으로 SSH 키를 서버에 복사하세요.
 
-1. `python -m http.server 8888`을 실행하여 당신의 VM에서 웹 서버를 시작하세요. `http://localhost:9999`로 네비게이트하여 당신의 머신에서 VM 웹 서버에 접근하세요.
+1. VM에서 `python -m http.server 8888`을 실행해 웹 서버를 시작하세요. 당신의 머신에서 `http://localhost:9999`로 접속해 VM 웹 서버에 접근하세요.
 
-1. `sudo vim /etc/ssh/sshd_config`를 실행하여 당신의 SSH 서버 구성을 편집하고, `PasswordAuthentication`의 값을 편집하여 비밀번호 인증을 비활성화하세요. `PermitRootLogin`의 값을 편집하여 루트 로그인을 비활성화하세요. `sudo service sshd restart`로 `ssh` 서비스를 다시 시작하세요. ssh로 다시 시도하세요.
+1. `sudo vim /etc/ssh/sshd_config`로 SSH 서버 설정을 편집하세요. `PasswordAuthentication`을 비활성화하고, `PermitRootLogin`도 비활성화하세요. `sudo service sshd restart`로 SSH 서비스를 재시작한 후 다시 접속하세요.
 
-1. (도전) VM에서 [`mosh`](https://mosh.org/)를 설치하고 연결을 확립하세요. 그 다음 서버/VM의 네트워크 어댑터를 분리하세요. mosh가 그것으로부터 제대로 복구할 수 있습니까?
+1. (도전) VM에 [`mosh`](https://mosh.org/)를 설치하고 연결하세요. 그 다음 서버/VM의 네트워크 어댑터를 분리하세요. mosh가 제대로 복구될까요?
 
-1. (도전) `ssh`의 `-N`과 `-f` 플래그들이 무엇을 하는지 찾아보고, 백그라운드 포트 포워딩을 달성하는 명령을 찾아내세요.
+1. (도전) `ssh`의 `-N`과 `-f` 플래그가 무엇인지 알아보고, 백그라운드 포트 포워딩을 수행하는 명령을 찾으세요.
