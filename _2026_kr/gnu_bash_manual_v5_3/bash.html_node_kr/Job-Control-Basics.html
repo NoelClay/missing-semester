@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>작업 제어 기초 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="작업 제어 기초 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="작업 제어 기초 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Job-Control.html" rel="up" title="작업 제어">
+<link href="Job-Control-Builtins.html" rel="next" title="작업 제어 빌트인">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Job-Control-Basics">
+<div class="nav-panel">
+<p>
+다음: <a href="Job-Control-Builtins.html" accesskey="n" rel="next">작업 제어 빌트인</a>, 상위: <a href="Job-Control.html" accesskey="u" rel="up">작업 제어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Job-Control-Basics-1"><span>7.1 작업 제어 기초<a class="copiable-link" href="#Job-Control-Basics-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-job-control-1"></a>
+<a class="index-entry-id" id="index-foreground"></a>
+<a class="index-entry-id" id="index-background"></a>
+<a class="index-entry-id" id="index-suspending-jobs"></a>
+
+<p>작업 제어(Job control)는 프로세스의 실행을 선택적으로 중단(suspend)하고 나중에 다시 재개(resume)할 수 있는 기능을 의미합니다. 사용자는 일반적으로 운영체제 커널의 터미널 드라이버와 Bash가 공동으로 제공하는 대화형 인터페이스를 통해 이 기능을 사용합니다.
+</p>
+<p>쉘은 각 파이프라인에 <var class="var">작업(job)</var>을 할당합니다. 쉘은 현재 실행 중인 작업들의 테이블을 유지하며, <code class="code">jobs</code> 명령어로 이를 확인할 수 있습니다. 각 작업은 대괄호 사이에 표시되는 <em class="dfn">작업 번호(job number)</em>를 가집니다. 작업 번호는 1부터 시작합니다. Bash가 작업을 비동기적으로 시작하면 다음과 같은 한 줄을 출력합니다:
+</p><div class="example">
+<pre class="example-preformatted">[1] 25647
+</pre></div>
+<p>이는 이 작업의 작업 번호가 1번이며, 이 작업과 연관된 파이프라인의 마지막 프로세스의 프로세스 <small class="sc">ID</small>가 25647임을 나타냅니다. 단일 파이프라인 내의 모든 프로세스는 동일한 작업의 멤버입니다. Bash는 작업 제어의 기초로 <var class="var">작업</var> 추상화(abstraction)를 사용합니다.
+</p>
+<p>작업 제어 사용자 인터페이스의 구현을 용이하게 하기 위해, 각 프로세스는 <em class="dfn">프로세스 그룹 <small class="sc">ID</small></em>를 가지며, 운영체제는 현재 터미널의 프로세스 그룹 <small class="sc">ID</small> 개념을 유지합니다. 이 터미널 프로세스 그룹 <small class="sc">ID</small>는 <em class="dfn">제어 터미널(controlling terminal)</em>과 연관됩니다.
+</p>
+<p>동일한 프로세스 그룹 ID를 가진 프로세스들은 동일한 <em class="dfn">프로세스 그룹</em>의 일부라고 합니다. 포그라운드(foreground) 프로세스 그룹의 멤버들(프로세스 그룹 <small class="sc">ID</small>가 현재 터미널 프로세스 그룹 <small class="sc">ID</small>와 동일한 프로세스들)은 <code class="code">SIGINT</code>와 같이 키보드에서 생성된 시그널을 수신합니다. 포그라운드 프로세스 그룹에 속한 프로세스들을 포그라운드 프로세스라고 부릅니다. 백그라운드(background) 프로세스는 프로세스 그룹 <small class="sc">ID</small>가 제어 터미널의 ID와 다른 프로세스들을 말하며, 이러한 프로세스들은 키보드 생성 시그널의 영향을 받지 않습니다. 오직 포그라운드 프로세스만이 제어 터미널로부터 데이터를 읽거나, 사용자가 <code class="code">stty tostop</code> 명령으로 지정한 경우 제어 터미널에 데이터를 쓸 수 있습니다. 시스템은 터미널로부터 데이터를 읽으려 하거나(<code class="code">tostop</code>이 활성화된 상태에서 쓰려 하는) 백그라운드 프로세스에 <code class="code">SIGTTIN</code> (<code class="code">SIGTTOU</code>) 시그널을 보내며, 이 시그널을 포착하여 처리하지 않으면 프로세스가 중단됩니다.
+</p>
+<p>Bash가 실행 중인 운영체제가 작업 제어를 지원한다면, Bash는 이를 사용하기 위한 기능들을 포함합니다. 프로세스가 실행 중일 때 <em class="dfn">중단(suspend)</em> 문자(보통 &lsquo;<samp class="samp">^Z</samp>&rsquo;, Control-Z)를 입력하면 해당 프로세스가 중단되고 제어권이 Bash로 돌아옵니다. <em class="dfn">지연된 중단(delayed suspend)</em> 문자(보통 &lsquo;<samp class="samp">^Y</samp>&rsquo;, Control-Y)를 입력하면 프로세스가 터미널로부터 입력을 읽으려고 시도할 때 중단되고 제어권이 Bash로 돌아옵니다. 사용자는 이후 <code class="code">bg</code> 명령어로 백그라운드에서 실행을 재개하거나, <code class="code">fg</code> 명령어로 포그라운드에서 실행을 재개하거나, <code class="code">kill</code> 명령어로 작업을 종료하는 등 해당 작업의 상태를 조작할 수 있습니다. 중단 문자는 즉시 효력을 발휘하며, 대기 중인 모든 출력과 미리 입력된 내용(typeahead)을 버리는 부작용이 있습니다. 백그라운드 프로세스를 강제로 중단시키거나 터미널 세션과 연관되지 않은 프로세스를 중단시키고 싶다면 <code class="code">kill</code> 명령어를 사용하여 <code class="code">SIGSTOP</code> 시그널을 보내십시오.
+</p>
+<p>쉘에서 작업을 참조하는 데는 여러 가지 방법이 있습니다. &lsquo;<samp class="samp">%</samp>&rsquo; 문자는 <em class="dfn">작업 사양(job specification, jobspec)</em>을 시작합니다.
+</p>
+<p>작업 번호 <code class="code">n</code>은 &lsquo;<samp class="samp">%n</samp>&rsquo;으로 참조할 수 있습니다. 작업은 또한 작업을 시작하는 데 사용된 이름의 접두사나 명령줄에 나타나는 부분 문자열을 사용하여 참조할 수도 있습니다. 예를 들어, &lsquo;<samp class="samp">%ce</samp>&rsquo;는 명령어 이름이 &lsquo;<samp class="samp">ce</samp>&rsquo;로 시작하는 작업을 참조합니다. 반면 &lsquo;<samp class="samp">%?ce</samp>&rsquo;는 명령줄 어디에든 &lsquo;<samp class="samp">ce</samp>&rsquo; 문자열이 포함된 모든 작업을 참조합니다. 접두사나 부분 문자열이 둘 이상의 작업과 일치하면 Bash는 에러를 보고합니다.
+</p>
+<p>&lsquo;<samp class="samp">%%</samp>&rsquo;와 &lsquo;<samp class="samp">%+</samp>&rsquo; 기호는 쉘의 <em class="dfn">현재 작업(current job)</em> 개념을 참조합니다. 단독으로 쓰인 &lsquo;<samp class="samp">%</samp>&rsquo;(뒤에 작업 사양이 없는 경우) 또한 현재 작업을 참조합니다. &lsquo;<samp class="samp">%-</samp>&rsquo;는 <em class="dfn">이전 작업(previous job)</em>을 참조합니다. 작업이 백그라운드에서 시작되거나, 포그라운드에서 중단되거나, 백그라운드에서 재개될 때 해당 작업은 현재 작업이 됩니다. 원래 현재 작업이었던 작업은 이전 작업이 됩니다. 현재 작업이 종료되면 이전 작업이 현재 작업이 됩니다. 오직 하나의 작업만 있는 경우 &lsquo;<samp class="samp">%+</samp>&rsquo;와 &lsquo;<samp class="samp">%-</samp>&rsquo; 모두 그 작업을 가리키는 데 사용될 수 있습니다. 작업과 관련된 출력(예: <code class="code">jobs</code> 명령어의 출력)에서 현재 작업은 항상 &lsquo;<samp class="samp">+</samp>&rsquo;로 표시되고, 이전 작업은 &lsquo;<samp class="samp">-</samp>&rsquo;로 표시됩니다.
+</p>
+<p>작업의 이름을 단순히 입력하는 것만으로도 포그라운드로 가져올 수 있습니다: &lsquo;<samp class="samp">%1</samp>&rsquo;은 &lsquo;<samp class="samp">fg %1</samp>&rsquo;의 동의어이며, 1번 작업을 백그라운드에서 포그라운드로 가져옵니다. 유사하게 &lsquo;<samp class="samp">%1 &amp;</samp>&rsquo;은 1번 작업을 백그라운드에서 재개하며, 이는 &lsquo;<samp class="samp">bg %1</samp>&rsquo;과 동일합니다.
+</p>
+<p>쉘은 작업의 상태가 변경될 때마다 즉시 알게 됩니다. 보통 Bash는 다른 출력을 방해하지 않기 위해 프롬프트를 출력하기 직전까지 기다렸다가 작업 상태 변경 사항을 사용자에게 알립니다. 하지만 목록 내의 포그라운드 명령어가 완료된 후 다음 명령어를 실행하기 전에는 작업 상태 변경 알림을 수행합니다. <code class="code">set</code> 빌트인의 <samp class="option">-b</samp> 옵션이 활성화되어 있다면, Bash는 상태 변경을 즉시 보고합니다(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조). Bash는 종료되는 각 자식 프로세스에 대해 <code class="code">SIGCHLD</code> 트랩을 실행합니다.
+</p>
+<p>작업이 종료되고 Bash가 이에 대해 사용자에게 알리면, Bash는 작업 테이블에서 해당 작업을 제거합니다. 해당 작업은 더 이상 <code class="code">jobs</code> 출력에 나타나지 않지만, <code class="code">wait</code> 명령어에 해당 작업의 프로세스 ID를 인자로 주면 종료 상태를 보고합니다. 테이블이 비어 있게 되면 작업 번호는 다시 1부터 시작합니다.
+</p>
+<p>사용자가 작업이 중단된 상태(또는 <code class="code">checkjobs</code> 옵션이 활성화된 경우 실행 중인 상태 - <a class="ref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조)에서 Bash를 종료하려고 시도하면, 쉘은 경고 메시지를 출력하고 <code class="code">checkjobs</code> 옵션이 켜져 있다면 작업 목록과 그 상태를 나열합니다. 사용자는 <code class="code">jobs</code> 명령어를 사용하여 상태를 더 자세히 확인할 수 있습니다. 사용자가 중간에 다른 명령어 없이 즉시 다시 종료를 시도하면, Bash는 다시 경고하지 않고 중단된 모든 작업들을 종료시킵니다.
+</p>
+<p><code class="code">wait</code> 빌트인을 사용하여 작업이나 프로세스를 기다리고 있고 작업 제어가 활성화되어 있다면, <code class="code">wait</code>은 작업의 상태가 변경될 때 반환됩니다. <samp class="option">-f</samp> 옵션을 사용하면 <code class="code">wait</code>이 작업이나 프로세스가 완전히 종료될 때까지 기다린 후 반환하도록 합니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Job-Control-Builtins.html">작업 제어 빌트인</a>, 상위: <a href="Job-Control.html">작업 제어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

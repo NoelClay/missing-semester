@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Readline 삭제 및 붙여넣기 명령어 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Readline 삭제 및 붙여넣기 명령어 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Readline 삭제 및 붙여넣기 명령어 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Readline-Interaction.html" rel="up" title="Readline 상호작용">
+<link href="Readline-Arguments.html" rel="next" title="Readline 인자">
+<link href="Readline-Movement-Commands.html" rel="prev" title="Readline 이동 명령어">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Readline-Killing-Commands">
+<div class="nav-panel">
+<p>
+다음: <a href="Readline-Arguments.html" accesskey="n" rel="next">Readline 인자</a>, 이전: <a href="Readline-Movement-Commands.html" accesskey="p" rel="prev">Readline 이동 명령어</a>, 상위: <a href="Readline-Interaction.html" accesskey="u" rel="up">Readline 상호작용</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Readline-Killing-Commands-1"><span>8.2.3 Readline 삭제(Killing) 명령어<a class="copiable-link" href="#Readline-Killing-Commands-1"> &para;</a></span></h4>
+
+<a class="index-entry-id" id="index-killing-text"></a>
+<a class="index-entry-id" id="index-yanking-text"></a>
+
+<p>텍스트를 <em class="dfn">삭제(Killing)</em>한다는 것은 줄에서 텍스트를 지우되, 나중에 <em class="dfn">붙여넣기(yanking, 다시 삽입하기)</em>를 통해 사용할 수 있도록 따로 저장해 두는 것을 의미합니다. (&lsquo;잘라내기(cut)&rsquo;와 &lsquo;붙여넣기(paste)&rsquo;는 &lsquo;삭제(kill)&rsquo;와 &lsquo;양킹(yank)&rsquo;에 대한 보다 현대적인 용어입니다.)
+</p>
+<p>어떤 명령어에 대한 설명이 텍스트를 &lsquo;삭제(kill)&rsquo;한다고 되어 있다면, 나중에 다른 곳(또는 같은 곳)에서 해당 텍스트를 다시 불러올 수 있음을 확신해도 좋습니다.
+</p>
+<p>삭제 명령어를 사용하면 텍스트는 <em class="dfn">킬링(kill-ring)</em> 버퍼에 저장됩니다. 연속적으로 수행된 여러 번의 삭제 작업은 삭제된 모든 텍스트를 함께 저장하므로, 나중에 붙여넣을 때 한꺼번에 가져올 수 있습니다. 킬링 버퍼는 현재 줄에만 국한되지 않습니다; 이전에 입력했던 줄에서 삭제한 텍스트도 나중에 다른 줄을 입력할 때 붙여넣을 수 있습니다.
+<a class="index-entry-id" id="index-kill-ring"></a>
+</p>
+<p>다음은 텍스트를 삭제하는 명령어 목록입니다.
+</p>
+<dl class="table">
+<dt><kbd class="kbd">C-k</kbd></dt>
+<dd><p>현재 커서 위치부터 줄 끝까지 텍스트를 삭제.
+</p>
+</dd>
+<dt><kbd class="kbd">M-d</kbd></dt>
+<dd><p>커서 위치부터 현재 단어의 끝까지, 또는 단어 사이인 경우 다음 단어의 끝까지 삭제. 단어 경계는 <kbd class="kbd">M-f</kbd>에서 사용되는 것과 동일합니다.
+</p>
+</dd>
+<dt><kbd class="kbd">M-<kbd class="key">DEL</kbd></kbd></dt>
+<dd><p>커서 위치부터 현재 단어의 시작까지, 또는 단어 사이인 경우 이전 단어의 시작까지 삭제. 단어 경계는 <kbd class="kbd">M-b</kbd>에서 사용되는 것과 동일합니다.
+</p>
+</dd>
+<dt><kbd class="kbd">C-w</kbd></dt>
+<dd><p>커서 위치부터 이전 공백(whitespace)까지 삭제. 단어 경계 기준이 다르기 때문에 <kbd class="kbd">M-<kbd class="key">DEL</kbd></kbd>과는 다릅니다.
+</p>
+</dd>
+</dl>
+
+<p>다음은 텍스트를 <em class="dfn">붙여넣는(yank)</em> 방법입니다. 양킹(Yanking)은 킬링 버퍼에서 가장 최근에 삭제된 텍스트를 현재 커서 위치의 줄에 복사하는 것을 의미합니다.
+</p>
+<dl class="table">
+<dt><kbd class="kbd">C-y</kbd></dt>
+<dd><p>가장 최근에 삭제된 텍스트를 커서 위치의 버퍼에 붙여넣음.
+</p>
+</dd>
+<dt><kbd class="kbd">M-y</kbd></dt>
+<dd><p>킬링(kill-ring) 버퍼를 회전시키고 새로운 최상단 항목을 붙여넣음. 이 명령어는 바로 이전 명령어가 <kbd class="kbd">C-y</kbd> 또는 <kbd class="kbd">M-y</kbd>인 경우에만 사용할 수 있습니다.
+</p></dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Readline-Arguments.html">Readline 인자</a>, 이전: <a href="Readline-Movement-Commands.html">Readline 이동 명령어</a>, 상위: <a href="Readline-Interaction.html">Readline 상호작용</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

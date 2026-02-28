@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>명령어 치환 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="명령어 치환 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="명령어 치환 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Shell-Expansions.html" rel="up" title="쉘 확장">
+<link href="Arithmetic-Expansion.html" rel="next" title="산술 확장">
+<link href="Shell-Parameter-Expansion.html" rel="prev" title="쉘 파라미터 확장">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Command-Substitution">
+<div class="nav-panel">
+<p>
+다음: <a href="Arithmetic-Expansion.html" accesskey="n" rel="next">산술 확장</a>, 이전: <a href="Shell-Parameter-Expansion.html" accesskey="p" rel="prev">쉘 파라미터 확장</a>, 상위: <a href="Shell-Expansions.html" accesskey="u" rel="up">쉘 확장</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Command-Substitution-1"><span>3.5.4 명령어 치환<a class="copiable-link" href="#Command-Substitution-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-command-substitution"></a>
+
+<p>명령어 치환(Command substitution)은 명령어의 실행 결과물이 명령어 자체를 대체할 수 있게 해줍니다.
+표준적인 명령어 치환 형식은 명령어를 다음과 같이 감싸는 것입니다:
+</p><div class="example">
+<pre class="example-preformatted">$(<var class="var">command</var>)
+</pre></div>
+<p>또는 (권장되지 않는 이전 방식):
+</p><div class="example">
+<pre class="example-preformatted">`<var class="var">command</var>`.
+</pre></div>
+
+<p>Bash는 서브쉘 환경에서 <var class="var">command</var>를 실행하고, 명령어 치환 부분을 해당 명령어의 표준 출력 내용으로 교체하며, 이때 결과물의 마지막에 있는 줄바꿈 문자들은 삭제됩니다.
+내부의 줄바꿈 문자는 삭제되지 않지만, 단어 분할 과정에서 제거될 수 있습니다.
+명령어 치환 <code class="code">$(cat <var class="var">file</var>)</code>은 이와 동일하지만 더 빠른 <code class="code">$(&lt; <var class="var">file</var>)</code>로 대체할 수 있습니다.
+</p>
+<p>백틱(` `)을 사용하는 예전 방식의 치환에서는, 백슬래시 뒤에 &lsquo;<samp class="samp">$</samp>&rsquo;, &lsquo;<samp class="samp">`</samp>&rsquo;, 또는 &lsquo;<samp class="samp">\</samp>&rsquo;가 오지 않는 한 백슬래시의 리터럴 의미가 유지됩니다.
+백슬래시가 앞에 붙지 않은 첫 번째 백틱이 명령어 치환을 종료합니다.
+<code class="code">$(<var class="var">command</var>)</code> 형식을 사용할 때는 소괄호 사이의 모든 문자열이 명령어를 구성하며, 특별하게 취급되는 문자는 없습니다.
+</p>
+<p>또 다른 명령어 치환 형식도 존재합니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">${<var class="var">c</var> <var class="var">command</var>; }
+</pre></div>
+
+<p>이는 현재 실행 환경에서 <var class="var">command</var>를 실행하고 그 출력을 캡처하며, 역시 마지막 줄바꿈들은 제거됩니다.
+</p>
+<p>여는 중괄호 뒤의 문자 <var class="var">c</var>는 반드시 공백, 탭, 줄바꿈, 또는 &lsquo;<samp class="samp">|</samp>&rsquo;여야 하며, 닫는 중괄호는 예약어가 나타날 수 있는 위치(즉, 세미콜론과 같은 명령어 종료자 뒤)에 있어야 합니다.
+Bash는 예약어가 보통 요구하는 쉘 메타 문자가 뒤따르지 않더라도 닫는 중괄호가 단어의 나머지 부분과 결합되는 것을 허용합니다.
+</p>
+<p><var class="var">command</var>에 의한 그 어떤 부작용(side effect)도 현재 실행 환경에 즉시 적용되며 명령어가 완료된 후에도 유지됩니다 (예: <code class="code">exit</code> 빌트인은 쉘을 종료시킵니다).
+</p>
+<p>이러한 유형의 명령어 치환은 겉보기에는 이름 없는 쉘 함수를 실행하는 것과 비슷합니다: 쉘 함수 실행 시처럼 지역 변수가 생성되며, <code class="code">return</code> 빌트인은 <var class="var">command</var>의 완료를 강제합니다. 하지만 위치 파라미터를 포함한 나머지 실행 환경은 호출자와 공유됩니다.
+</p>
+<p>만약 여는 중괄호 뒤의 첫 번째 문자가 &lsquo;<samp class="samp">|</samp>&rsquo;인 경우, 해당 구조는 <var class="var">command</var>가 실행된 후의 <code class="code">REPLY</code> 쉘 변수 값으로 확장되며, 이때 마지막 줄바꿈은 제거되지 않습니다. 또한 <var class="var">command</var>의 표준 출력은 호출한 쉘에서와 동일하게 유지됩니다.
+Bash는 <var class="var">command</var> 실행 시 <code class="code">REPLY</code>를 초기값이 해제된 지역 변수로 생성하며, <var class="var">command</var>가 완료된 후에는 일반적인 지역 변수와 마찬가지로 명령어 치환 전의 <code class="code">REPLY</code> 값으로 복구합니다.
+</p>
+<p>예를 들어, 다음 구조는 &lsquo;<samp class="samp">12345</samp>&rsquo;로 확장되며 현재 실행 환경의 쉘 변수 <code class="code">X</code>는 변경되지 않은 상태로 둡니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">
+
+${ local X=12345 ; echo $X; }
+</pre></div>
+
+<p>( <code class="code">X</code>를 local로 선언하지 않으면 일반적인 쉘 함수 실행 시처럼 현재 환경의 값이 수정됩니다.)
+반면 다음 구조는 출력을 생성하지 않고도 &lsquo;<samp class="samp">12345</samp>&rsquo;로 확장됩니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">${| REPLY=12345; }
+</pre></div>
+
+<p>그리고 명령어 치환 전의 <code class="code">REPLY</code> 값을 복구합니다.
+</p>
+<p>명령어 치환은 중첩될 수 있습니다. 백틱 형식을 사용할 때 중첩하려면 내부의 백틱들을 백슬래시로 이스케이프해야 합니다.
+</p>
+<p>치환이 큰따옴표 내에서 이루어지는 경우, Bash는 결과물에 대해 단어 분할과 파일 이름 확장을 수행하지 않습니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Arithmetic-Expansion.html">산술 확장</a>, 이전: <a href="Shell-Parameter-Expansion.html">쉘 파라미터 확장</a>, 상위: <a href="Shell-Expansions.html">쉘 확장</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

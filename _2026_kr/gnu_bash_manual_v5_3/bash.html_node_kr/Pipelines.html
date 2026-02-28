@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>파이프라인 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="파이프라인 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="파이프라인 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Shell-Commands.html" rel="up" title="쉘 명령어">
+<link href="Lists.html" rel="next" title="명령어 목록">
+<link href="Simple-Commands.html" rel="prev" title="단순 명령어">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Pipelines">
+<div class="nav-panel">
+<p>
+다음: <a href="Lists.html" accesskey="n" rel="next">명령어 목록</a>, 이전: <a href="Simple-Commands.html" accesskey="p" rel="prev">단순 명령어</a>, 상위: <a href="Shell-Commands.html" accesskey="u" rel="up">쉘 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Pipelines-1"><span>3.2.3 파이프라인<a class="copiable-link" href="#Pipelines-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-pipeline"></a>
+<a class="index-entry-id" id="index-commands_002c-pipelines"></a>
+
+<p><code class="code">파이프라인</code>은 제어 연산자 &lsquo;<samp class="samp">|</samp>&rsquo; 또는 &lsquo;<samp class="samp">|&amp;</samp>&rsquo;로 구분된 하나 이상의 명령어 시퀀스입니다.
+</p>
+<a class="index-entry-id" id="index-time"></a>
+<a class="index-entry-id" id="index-_0021"></a>
+<a class="index-entry-id" id="index-command-timing"></a>
+<p>파이프라인의 형식은 다음과 같습니다:
+</p><div class="example">
+<pre class="example-preformatted">[time [-p]] [!] <var class="var">command1</var> [ | 또는 |&amp; <var class="var">command2</var> ] ...
+</pre></div>
+
+<p>파이프라인 내의 각 명령어의 출력은 파이프를 통해 다음 명령어의 입력으로 연결됩니다.
+즉, 각 명령어는 이전 명령어의 출력을 읽습니다.
+이 연결은 <var class="var">command1</var>에 지정된 그 어떤 리다이렉션보다도 먼저 수행됩니다.
+</p>
+<p>파이프라인 연산자가 &lsquo;<samp class="samp">|&amp;</samp>&rsquo;인 경우,
+<var class="var">command1</var>의 표준 출력뿐만 아니라 표준 에러도 파이프를 통해 <var class="var">command2</var>의 표준 입력으로 연결됩니다.
+이는 <code class="code">2&gt;&amp;1 |</code>의 축약형입니다.
+표준 에러를 표준 출력으로 리다이렉션하는 이 암시적인 처리는 해당 축약형과 일관되게 <var class="var">command1</var>에 지정된 리다이렉션이 수행된 이후에 이루어집니다.
+</p>
+<p>예약어 <code class="code">time</code>이 파이프라인 앞에 오면, Bash는 파이프라인이 종료된 후 실행 소요 시간 통계를 출력합니다.
+현재 통계는 경과 시간(실제 시간)과 명령어 실행에 소요된 사용자 및 시스템 시간으로 구성됩니다.
+<samp class="option">-p</samp> 옵션은 출력 형식을 <small class="sc">POSIX</small>에 지정된 형식으로 변경합니다.
+쉘이 <small class="sc">POSIX</small> 모드(<a class="pxref" href="Bash-POSIX-Mode.html">Bash와 POSIX</a> 참조)일 때, 다음 토큰이 &lsquo;<samp class="samp">-</samp>&rsquo;로 시작하면 <code class="code">time</code>을 예약어로 인식하지 않습니다.
+<code class="env">TIMEFORMAT</code> 변수의 값은 시간 정보가 표시되는 방식을 지정하는 형식 문자열입니다.
+사용 가능한 형식에 대한 설명은 <a class="xref" href="Bash-Variables.html">Bash 변수</a>를 참조하십시오.
+<code class="code">time</code>을 예약어로 제공함으로써 쉘 빌트인, 쉘 함수, 파이프라인의 실행 시간을 측정할 수 있습니다.
+외부 <code class="code">time</code> 명령어로는 이들의 시간을 쉽게 측정할 수 없습니다.
+</p>
+<p>쉘이 <small class="sc">POSIX</small> 모드(<a class="pxref" href="Bash-POSIX-Mode.html">Bash와 POSIX</a> 참조)일 때, <code class="code">time</code>을 단독으로 단순 명령어로 사용할 수 있습니다.
+이 경우 쉘은 쉘 자체와 그 자식 프로세스들이 소비한 총 사용자 및 시스템 시간을 표시합니다.
+<code class="env">TIMEFORMAT</code> 변수가 시간 정보의 형식을 지정합니다.
+</p>
+<p>파이프라인이 비동기적으로 실행되지 않는 한(<a class="pxref" href="Lists.html">명령어 목록</a> 참조), 쉘은 파이프라인의 모든 명령어가 완료될 때까지 기다립니다.
+</p>
+<p>파이프가 생성되는 다중 명령어 파이프라인의 각 명령어는 별도의 프로세스인 고유한 <em class="dfn">서브쉘(subshell)</em>에서 실행됩니다(<a class="pxref" href="Command-Execution-Environment.html">명령어 실행 환경</a> 참조).
+만약 <code class="code">shopt</code> 빌트인(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조)을 사용하여 <code class="code">lastpipe</code> 옵션을 활성화하고 작업 제어가 활성 상태가 아니라면, 파이프라인의 마지막 요소가 쉘 프로세스에 의해 실행될 수 있습니다.
+</p>
+<p>파이프라인의 종료 상태는 <code class="code">pipefail</code> 옵션이 활성화되어 있지 않는 한 파이프라인의 마지막 명령어의 종료 상태입니다(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조).
+<code class="code">pipefail</code>이 활성화된 경우, 파이프라인의 반환 상태는 0이 아닌 상태로 종료된 마지막(가장 오른쪽) 명령어의 값이거나, 모든 명령어가 성공적으로 종료된 경우 0이 됩니다.
+예약어 &lsquo;<samp class="samp">!</samp>&rsquo;가 파이프라인 앞에 오면, 종료 상태는 위에서 설명한 종료 상태의 논리적 부정(logical negation)이 됩니다.
+파이프라인이 비동기적으로 실행되지 않는 한(<a class="pxref" href="Lists.html">명령어 목록</a> 참조), 쉘은 값을 반환하기 전에 파이프라인의 모든 명령어가 종료될 때까지 기다립니다.
+비동기 파이프라인의 반환 상태는 0입니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Lists.html">명령어 목록</a>, 이전: <a href="Simple-Commands.html">단순 명령어</a>, 상위: <a href="Shell-Commands.html">쉘 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

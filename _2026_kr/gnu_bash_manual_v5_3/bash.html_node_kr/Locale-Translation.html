@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>로케일 번역 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="로케일 번역 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="로케일 번역 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Quoting.html" rel="up" title="인용(Quoting)">
+<link href="ANSI_002dC-Quoting.html" rel="prev" title="ANSI-C 방식 인용">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsubsection-level-extent" id="Locale-Translation">
+<div class="nav-panel">
+<p>
+이전: <a href="ANSI_002dC-Quoting.html" accesskey="p" rel="prev">ANSI-C 방식 인용</a>, 상위: <a href="Quoting.html" accesskey="u" rel="up">인용(Quoting)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsubsection" id="Locale_002dSpecific-Translation"><span>3.1.2.5 로케일 특정 번역<a class="copiable-link" href="#Locale_002dSpecific-Translation"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-localization"></a>
+<a class="index-entry-id" id="index-internationalization"></a>
+<a class="index-entry-id" id="index-native-languages"></a>
+<a class="index-entry-id" id="index-translation_002c-native-languages"></a>
+
+<p><code class="verb">$&quot;hello,&nbsp;world&quot;</code>와 같이 큰따옴표로 감싸진 문자열 앞에 달러 기호(&lsquo;<samp class="samp">$</samp>&rsquo;)를 붙이면, 해당 문자열이 현재 로케일에 따라 번역됩니다.
+<code class="code">gettext</code> 인프라가 아래에 설명된 대로 <code class="code">LC_MESSAGES</code>, <code class="code">TEXTDOMAINDIR</code>, <code class="code">TEXTDOMAIN</code> 쉘 변수들을 사용하여 조회 및 번역을 수행합니다.
+여기서 다루지 않는 추가적인 세부 사항은 gettext 문서를 참조하십시오.
+현재 로케일이 <code class="code">C</code> 또는 <code class="code">POSIX</code>이거나, 사용 가능한 번역이 없거나, 문자열이 번역되지 않은 경우 달러 기호는 무시되며 문자열은 위에서 설명한 큰따옴표 규칙에 따라 처리됩니다.
+이것은 큰따옴표의 한 형태이므로, 번역 및 치환 여부와 관계없이 문자열은 기본적으로 큰따옴표로 감싸진 상태를 유지합니다.
+만약 <code class="code">shopt</code> 빌트인 명령어(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조)를 통해 <code class="code">noexpand_translation</code> 옵션을 활성화하면, 번역된 문자열은 큰따옴표 대신 작은따옴표로 감싸집니다.
+</p>
+<p>이 섹션의 나머지 부분은 <var class="var">scriptname</var>이라는 이름의 쉘 스크립트 내에 있는 문자열들에 대해 gettext를 사용하여 번역을 생성하는 방법에 대한 간략한 개요입니다.
+더 자세한 내용은 gettext 문서에 나와 있습니다.
+</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>큰따옴표 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="큰따옴표 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="큰따옴표 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Quoting.html" rel="up" title="인용(Quoting)">
+<link href="ANSI_002dC-Quoting.html" rel="next" title="ANSI-C 방식 인용">
+<link href="Single-Quotes.html" rel="prev" title="작은따옴표">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsubsection-level-extent" id="Double-Quotes">
+<div class="nav-panel">
+<p>
+다음: <a href="ANSI_002dC-Quoting.html" accesskey="n" rel="next">ANSI-C 방식 인용</a>, 이전: <a href="Single-Quotes.html" accesskey="p" rel="prev">작은따옴표</a>, 상위: <a href="Quoting.html" accesskey="u" rel="up">인용(Quoting)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsubsection" id="Double-Quotes-1"><span>3.1.2.3 큰따옴표<a class="copiable-link" href="#Double-Quotes-1"> &para;</a></span></h4>
+
+<p>문자들을 큰따옴표(&lsquo;<samp class="samp">&quot;</samp>&rsquo;)로 감싸면 따옴표 내의 모든 문자의 리터럴 값이 보존되지만, &lsquo;<samp class="samp">$</samp>&rsquo;, &lsquo;<samp class="samp">`</samp>&rsquo;, &lsquo;<samp class="samp">\</samp>&rsquo;, 그리고 히스토리 확장이 활성화된 경우 &lsquo;<samp class="samp">!</samp>&rsquo;는 예외입니다.
+쉘이 <small class="sc">POSIX</small> 모드(<a class="pxref" href="Bash-POSIX-Mode.html">Bash와 POSIX</a> 참조)일 때는 히스토리 확장이 활성화되어 있더라도 큰따옴표 내의 &lsquo;<samp class="samp">!</samp>&rsquo;는 특별한 의미를 갖지 않습니다.
+문자 &lsquo;<samp class="samp">$</samp>&rsquo;와 &lsquo;<samp class="samp">`</samp>&rsquo;은 큰따옴표 내에서도 특별한 의미를 유지합니다(<a class="pxref" href="Shell-Expansions.html">쉘 확장</a> 참조).
+백슬래시는 오직 다음 문자들 앞에 올 때만 특별한 의미를 유지합니다:
+&lsquo;<samp class="samp">$</samp>&rsquo;, &lsquo;<samp class="samp">`</samp>&rsquo;, &lsquo;<samp class="samp">&quot;</samp>&rsquo;, &lsquo;<samp class="samp">\</samp>&rsquo;, 또는 <code class="code">newline</code>(줄바꿈).
+큰따옴표 내에서 이러한 문자들 앞에 오는 백슬래시는 제거됩니다.
+특별한 의미가 없는 문자 앞에 오는 백슬래시는 수정되지 않고 그대로 남습니다.
+</p>
+<p>큰따옴표 내에서 큰따옴표를 인용하려면 앞에 백슬래시를 붙이면 됩니다.
+활성화된 경우, 큰따옴표 내에 나타나는 &lsquo;<samp class="samp">!</samp>&rsquo;가 백슬래시로 이스케이프되지 않는 한 히스토리 확장이 수행됩니다.
+&lsquo;<samp class="samp">!</samp>&rsquo; 앞에 붙은 백슬래시는 제거되지 않습니다.
+</p>
+<p>특수 파라미터 &lsquo;<samp class="samp">*</samp>&rsquo;와 &lsquo;<samp class="samp">@</samp>&rsquo;는 큰따옴표 내에서 특별한 의미를 갖습니다(<a class="pxref" href="Shell-Parameter-Expansion.html">쉘 파라미터 확장</a> 참조).
+</p>
+</div>
+
+
+
+</body>
+</html>

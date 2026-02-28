@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bourne 쉘 변수 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Bourne 쉘 변수 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Bourne 쉘 변수 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Shell-Variables.html" rel="up" title="쉘 변수">
+<link href="Bash-Variables.html" rel="next" title="Bash 변수">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Bourne-Shell-Variables">
+<div class="nav-panel">
+<p>
+다음: <a href="Bash-Variables.html" accesskey="n" rel="next">Bash 변수</a>, 상위: <a href="Shell-Variables.html" accesskey="u" rel="up">쉘 변수</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Bourne-Shell-Variables-1"><span>5.1 Bourne 쉘 변수<a class="copiable-link" href="#Bourne-Shell-Variables-1"> &para;</a></span></h3>
+
+<p>Bash는 특정 쉘 변수들을 Bourne 쉘과 동일한 방식으로 사용합니다. 일부 경우, Bash는 변수에 기본값을 할당합니다.
+</p>
+<dl class="vtable">
+<dt><a id="index-CDPATH"></a><span><code class="code">CDPATH</code><a class="copiable-link" href="#index-CDPATH"> &para;</a></span></dt>
+<dd><p><code class="code">cd</code> 빌트인 명령어를 위한 검색 경로로 사용되는 콜론(:)으로 구분된 디렉토리 목록입니다.
+</p>
+</dd>
+<dt><a id="index-HOME"></a><span><code class="code">HOME</code><a class="copiable-link" href="#index-HOME"> &para;</a></span></dt>
+<dd><p>현재 사용자의 홈 디렉토리입니다. <code class="code">cd</code> 빌트인 명령어의 기본 인자입니다. 이 변수의 값은 물결표 확장(<a class="pxref" href="Tilde-Expansion.html">물결표 확장</a> 참조)에서도 사용됩니다.
+</p>
+</dd>
+<dt><a id="index-IFS"></a><span><code class="code">IFS</code><a class="copiable-link" href="#index-IFS"> &para;</a></span></dt>
+<dd><p>필드를 구분하는 문자들의 목록입니다. 확장의 일부로 단어를 분할할 때와 <code class="code">read</code> 빌트인이 줄을 여러 단어로 분할할 때 사용됩니다. 단어 분할에 대한 설명은 <a class="xref" href="Word-Splitting.html">단어 분할</a>을 참조하십시오.
+</p>
+</dd>
+<dt><a id="index-MAIL"></a><span><code class="code">MAIL</code><a class="copiable-link" href="#index-MAIL"> &para;</a></span></dt>
+<dd><p>이 값이 파일명이나 디렉토리 이름으로 설정되어 있고 <code class="env">MAILPATH</code> 변수가 설정되어 있지 않다면, Bash는 지정된 파일이나 Maildir 형식의 디렉토리에 새로운 메일이 도착했음을 사용자에게 알립니다.
+</p>
+</dd>
+<dt><a id="index-MAILPATH"></a><span><code class="code">MAILPATH</code><a class="copiable-link" href="#index-MAILPATH"> &para;</a></span></dt>
+<dd><p>쉘이 주기적으로 새 메일을 확인하는 파일명들의 콜론 구분 목록입니다. 각 목록 항목은 파일 이름 뒤에 &lsquo;<samp class="samp">?</samp>&rsquo;를 붙여 새 메일 도착 시 출력할 메시지를 지정할 수 있습니다. 메시지 텍스트 내에서 <code class="code">$_</code>은 현재 메일 파일의 이름으로 확장됩니다.
+</p>
+</dd>
+<dt><a id="index-OPTARG"></a><span><code class="code">OPTARG</code><a class="copiable-link" href="#index-OPTARG"> &para;</a></span></dt>
+<dd><p><code class="code">getopts</code> 빌트인에 의해 가장 최근에 처리된 옵션 인자의 값입니다.
+</p>
+</dd>
+<dt><a id="index-OPTIND"></a><span><code class="code">OPTIND</code><a class="copiable-link" href="#index-OPTIND"> &para;</a></span></dt>
+<dd><p><code class="code">getopts</code> 빌트인에 의해 다음에 처리될 인자의 인덱스입니다.
+</p>
+</dd>
+<dt><a id="index-PATH"></a><span><code class="code">PATH</code><a class="copiable-link" href="#index-PATH"> &para;</a></span></dt>
+<dd><p>쉘이 명령어를 찾을 디렉토리들의 콜론 구분 목록입니다. <code class="code">PATH</code> 값 내의 길이가 0인(null) 디렉토리 이름은 현재 디렉토리를 나타냅니다. null 디렉토리 이름은 두 개의 인접한 콜론으로 나타나거나, 시작 또는 마지막의 콜론으로 나타날 수 있습니다. 기본 경로는 시스템마다 다르며, <code class="code">bash</code>를 설치하는 관리자에 의해 설정됩니다. 흔히 사용되는 값은 &quot;/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin&quot;입니다.
+</p>
+</dd>
+<dt><a id="index-PS1"></a><span><code class="code">PS1</code><a class="copiable-link" href="#index-PS1"> &para;</a></span></dt>
+<dd><p>기본 프롬프트 문자열입니다. 기본값은 &lsquo;<samp class="samp">\s-\v\$ </samp>&rsquo;입니다. <code class="env">PS1</code>이 표시되기 전 확장되는 이스케이프 시퀀스들의 전체 목록은 <a class="xref" href="Controlling-the-Prompt.html">프롬프트 제어하기</a>를 참조하십시오.
+</p>
+</dd>
+<dt><a id="index-PS2"></a><span><code class="code">PS2</code><a class="copiable-link" href="#index-PS2"> &para;</a></span></dt>
+<dd><p>보조 프롬프트 문자열입니다. 기본값은 &lsquo;<samp class="samp">&gt; </samp>&rsquo;입니다. <code class="env">PS2</code>는 표시되기 전 <code class="env">PS1</code>과 동일한 방식으로 확장됩니다.
+</p>
+</dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Bash-Variables.html">Bash 변수</a>, 상위: <a href="Shell-Variables.html">쉘 변수</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

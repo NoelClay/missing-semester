@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>루프 구문 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="루프 구문 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="루프 구문 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Compound-Commands.html" rel="up" title="복합 명령어">
+<link href="Conditional-Constructs.html" rel="next" title="조건부 구문">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsubsection-level-extent" id="Looping-Constructs">
+<div class="nav-panel">
+<p>
+다음: <a href="Conditional-Constructs.html" accesskey="n" rel="next">조건부 구문</a>, 상위: <a href="Compound-Commands.html" accesskey="u" rel="up">복합 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsubsection" id="Looping-Constructs-1"><span>3.2.5.1 루프 구문<a class="copiable-link" href="#Looping-Constructs-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-commands_002c-looping"></a>
+
+<p>Bash는 다음과 같은 루프 구문을 지원합니다.
+</p>
+<p>명령어 문법 설명에서 세미콜론(&lsquo;<samp class="samp">;</samp>&rsquo;)이 나타나는 곳은 어디든 하나 이상의 줄바꿈으로 대체될 수 있습니다.
+</p>
+<dl class="table">
+<dt><a class="index-entry-id" id="index-do"></a>
+<a class="index-entry-id" id="index-done"></a>
+<a id="index-until"></a><span><code class="code">until</code><a class="copiable-link" href="#index-until"> &para;</a></span></dt>
+<dd><p><code class="code">until</code> 명령어의 문법은 다음과 같습니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">until <var class="var">test-commands</var>; do <var class="var">consequent-commands</var>; done
+</pre></div>
+
+<p><var class="var">test-commands</var>의 종료 상태가 0이 아닌 동안 <var class="var">consequent-commands</var>를 실행합니다.
+반환 상태는 <var class="var">consequent-commands</var>에서 마지막으로 실행된 명령어의 종료 상태이며, 실행된 명령어가 없는 경우 0입니다.
+</p>
+</dd>
+<dt><a id="index-while"></a><span><code class="code">while</code><a class="copiable-link" href="#index-while"> &para;</a></span></dt>
+<dd><p><code class="code">while</code> 명령어의 문법은 다음과 같습니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">while <var class="var">test-commands</var>; do <var class="var">consequent-commands</var>; done
+</pre></div>
+
+<p><var class="var">test-commands</var>의 종료 상태가 0인 동안 <var class="var">consequent-commands</var>를 실행합니다.
+반환 상태는 <var class="var">consequent-commands</var>에서 마지막으로 실행된 명령어의 종료 상태이며, 실행된 명령어가 없는 경우 0입니다.
+</p>
+</dd>
+<dt><a id="index-for"></a><span><code class="code">for</code><a class="copiable-link" href="#index-for"> &para;</a></span></dt>
+<dd><p><code class="code">for</code> 명령어의 문법은 다음과 같습니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">for <var class="var">name</var> [ [in <var class="var">words</var> ...] ; ] do <var class="var">commands</var>; done
+</pre></div>
+
+<p><var class="var">words</var>를 확장(<a class="pxref" href="Shell-Expansions.html">쉘 확장</a> 참조)한 후, 그 결과 목록의 각 단어에 대해 <var class="var">name</var>에 현재 단어를 바인딩하여 <var class="var">commands</var>를 한 번씩 실행합니다.
+&lsquo;<samp class="samp">in <var class="var">words</var></samp>&rsquo;가 없으면, 마치 &lsquo;<samp class="samp">in &quot;$@&quot;</samp>&rsquo;가 지정된 것처럼(<a class="pxref" href="Special-Parameters.html">특수 파라미터</a> 참조) 설정된 각 위치 파라미터에 대해 <var class="var">commands</var>를 한 번씩 실행합니다.
+</p>
+<p>반환 상태는 마지막으로 실행된 명령어의 종료 상태입니다.
+<var class="var">words</var>의 확장 결과에 항목이 없으면 명령어가 실행되지 않으며, 반환 상태는 0입니다.
+</p>
+<p><code class="code">for</code> 명령어에는 C 언어와 유사한 또 다른 형식이 있습니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">for (( <var class="var">expr1</var> ; <var class="var">expr2</var> ; <var class="var">expr3</var> )) [;] do <var class="var">commands</var> ; done
+</pre></div>
+
+<p>먼저, 아래에 설명된 규칙(<a class="pxref" href="Shell-Arithmetic.html">쉘 산술 연산</a> 참조)에 따라 산술식 <var class="var">expr1</var>을 평가합니다.
+그런 다음, 산술식 <var class="var">expr2</var>가 0이 될 때까지 반복해서 평가합니다.
+<var class="var">expr2</var>가 0이 아닌 값으로 평가될 때마다 <var class="var">commands</var>를 실행하고 산술식 <var class="var">expr3</var>을 평가합니다.
+어떤 식이든 생략되면 1로 평가되는 것처럼 동작합니다.
+반환 값은 실행된 <var class="var">commands</var> 중 마지막 명령어의 종료 상태이며, 식 중 하나라도 유효하지 않으면 0이 아닌 값이 반환됩니다.
+</p></dd>
+</dl>
+
+<p>루프 실행을 제어하려면 <code class="code">break</code>와 <code class="code">continue</code> 빌트인 명령어(<a class="pxref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a> 참조)를 사용하십시오.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Conditional-Constructs.html">조건부 구문</a>, 상위: <a href="Compound-Commands.html">복합 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

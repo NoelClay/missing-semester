@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>쉘 산술 연산 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="쉘 산술 연산 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="쉘 산술 연산 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Bash-Features.html" rel="up" title="Bash 기능">
+<link href="Aliases.html" rel="next" title="별칭(Alias)">
+<link href="Bash-Conditional-Expressions.html" rel="prev" title="Bash 조건식">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Shell-Arithmetic">
+<div class="nav-panel">
+<p>
+다음: <a href="Aliases.html" accesskey="n" rel="next">별칭(Alias)</a>, 이전: <a href="Bash-Conditional-Expressions.html" accesskey="p" rel="prev">Bash 조건식</a>, 상위: <a href="Bash-Features.html" accesskey="u" rel="up">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Shell-Arithmetic-1"><span>6.5 쉘 산술 연산<a class="copiable-link" href="#Shell-Arithmetic-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-arithmetic_002c-shell"></a>
+<a class="index-entry-id" id="index-shell-arithmetic"></a>
+<a class="index-entry-id" id="index-expressions_002c-arithmetic"></a>
+<a class="index-entry-id" id="index-evaluation_002c-arithmetic"></a>
+<a class="index-entry-id" id="index-arithmetic-evaluation"></a>
+
+<p>쉘은 산술식의 평가를 허용합니다. 이는 쉘 확장 과정 중 하나로 수행되거나, <code class="code">((</code> 복합 명령어, <code class="code">let</code> 및 <code class="code">declare</code> 빌트인, 산술 <code class="code">for</code> 명령어, <code class="code">[[</code> 조건부 명령어, 또는 <code class="code">declare</code> 빌트인의 <samp class="option">-i</samp> 옵션을 통해 수행됩니다.
+</p>
+<p>평가는 사용 가능한 가장 큰 고정 폭 정수(fixed-width integers)를 사용하여 이루어지며, 오버플로우(overflow)에 대한 검사는 수행하지 않지만, 0으로 나누는 작업은 포착되어 에러로 표시됩니다.
+연산자와 그 우선순위, 결합성 및 값은 C 언어와 동일합니다.
+다음 연산자 목록은 동일한 우선순위를 가진 연산자들끼리 묶여 있으며, 우선순위가 높은 순서대로 나열되었습니다.
+</p>
+<dl class="table">
+<dd><a class="index-entry-id" id="index-arithmetic-operators"></a>
+<a class="index-entry-id" id="index-unary-arithmetic-operators"></a>
+<a class="index-entry-id" id="index-binary-arithmetic-operators"></a>
+<a class="index-entry-id" id="index-conditional-arithmetic-operator"></a>
+<a class="index-entry-id" id="index-bitwise-arithmetic-operators"></a>
+
+</dd>
+<dt><code class="code"><var class="var">id</var>++ <var class="var">id</var>--</code></dt>
+<dd><p>변수 후위-증가 및 후위-감소
+</p>
+</dd>
+<dt><code class="code">++<var class="var">id</var> --<var class="var">id</var></code></dt>
+<dd><p>변수 전위-증가 및 전위-감소
+</p>
+</dd>
+<dt><code class="code">- +</code></dt>
+<dd><p>단항 마이너스 및 플러스
+</p>
+</dd>
+<dt><code class="code">! ~</code></dt>
+<dd><p>논리 및 비트 부정(negation)
+</p>
+</dd>
+<dt><code class="code">**</code></dt>
+<dd><p>거듭제곱 (exponentiation)
+</p>
+</dd>
+<dt><code class="code">* / %</code></dt>
+<dd><p>곱셈, 나눗셈, 나머지
+</p>
+</dd>
+<dt><code class="code">+ -</code></dt>
+<dd><p>덧셈, 뺄셈
+</p>
+</dd>
+<dt><code class="code">&lt;&lt; &gt;&gt;</code></dt>
+<dd><p>좌측 및 우측 비트 시프트(shift)
+</p>
+</dd>
+<dt><code class="code">&lt;= &gt;= &lt; &gt;</code></dt>
+<dd><p>비교
+</p>
+</dd>
+<dt><code class="code">== !=</code></dt>
+<dd><p>같음 및 같지 않음
+</p>
+</dd>
+<dt><code class="code">&amp;</code></dt>
+<dd><p>비트 AND
+</p>
+</dd>
+<dt><code class="code">^</code></dt>
+<dd><p>비트 배타적 OR (XOR)
+</p>
+</dd>
+<dt><code class="code">|</code></dt>
+<dd><p>비트 OR
+</p>
+</dd>
+<dt><code class="code">&amp;&amp;</code></dt>
+<dd><p>논리 AND
+</p>
+</dd>
+<dt><code class="code">||</code></dt>
+<dd><p>논리 OR
+</p>
+</dd>
+<dt><code class="code">expr ? if-true-expr : if-false-expr</code></dt>
+<dd><p>조건 연산자 (삼항 연산자)
+</p>
+</dd>
+<dt><code class="code">= *= /= %= += -= &lt;&lt;= &gt;&gt;= &amp;= ^= |=</code></dt>
+<dd><p>할당
+</p>
+</dd>
+<dt><code class="code">expr1 , expr2</code></dt>
+<dd><p>콤마
+</p></dd>
+</dl>
+
+<p>쉘 변수는 피연산자로 사용될 수 있습니다; 파라미터 확장은 식이 평가되기 전에 수행됩니다.
+식 내부에서 쉘 변수는 파라미터 확장 문법을 사용하지 않고 이름으로만 참조될 수도 있습니다.
+즉, 산술식 내에서 <var class="var">x</var>(쉘 변수 이름)를 사용하면, 쉘은 그 값을 산술식으로 평가하고 그 결과를 사용합니다.
+값이 null이거나 해제(unset)된 쉘 변수를 식 내부에서 이름으로 참조하면 0으로 평가됩니다.
+</p>
+<p>변수가 참조될 때, 또는 &lsquo;<samp class="samp">declare -i</samp>&rsquo;를 사용하여 <code class="code">integer</code> 속성이 부여된 변수에 값이 할당될 때 그 값은 산술식으로 평가됩니다.
+null 값은 0으로 평가됩니다.
+산술식에서 사용되기 위해 쉘 변수의 <code class="code">integer</code> 속성이 반드시 켜져 있어야 할 필요는 없습니다.
+</p>
+<p>정수 상수는 접미사나 문자 상수가 없는 C 언어 정의를 따릅니다.
+앞에 0이 붙은 상수는 8진수로 해석됩니다.
+앞에 &lsquo;<samp class="samp">0x</samp>&rsquo; 또는 &lsquo;<samp class="samp">0X</samp>&rsquo;가 붙으면 16진수를 나타냅니다. 그 외의 경우,
+숫자는 [<var class="var">base</var><code class="code">#</code>]<var class="var">n</var> 형식을 취하며, 여기서 선택적인 <var class="var">base</var>는 2에서 64 사이의 10진수로 산술 진법을 나타내고, <var class="var">n</var>은 해당 진법의 숫자입니다.
+만약 <var class="var">base</var><code class="code">#</code>이 생략되면 10진수가 사용됩니다.
+<var class="var">n</var>을 지정할 때 숫자가 아닌 문자가 필요한 경우, 9보다 큰 숫자는 소문자 알파벳, 대문자 알파벳, &lsquo;<samp class="samp">@</samp>&rsquo;, 그리고 &lsquo;<samp class="samp">_</samp>&rsquo; 순서대로 대응됩니다.
+만약 진법(<var class="var">base</var>)이 36 이하인 경우, 10에서 35 사이의 숫자를 나타내기 위해 소문자와 대문자를 구분 없이 사용할 수 있습니다.
+</p>
+<p>연산자는 우선순위에 따라 평가됩니다.
+소괄호로 감싸진 서브 표현식이 먼저 평가되며, 위의 우선순위 규칙을 무시하고 강제할 수 있습니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Aliases.html">별칭(Alias)</a>, 이전: <a href="Bash-Conditional-Expressions.html">Bash 조건식</a>, 상위: <a href="Bash-Features.html">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

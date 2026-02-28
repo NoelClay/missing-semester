@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>중괄호 확장 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="중괄호 확장 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="중괄호 확장 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Shell-Expansions.html" rel="up" title="쉘 확장">
+<link href="Tilde-Expansion.html" rel="next" title="물결표 확장">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Brace-Expansion">
+<div class="nav-panel">
+<p>
+다음: <a href="Tilde-Expansion.html" accesskey="n" rel="next">물결표 확장</a>, 상위: <a href="Shell-Expansions.html" accesskey="u" rel="up">쉘 확장</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Brace-Expansion-1"><span>3.5.1 중괄호 확장<a class="copiable-link" href="#Brace-Expansion-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-brace-expansion"></a>
+<a class="index-entry-id" id="index-expansion_002c-brace"></a>
+
+<p>중괄호 확장(Brace expansion)은 공통된 접두사와 접미사를 공유하는 임의의 문자열들을 생성하는 메커니즘입니다. 접두사나 접미사 중 하나는 비어 있을 수도 있습니다.
+이 메커니즘은 <em class="dfn">파일 이름 확장</em>(<a class="pxref" href="Filename-Expansion.html">파일 이름 확장</a> 참조)과 유사하지만, 생성된 파일 이름이 실제로 존재할 필요는 없다는 점이 다릅니다.
+중괄호 확장을 위한 패턴은 선택 사항인 <var class="var">서문(preamble)</var>, 그 뒤에 오는 쉼표로 구분된 일련의 문자열들 또는 한 쌍의 중괄호 사이의 시퀀스 표현식, 그리고 마지막으로 선택 사항인 <var class="var">후문(postscript)</var>으로 구성됩니다.
+서문은 중괄호 안에 포함된 각 문자열의 앞에 붙고, 후문은 결과로 나온 각 문자열의 뒤에 덧붙여지며, 왼쪽에서 오른쪽 방향으로 확장됩니다.
+</p>
+<p>중괄호 확장은 중첩될 수 있습니다.
+각 확장된 문자열의 결과는 정렬되지 않으며, 중괄호 확장은 왼쪽에서 오른쪽 방향의 순서를 보존합니다.
+예를 들어:
+</p><div class="example">
+<pre class="example-preformatted">bash$ echo a{d,c,b}e
+ade ace abe
+</pre></div>
+
+<p>시퀀스 표현식은 <code class="code"><var class="var">x</var>..<var class="var">y</var>[..<var class="var">incr</var>]</code> 형식을 취하며, 여기서 <var class="var">x</var>와 <var class="var">y</var>는 정수이거나 문자이고, 선택 사항인 <var class="var">incr</var>(증가분)은 정수입니다.
+정수가 제공되면 표현식은 <var class="var">x</var>와 <var class="var">y</var> 사이의 각 숫자(양 끝값 포함)로 확장됩니다.
+만약 <var class="var">x</var>나 <var class="var">y</var>가 0으로 시작하면, 생성된 각 항목은 동일한 자리수를 가지며 필요한 경우 0으로 채워집니다(zero-padding).
+문자가 제공되면 표현식은 C 로케일을 사용하여 <var class="var">x</var>와 <var class="var">y</var> 사이의 각 문자(사전순, 양 끝값 포함)로 확장됩니다.
+<var class="var">x</var>와 <var class="var">y</var>는 반드시 동일한 타입(둘 다 정수이거나 둘 다 문자)이어야 함에 유의하십시오.
+증가분이 제공되면 각 항목 사이의 차이값으로 사용됩니다.
+기본 증가분은 상황에 따라 1 또는 -1입니다.
+</p>
+<p>중괄호 확장은 다른 어떤 확장보다 먼저 수행되며, 다른 확장에 특별한 의미를 갖는 문자들은 결과물에서 그대로 보존됩니다.
+이는 엄격하게 텍스트적으로만 처리됩니다.
+Bash는 확장의 컨텍스트나 중괄호 사이의 텍스트에 대해 그 어떤 구문론적 해석도 적용하지 않습니다.
+</p>
+<p>올바른 형식의 중괄호 확장은 인용되지 않은 여는 중괄호와 닫는 중괄호, 그리고 최소한 하나의 인용되지 않은 쉼표 또는 유효한 시퀀스 표현식을 포함해야 합니다.
+잘못 형성된 중괄호 확장은 수정되지 않고 그대로 남습니다.
+</p>
+<p>&lsquo;<samp class="samp">{</samp>&rsquo; 또는 &lsquo;<samp class="samp">,</samp>&rsquo; 문자는 중괄호 표현식의 일부로 간주되지 않도록 백슬래시로 인용할 수 있습니다.
+파라미터 확장과의 충돌을 피하기 위해, 문자열 &lsquo;<samp class="samp">${</samp>&rsquo;은 중괄호 확장의 대상으로 간주되지 않으며, 닫는 &lsquo;<samp class="samp">}</samp>&rsquo;가 나타날 때까지 중괄호 확장을 억제합니다.
+</p>
+<p>이 구조는 생성될 문자열들의 공통 접두사가 위 예시보다 길 때 보통 축약형으로 사용됩니다:
+</p><div class="example">
+<pre class="example-preformatted">mkdir /usr/local/src/bash/{old,new,dist,bugs}
+</pre></div>
+<p>또는
+</p><div class="example">
+<pre class="example-preformatted">chown root /usr/{ucb/{ex,edit},lib/{ex?.?*,how_ex}}
+</pre></div>
+
+<p>중괄호 확장은 과거 버전의 <code class="command">sh</code>와 약간의 호환성 문제를 일으킵니다.
+<code class="command">sh</code>는 여는 중괄호나 닫는 중괄호가 단어의 일부로 나타날 때 특별하게 취급하지 않고 출력에 그대로 유지합니다.
+반면 Bash는 중괄호 확장의 결과로 단어에서 중괄호를 제거합니다.
+예를 들어, <code class="command">sh</code>에 &lsquo;<samp class="samp">file{1,2}</samp>&rsquo;라고 입력하면 출력에도 똑같이 나타납니다.
+하지만 Bash는 중괄호 확장 후에 해당 단어를 &lsquo;<samp class="samp">file1 file2</samp>&rsquo;로 출력합니다.
+엄격한 <code class="command">sh</code> 호환성을 위해서는 <samp class="option">+B</samp> 옵션과 함께 Bash를 시작하거나 <code class="code">set</code> 명령어의 <samp class="option">+B</samp> 옵션(<a class="pxref" href="Shell-Builtin-Commands.html">쉘 빌트인 명령어</a> 참조)으로 중괄호 확장을 비활성화하십시오.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Tilde-Expansion.html">물결표 확장</a>, 상위: <a href="Shell-Expansions.html">쉘 확장</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

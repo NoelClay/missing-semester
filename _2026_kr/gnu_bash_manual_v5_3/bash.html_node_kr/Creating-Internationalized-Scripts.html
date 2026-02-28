@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>국제화된 스크립트 만들기 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="국제화된 스크립트 만들기 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="국제화된 스크립트 만들기 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<a class="node-id" id="Creating-Internationalized-Scripts"></a><div class="nav-panel">
+<p>
+[<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="node"><span>국제화된 스크립트 만들기<a class="copiable-link" href="#Creating-Internationalized-Scripts"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-internationalized-scripts"></a>
+<a class="index-entry-id" id="index-string-translations"></a>
+<p>스크립트 내에서 번역하고자 하는 문자열들을 <code class="code">$&quot;&hellip;&quot;</code> 형식을 사용하여 표시했다면, 다음 명령어를 사용하여 gettext &quot;템플릿(template)&quot; 파일을 생성합니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">bash --dump-po-strings <var class="var">scriptname</var> &gt; <var class="var">domain</var>.pot
+</pre></div>
+
+<p><var class="var">domain</var>은 귀하의 <em class="dfn">메시지 도메인(message domain)</em>입니다. 이는 패키지나 스크립트 이름처럼 gettext가 필요로 하는 파일들을 식별하기 위해 사용되는 임의의 문자열입니다. 이 이름은 번역본이 설치될 시스템의 모든 메시지 도메인들 사이에서 유일해야 하며, 그래야 gettext가 어떤 번역이 귀하의 스크립트에 대응하는지 알 수 있습니다. 귀하는 이 템플릿 파일을 사용하여 각 대상 언어에 대한 번역본을 만들게 됩니다. 템플릿 파일은 관례적으로 &lsquo;<samp class="samp">.pot</samp>&rsquo; 확장자를 가집니다.
+</p>
+<p>지원하고자 하는 각 대상 언어에 대해 이 템플릿 파일을 별도의 파일(확장자 &lsquo;<samp class="samp">.po</samp>&rsquo;를 사용하는 &quot;PO&quot; 파일)로 복사합니다. PO 파일은 다양한 명명 규칙을 사용하지만, 템플릿 파일을 특정 언어로 번역하는 작업을 시작할 때는 먼저 템플릿 파일을 대상 언어 이름 뒤에 &lsquo;<samp class="samp">.po</samp>&rsquo; 확장자를 붙인 이름의 파일로 복사하십시오. 예를 들어, 스페인어 번역본은 &lsquo;<samp class="samp">es.po</samp>&rsquo;라는 이름의 파일에 들어갈 것이며, &quot;example&quot;이라는 메시지 도메인을 사용하여 작업을 시작하려면 다음과 같이 실행합니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">cp example.pot es.po
+</pre></div>
+
+<p>궁극적으로 PO 파일들은 종종 <var class="var">domain</var>.po로 명명되어 특정 언어를 위한 여러 번역 파일들을 포함하는 디렉토리들에 설치됩니다.
+</p>
+<p>어떤 명명 규칙을 선택하든, PO 파일 내의 문자열들을 적절한 언어로 번역해야 합니다. 이 작업은 수동으로 이루어져야 합니다.
+</p>
+<p>번역과 PO 파일이 완성되면, gettext 도구를 사용하여 &quot;MO&quot; 파일이라고 불리는 결과물을 생성합니다. MO 파일은 gettext 도구가 번역을 효율적으로 찾아보기 위해 사용하는 PO 파일의 컴파일된 버전입니다. MO 파일은 &quot;메시지 카탈로그(message catalog)&quot; 파일이라고도 불립니다. 이 작업을 수행하기 위해 <code class="command">msgfmt</code> 프로그램을 사용합니다. 예를 들어, 스페인어 번역 파일이 있다면 다음과 같이 실행할 수 있습니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">msgfmt -o es.mo es.po
+</pre></div>
+
+<p>이 명령어는 대응하는 MO 파일을 생성합니다.
+</p>
+<p>MO 파일들이 준비되면, 이를 어디에 설치할지 결정하고 <code class="code">TEXTDOMAINDIR</code> 쉘 변수를 사용하여 gettext 도구에 그 위치를 알려줍니다. MO 파일들을 설치할 때 PO 파일에서 사용했던 것과 동일한 메시지 도메인 이름을 사용하여 파일 이름을 지었는지 확인하십시오.
+</p>
+<a class="index-entry-id" id="index-LANG"></a>
+<a class="index-entry-id" id="index-LC_005fMESSAGES"></a>
+<a class="index-entry-id" id="index-TEXTDOMAIN"></a>
+<a class="index-entry-id" id="index-TEXTDOMAINDIR"></a>
+<p>사용자들은 원하는 언어를 선택하기 위해 <code class="env">LANG</code> 또는 <code class="env">LC_MESSAGES</code> 쉘 변수를 사용할 것입니다.
+</p>
+<p>귀하는 <code class="env">TEXTDOMAIN</code> 변수를 스크립트의 메시지 도메인으로 설정해야 합니다. 위에서와 같이, 번역 파일의 이름을 지을 때 메시지 도메인을 사용합니다.
+</p>
+<p>귀하 또는 귀하의 사용자들은 <code class="env">TEXTDOMAINDIR</code> 변수를 메시지 카탈로그 파일들이 저장된 디렉토리 이름으로 설정합니다. 만약 메시지 파일들을 시스템의 표준 메시지 카탈로그 디렉토리에 설치했다면 이 변수에 대해 걱정할 필요가 없습니다.
+</p>
+<p>메시지 카탈로그 파일들이 저장되는 디렉토리는 시스템마다 다릅니다. 일부 시스템은 <code class="env">LC_MESSAGES</code> 쉘 변수에 의해 선택된 메시지 카탈로그를 사용합니다. 다른 시스템들은 <code class="env">TEXTDOMAIN</code> 쉘 변수의 값으로부터 메시지 카탈로그의 이름을 생성하며, 여기에 &lsquo;<samp class="samp">.mo</samp>&rsquo; 확장자를 덧붙이기도 합니다. 만약 <code class="env">TEXTDOMAIN</code> 변수를 사용한다면, 위와 같이 <code class="env">TEXTDOMAINDIR</code> 변수를 메시지 카탈로그 파일의 위치로 설정해야 할 수도 있습니다. 두 변수를 다음과 같은 방식으로 함께 사용하는 것이 일반적입니다:
+<code class="env">$TEXTDOMAINDIR</code>/<code class="env">$LC_MESSAGES</code>/LC_MESSAGES/<code class="env">$TEXTDOMAIN</code>.mo.
+</p>
+<p>만약 이 마지막 규칙을 사용하고, 스페인어(es)와 에스페란토(eo) 번역이 담긴 메시지 카탈로그 파일들을 커스텀 번역 파일을 위해 사용하는 로컬 디렉토리에 저장하고 싶다면, 다음과 같이 실행할 수 있습니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">TEXTDOMAIN=example
+TEXTDOMAINDIR=/usr/local/share/locale
+
+cp es.mo ${TEXTDOMAINDIR}/es/LC_MESSAGES/${TEXTDOMAIN}.mo
+cp eo.mo ${TEXTDOMAINDIR}/eo/LC_MESSAGES/${TEXTDOMAIN}.mo
+</pre></div>
+
+<p>이 모든 작업이 완료되고 컴파일된 번역을 포함하는 메시지 카탈로그 파일들이 올바른 위치에 설치되면, 사용자들은 스크립트를 실행하기 전에 <code class="env">LANG</code> 또는 <code class="env">LC_MESSAGES</code> 환경 변수를 설정함으로써 지원되는 모든 언어로 번역된 문자열들을 볼 수 있게 됩니다.
+</p>
+<hr>
+<div class="nav-panel">
+<p>
+[<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

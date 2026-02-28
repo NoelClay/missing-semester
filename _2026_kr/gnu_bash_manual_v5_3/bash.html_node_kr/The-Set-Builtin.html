@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Set 빌트인 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Set 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Set 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Modifying-Shell-Behavior.html" rel="up" title="쉘 동작 수정하기">
+<link href="The-Shopt-Builtin.html" rel="next" title="Shopt 빌트인">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="The-Set-Builtin">
+<div class="nav-panel">
+<p>
+다음: <a href="The-Shopt-Builtin.html" accesskey="n" rel="next">Shopt 빌트인</a>, 상위: <a href="Modifying-Shell-Behavior.html" accesskey="u" rel="up">쉘 동작 수정하기</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="The-Set-Builtin-1"><span>4.3.1 Set 빌트인<a class="copiable-link" href="#The-Set-Builtin-1"> &para;</a></span></h4>
+
+<p>이 빌트인은 매우 복잡하여 별도의 섹션을 할애할 가치가 있습니다. <code class="code">set</code>을 사용하면 쉘 옵션의 값을 변경하고 위치 파라미터를 설정하거나, 쉘 변수의 이름과 값을 표시할 수 있습니다.
+</p>
+<dl class="table">
+<dt><a id="index-set"></a><span><code class="code">set</code><a class="copiable-link" href="#index-set"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">set [-abefhkmnptuvxBCEHPT] [-o <var class="var">option-name</var>] [--] [-] [<var class="var">argument</var> ...]
+set [+abefhkmnptuvxBCEHPT] [+o <var class="var">option-name</var>] [--] [-] [<var class="var">argument</var> ...]
+set -o
+set +o
+</pre></div>
+
+<p>옵션이나 인자가 제공되지 않으면, <code class="code">set</code>은 현재 로케일에 따라 정렬된 모든 쉘 변수와 함수의 이름과 값을 표시합니다. 출력 형식은 현재 설정된 변수들을 설정하거나 재설정하기 위해 입력으로 재사용할 수 있는 형식입니다.
+읽기 전용 변수는 재설정할 수 없습니다.
+<small class="sc">POSIX</small> 모드에서는 오직 쉘 변수만 나열됩니다.
+</p>
+<p>옵션이 제공되면 쉘 속성(attributes)을 설정하거나 해제합니다.
+옵션 처리 후 남은 인자들은 위치 파라미터들을 대체합니다.
+</p>
+<p>옵션이 지정되면 다음과 같은 의미를 갖습니다:
+</p>
+<dl class="table">
+<dt><code class="code">-a</code></dt>
+<dd><p>생성되거나 수정되는 각 변수나 함수에 내보내기(export) 속성을 부여하여 이후 명령어들의 환경으로 내보내지도록 표시합니다.
+</p>
+</dd>
+<dt><code class="code">-b</code></dt>
+<dd><p>종료된 백그라운드 작업의 상태를 다음 기본 프롬프트를 출력하기 전까지 기다리지 않고 즉시 보고하도록 합니다. 특정 상황에서는 포그라운드 명령어가 종료될 때 보고하기도 합니다. 이 옵션은 작업 제어가 활성화된 경우에만 유효합니다.
+</p>
+</dd>
+<dt><code class="code">-e</code></dt>
+<dd><p>파이프라인(<a class="pxref" href="Pipelines.html">파이프라인</a> 참조, 단일 단순 명령어로 구성될 수 있음), 목록(<a class="pxref" href="Lists.html">명령어 목록</a> 참조), 또는 복합 명령어(<a class="pxref" href="Compound-Commands.html">복합 명령어</a> 참조)가 0이 아닌 상태를 반환하면 즉시 종료합니다.
+실패한 명령어가 <code class="code">while</code> 또는 <code class="code">until</code> 예약어 바로 뒤에 오는 명령어 목록의 일부이거나, <code class="code">if</code> 문 내의 테스트 부분인 경우, 마지막 명령어를 제외한 <code class="code">&amp;&amp;</code> 또는 <code class="code">||</code> 목록에서 실행된 명령어의 일부인 경우, 파이프라인의 마지막 요소가 아닌 경우(<code class="code">pipefail</code> 쉘 옵션 상태에 따름), 또는 명령어의 반환 상태가 <code class="code">!</code>를 통해 반전되는 경우에는 쉘이 종료되지 않습니다.
+서브쉘이 아닌 복합 명령어가 <samp class="option">-e</samp>가 무시되는 동안 명령어가 실패하여 0이 아닌 상태를 반환한 경우에도 쉘은 종료되지 않습니다.
+<code class="code">ERR</code> 트랩이 설정되어 있다면 쉘이 종료되기 전에 실행됩니다.
+</p>
+<p>이 옵션은 쉘 환경과 각 서브쉘 환경에 개별적으로 적용되며(<a class="pxref" href="Command-Execution-Environment.html">명령어 실행 환경</a> 참조), 서브쉘 내의 모든 명령어를 실행하기 전에 서브쉘이 종료되게 할 수 있습니다.
+</p>
+<p>복합 명령어 또는 쉘 함수가 <samp class="option">-e</samp>가 무시되는 컨텍스트에서 실행되는 경우, <samp class="option">-e</samp>가 설정되어 있고 명령어가 실패를 반환하더라도 해당 복합 명령어 또는 함수 본체 내에서 실행되는 그 어떤 명령어도 <samp class="option">-e</samp> 설정의 영향을 받지 않습니다.
+만약 <samp class="option">-e</samp>가 무시되는 컨텍스트에서 복합 명령어 또는 쉘 함수가 <samp class="option">-e</samp>를 설정한다면, 해당 설정은 복합 명령어 또는 함수 호출을 포함하는 명령어가 완료될 때까지 효력을 발휘하지 않습니다.
+</p>
+</dd>
+<dt><code class="code">-f</code></dt>
+<dd><p>파일명 확장(globbing)을 비활성화합니다.
+</p>
+</dd>
+<dt><code class="code">-h</code></dt>
+<dd><p>실행을 위해 명령어를 찾을 때 그 위치를 기억(hash)해 둡니다. 이 옵션은 기본적으로 활성화되어 있습니다.
+</p>
+</dd>
+<dt><code class="code">-k</code></dt>
+<dd><p>할당문 형식의 모든 인자들을 명령어 이름 앞에 오는 것뿐만 아니라 명령어의 환경에 배치합니다.
+</p>
+</dd>
+<dt><code class="code">-m</code></dt>
+<dd><p>작업 제어를 활성화합니다(<a class="pxref" href="Job-Control.html">작업 제어</a> 참조). 모든 프로세스는 별도의 프로세스 그룹에서 실행됩니다. 백그라운드 작업이 완료되면 쉘은 그 종료 상태를 포함한 한 줄을 출력합니다.
+</p>
+</dd>
+<dt><code class="code">-n</code></dt>
+<dd><p>명령어를 읽기만 하고 실행하지는 않습니다. 스크립트의 문법 오류를 확인하는 데 사용될 수 있습니다. 대화형 쉘에서는 이 옵션이 무시됩니다.
+</p>
+</dd>
+<dt><code class="code">-o <var class="var">option-name</var></code></dt>
+<dd>
+<p><var class="var">option-name</var>에 대응하는 옵션을 설정합니다.
+<samp class="option">-o</samp>가 <var class="var">option-name</var> 없이 제공되면, <code class="code">set</code>은 현재의 쉘 옵션 설정값을 출력합니다.
+<samp class="option">+o</samp>가 <var class="var">option-name</var> 없이 제공되면, <code class="code">set</code>은 현재의 옵션 설정을 재현할 수 있는 일련의 <code class="code">set</code> 명령어들을 표준 출력으로 출력합니다.
+유효한 옵션 이름들은 다음과 같습니다:
+</p>
+<dl class="table">
+<dt><code class="code">allexport</code></dt>
+<dd><p><code class="code">-a</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">braceexpand</code></dt>
+<dd><p><code class="code">-B</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">emacs</code></dt>
+<dd><p>emacs 스타일의 명령줄 편집 인터페이스를 사용합니다(<a class="pxref" href="Command-Line-Editing.html">명령줄 편집</a> 참조). 이는 <code class="code">read -e</code>에서 사용되는 편집 인터페이스에도 영향을 줍니다.
+</p>
+</dd>
+<dt><code class="code">errexit</code></dt>
+<dd><p><code class="code">-e</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">errtrace</code></dt>
+<dd><p><code class="code">-E</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">functrace</code></dt>
+<dd><p><code class="code">-T</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">hashall</code></dt>
+<dd><p><code class="code">-h</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">histexpand</code></dt>
+<dd><p><code class="code">-H</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">history</code></dt>
+<dd><p><a class="ref" href="Bash-History-Facilities.html">Bash 히스토리 기능</a>에 설명된 대로 명령어 히스토리를 활성화합니다. 대화형 쉘에서는 기본적으로 켜져 있습니다.
+</p>
+</dd>
+<dt><code class="code">ignoreeof</code></dt>
+<dd><p>대화형 쉘이 EOF를 읽더라도 종료되지 않도록 합니다.
+</p>
+</dd>
+<dt><code class="code">keyword</code></dt>
+<dd><p><code class="code">-k</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">monitor</code></dt>
+<dd><p><code class="code">-m</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">noclobber</code></dt>
+<dd><p><code class="code">-C</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">noexec</code></dt>
+<dd><p><code class="code">-n</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">noglob</code></dt>
+<dd><p><code class="code">-f</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">nolog</code></dt>
+<dd><p>현재 무시됩니다.
+</p>
+</dd>
+<dt><code class="code">notify</code></dt>
+<dd><p><code class="code">-b</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">nounset</code></dt>
+<dd><p><code class="code">-u</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">onecmd</code></dt>
+<dd><p><code class="code">-t</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">physical</code></dt>
+<dd><p><code class="code">-P</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">pipefail</code></dt>
+<dd><p>설정된 경우, 파이프라인의 반환 값은 0이 아닌 상태로 종료된 마지막(가장 오른쪽) 명령어의 값이 되며, 파이프라인의 모든 명령어가 성공적으로 종료된 경우에만 0이 됩니다. 이 옵션은 기본적으로 비활성화되어 있습니다.
+</p>
+</dd>
+<dt><code class="code">posix</code></dt>
+<dd><p>POSIX 모드를 활성화합니다. 기본 동작이 POSIX 표준과 다른 부분에서 표준에 맞게 Bash의 동작을 변경합니다(<a class="pxref" href="Bash-POSIX-Mode.html">Bash와 POSIX</a> 참조). 이는 Bash가 해당 표준의 엄격한 슈퍼셋(superset)으로 동작하도록 하기 위함입니다.
+</p>
+</dd>
+<dt><code class="code">privileged</code></dt>
+<dd><p><code class="code">-p</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">verbose</code></dt>
+<dd><p><code class="code">-v</code>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">vi</code></dt>
+<dd><p>vi 스타일의 명령줄 편집 인터페이스를 사용합니다. 이는 <code class="code">read -e</code>에서 사용되는 편집 인터페이스에도 영향을 줍니다.
+</p>
+</dd>
+<dt><code class="code">xtrace</code></dt>
+<dd><p><code class="code">-x</code>와 동일합니다.
+</p></dd>
+</dl>
+
+</dd>
+<dt><code class="code">-p</code></dt>
+<dd><p>특권(privileged) 모드를 켭니다. 이 모드에서는 <code class="env">$BASH_ENV</code> 및 <code class="env">$ENV</code> 파일을 처리하지 않고, 쉘 함수를 환경으로부터 상속받지 않으며, 환경에 <code class="env">SHELLOPTS</code>, <code class="env">BASHOPTS</code>, <code class="env">CDPATH</code>, <code class="env">GLOBIGNORE</code> 변수가 있더라도 무시합니다. 만약 유효 사용자(그룹) ID가 실제 사용자(그룹) ID와 다른 상태로 쉘이 시작되었는데 <samp class="option">-p</samp> 옵션이 제공되지 않았다면, 이러한 조치들이 취해지고 유효 사용자 ID가 실제 사용자 ID로 설정됩니다. 시작 시 <samp class="option">-p</samp> 옵션이 제공되었다면 유효 사용자 ID는 리셋되지 않습니다. 이 옵션을 끄면 유효 사용자 및 그룹 ID가 실제 사용자 및 그룹 ID로 설정됩니다.
+</p>
+</dd>
+<dt><code class="code">-r</code></dt>
+<dd><p>제한된 쉘(restricted shell) 모드를 활성화합니다(<a class="pxref" href="The-Restricted-Shell.html">제한된 쉘</a> 참조). 이 옵션은 한번 설정되면 해제할 수 없습니다.
+</p>
+</dd>
+<dt><code class="code">-t</code></dt>
+<dd><p>명령어 하나를 읽고 실행한 뒤 종료합니다.
+</p>
+</dd>
+<dt><code class="code">-u</code></dt>
+<dd><p>파라미터 확장을 수행할 때 특수 파라미터 &lsquo;<samp class="samp">@</samp>&rsquo; 또는 &lsquo;<samp class="samp">*</samp>&rsquo;, 그리고 &lsquo;<samp class="samp">@</samp>&rsquo;나 &lsquo;<samp class="samp">*</samp>&rsquo;로 서브스크립트가 붙은 배열 변수를 제외하고, 설정되지 않은 변수나 파라미터를 에러로 취급합니다. 에러 메시지가 표준 에러로 출력되며, 비대화형 쉘은 종료됩니다.
+</p>
+</dd>
+<dt><code class="code">-v</code></dt>
+<dd><p>쉘 입력 줄을 읽어들이는 대로 표준 에러로 출력합니다.
+</p>
+</dd>
+<dt><code class="code">-x</code></dt>
+<dd><p>단순 명령어, <code class="code">for</code> 명령어, <code class="code">case</code> 명령어, <code class="code">select</code> 명령어, 그리고 산술 <code class="code">for</code> 명령어와 그 인자들 또는 연관된 단어 목록을 확장한 후 실행하기 전에 표준 에러로 추적(trace) 정보를 출력합니다. 쉘은 명령어와 확장된 인자들 앞에 <code class="env">PS4</code> 변수의 확장된 값을 출력합니다.
+</p>
+</dd>
+<dt><code class="code">-B</code></dt>
+<dd><p>쉘이 중괄호 확장을 수행하도록 합니다(<a class="pxref" href="Brace-Expansion.html">중괄호 확장</a> 참조). 이 옵션은 기본적으로 켜져 있습니다.
+</p>
+</dd>
+<dt><code class="code">-C</code></dt>
+<dd><p>&lsquo;<samp class="samp">&gt;</samp>&rsquo;, &lsquo;<samp class="samp">&gt;&amp;</samp>&rsquo;, 그리고 &lsquo;<samp class="samp">&lt;&gt;</samp>&rsquo;를 사용한 출력 리다이렉션이 기존 파일을 덮어쓰는 것을 방지합니다. 리다이렉션 연산자 &lsquo;<samp class="samp">&gt;|</samp>&rsquo;를 대신 사용하면 이 설정을 무시하고 출력 파일 생성을 강제합니다.
+</p>
+</dd>
+<dt><code class="code">-E</code></dt>
+<dd><p>설정된 경우, <code class="code">ERR</code> 트랩이 쉘 함수, 명령어 치환, 그리고 서브쉘 환경에서 실행되는 명령어들에 상속됩니다. 보통의 경우 <code class="code">ERR</code> 트랩은 상속되지 않습니다.
+</p>
+</dd>
+<dt><code class="code">-H</code></dt>
+<dd><p>&lsquo;<samp class="samp">!</samp>&rsquo; 스타일의 히스토리 치환을 활성화합니다(<a class="pxref" href="History-Interaction.html">히스토리 확장</a> 참조). 대화형 쉘에서 기본적으로 켜져 있습니다.
+</p>
+</dd>
+<dt><code class="code">-P</code></dt>
+<dd><p>설정된 경우, <code class="code">cd</code>와 같이 현재 디렉토리를 변경하는 명령어를 실행할 때 심볼릭 링크를 해석하지 않습니다. 대신 물리적인 디렉토리 구조를 사용합니다. 기본적으로 Bash는 디렉토리를 변경하는 명령어를 수행할 때 논리적인 경로 체인을 따릅니다.
+</p>
+<p>예를 들어, <samp class="file">/usr/sys</samp>가 <samp class="file">/usr/local/sys</samp>에 대한 심볼릭 링크라면:
+</p><div class="example">
+<pre class="example-preformatted">$ cd /usr/sys; echo $PWD
+/usr/sys
+$ cd ..; pwd
+/usr
+</pre></div>
+
+<p><code class="code">set -P</code>가 켜져 있다면:
+</p><div class="example">
+<pre class="example-preformatted">$ cd /usr/sys; echo $PWD
+/usr/local/sys
+$ cd ..; pwd
+/usr/local
+</pre></div>
+
+</dd>
+<dt><code class="code">-T</code></dt>
+<dd><p>설정된 경우, <code class="code">DEBUG</code> 및 <code class="code">RETURN</code> 트랩이 쉘 함수, 명령어 치환, 그리고 서브쉘 환경에서 실행되는 명령어들에 상속됩니다. 보통의 경우 <code class="code">DEBUG</code> 및 <code class="code">RETURN</code> 트랩은 상속되지 않습니다.
+</p>
+</dd>
+<dt><code class="code">--</code></dt>
+<dd><p>이 옵션 뒤에 인자가 없으면 위치 파라미터들을 해제합니다. 인자가 있다면 위치 파라미터들을 <var class="var">arguments</var>로 설정하며, 인자 중 일부가 &lsquo;<samp class="samp">-</samp>&rsquo;로 시작하더라도 그대로 설정합니다.
+</p>
+</dd>
+<dt><code class="code">-</code></dt>
+<dd><p>옵션의 끝을 알리며, 남은 모든 <var class="var">arguments</var>를 위치 파라미터에 할당합니다. <samp class="option">-x</samp> 및 <samp class="option">-v</samp> 옵션이 꺼집니다. 인자가 없으면 위치 파라미터는 변경되지 않습니다.
+</p></dd>
+</dl>
+
+<p>&lsquo;<samp class="samp">-</samp>&rsquo; 대신 &lsquo;<samp class="samp">+</samp>&rsquo;를 사용하면 해당 옵션들이 꺼집니다. 옵션들은 쉘 호출 시에도 사용될 수 있습니다. 현재 옵션 세트는 <code class="code">$-</code>에서 확인할 수 있습니다.
+</p>
+<p>남은 N개의 <var class="var">arguments</var>는 위치 파라미터이며 순서대로 <code class="code">$1</code>, <code class="code">$2</code>, &hellip; <code class="code">$N</code>에 할당됩니다. 특수 파라미터 <code class="code">#</code>은 N으로 설정됩니다.
+</p>
+<p>반환 상태는 잘못된 옵션이 제공되지 않는 한 항상 0입니다.
+</p></dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="The-Shopt-Builtin.html">Shopt 빌트인</a>, 상위: <a href="Modifying-Shell-Behavior.html">쉘 동작 수정하기</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

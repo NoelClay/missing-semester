@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Readline 초기화 파일 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Readline 초기화 파일 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Readline 초기화 파일 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Command-Line-Editing.html" rel="up" title="명령줄 편집">
+<link href="Bindable-Readline-Commands.html" rel="next" title="바인딩 가능한 Readline 명령어">
+<link href="Readline-Interaction.html" rel="prev" title="Readline 상호작용">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Readline-Init-File">
+<div class="nav-panel">
+<p>
+다음: <a href="Bindable-Readline-Commands.html" accesskey="n" rel="next">바인딩 가능한 Readline 명령어</a>, 이전: <a href="Readline-Interaction.html" accesskey="p" rel="prev">Readline 상호작용</a>, 상위: <a href="Command-Line-Editing.html" accesskey="u" rel="up">명령줄 편집</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Readline-Init-File-1"><span>8.3 Readline 초기화 파일<a class="copiable-link" href="#Readline-Init-File-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-initialization-file_002c-readline"></a>
+
+<p>Readline 라이브러리는 기본적으로 Emacs 스타일의 키 바인딩 세트를 제공하지만, 다른 키 바인딩 세트를 사용할 수도 있습니다. 사용자는 관례적으로 홈 디렉토리에 위치하는 <em class="dfn">inputrc</em> 파일에 명령어들을 넣어 Readline을 사용하는 프로그램들을 커스터마이징할 수 있습니다. 이 파일의 이름은 쉘 변수 <code class="env">INPUTRC</code>의 값으로부터 가져옵니다. 해당 변수가 설정되어 있지 않다면 기본값은 <samp class="file">~/.inputrc</samp>입니다. 해당 파일이 존재하지 않거나 읽을 수 없는 경우, Readline은 <samp class="file">/etc/inputrc</samp>를 찾습니다. <code class="code">bind</code> 빌트인 명령어 또한 Readline 키 바인딩과 변수들을 설정하는 데 사용될 수 있습니다. <a class="xref" href="Bash-Builtins.html">Bash 빌트인 명령어</a>를 참조하십시오.
+</p>
+<p>Readline 라이브러리를 사용하는 프로그램이 시작될 때, Readline은 초기화 파일을 읽고 그 안에 포함된 모든 변수와 키 바인딩을 설정합니다.
+</p>
+<p>추가적으로, <code class="code">C-x C-r</code> 명령어는 이 초기화 파일을 다시 읽어들여 파일에 가한 모든 변경 사항을 즉시 반영합니다.
+</p>
+
+<ul class="mini-toc">
+<li><a href="Readline-Init-File-Syntax.html" accesskey="1">Readline 초기화 파일 문법</a></li>
+<li><a href="Conditional-Init-Constructs.html" accesskey="2">조건부 초기화 구문</a></li>
+<li><a href="Sample-Init-File.html" accesskey="3">예시 초기화 파일</a></li>
+</ul>
+</div>
+
+
+
+</body>
+</html>

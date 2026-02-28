@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>조건부 초기화 구문 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="조건부 초기화 구문 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="조건부 초기화 구문 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Readline-Init-File.html" rel="up" title="Readline 초기화 파일">
+<link href="Sample-Init-File.html" rel="next" title="예시 초기화 파일">
+<link href="Readline-Init-File-Syntax.html" rel="prev" title="Readline 초기화 파일 문법">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Conditional-Init-Constructs">
+<div class="nav-panel">
+<p>
+다음: <a href="Sample-Init-File.html" accesskey="n" rel="next">예시 초기화 파일</a>, 이전: <a href="Readline-Init-File-Syntax.html" accesskey="p" rel="prev">Readline 초기화 파일 문법</a>, 상위: <a href="Readline-Init-File.html" accesskey="u" rel="up">Readline 초기화 파일</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Conditional-Init-Constructs-1"><span>8.3.2 조건부 초기화 구문<a class="copiable-link" href="#Conditional-Init-Constructs-1"> &para;</a></span></h4>
+
+<p>Readline은 C 전처리기(preprocessor)의 조건부 컴파일 기능과 유사한 기능을 구현하여, 테스트 결과에 따라 키 바인딩 및 변수 설정을 수행할 수 있게 해줍니다. 네 가지 파서 지시어(parser directives)를 사용할 수 있습니다.
+</p>
+<dl class="table">
+<dt><code class="code">$if</code></dt>
+<dd><p><code class="code">$if</code> 구조는 편집 모드, 사용 중인 터미널, 또는 Readline을 사용하는 애플리케이션에 따라 바인딩을 수행할 수 있게 해줍니다. 비교 연산자 뒤의 테스트 텍스트는 줄의 끝까지 이어집니다; 별도로 언급하지 않는 한 이를 분리하기 위한 특별한 문자는 필요하지 않습니다.
+</p>
+<dl class="table">
+<dt><code class="code">mode</code></dt>
+<dd><p><code class="code">$if</code> 지시어의 <code class="code">mode=</code> 형식은 Readline이 <code class="code">emacs</code> 모드인지 <code class="code">vi</code> 모드인지 테스트하는 데 사용됩니다. 이는 예를 들어 &lsquo;<samp class="samp">set keymap</samp>&rsquo; 명령어와 함께 사용되어, Readline이 <code class="code">emacs</code> 모드로 시작될 때만 <code class="code">emacs-standard</code> 및 <code class="code">emacs-ctlx</code> 키맵에 바인딩을 설정하도록 할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">term</code></dt>
+<dd><p><code class="code">term=</code> 형식은 터미널 전용 키 바인딩을 포함시키는 데 사용될 수 있습니다. 예를 들어 터미널의 기능 키(function keys)가 출력하는 키 시퀀스를 바인딩할 때 유용합니다. &lsquo;<samp class="samp">=</samp>&rsquo; 오른쪽에 오는 단어는 터미널의 전체 이름뿐만 아니라 첫 번째 &lsquo;<samp class="samp">-</samp>&rsquo; 이전의 터미널 이름 부분과도 대조됩니다. 이를 통해 예를 들어 <code class="code">xterm</code>은 <code class="code">xterm</code>과 <code class="code">xterm-256color</code> 모두에 매치될 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">version</code></dt>
+<dd><p><code class="code">version</code> 테스트는 특정 Readline 버전에 대해 비교를 수행하는 데 사용될 수 있습니다. <code class="code">version</code>은 현재 Readline 버전으로 확장됩니다. 비교 연산자 세트에는 &lsquo;<samp class="samp">=</samp>&rsquo; (및 &lsquo;<samp class="samp">==</samp>&rsquo;), &lsquo;<samp class="samp">!=</samp>&rsquo;, &lsquo;<samp class="samp">&lt;=</samp>&rsquo;, &lsquo;<samp class="samp">&gt;=</samp>&rsquo;, &lsquo;<samp class="samp">&lt;</samp>&rsquo;, 그리고 &lsquo;<samp class="samp">&gt;</samp>&rsquo;가 포함됩니다. 연산자 오른쪽에 제공되는 버전 번호는 메이저 버전 번호, 선택적인 소수점, 그리고 선택적인 마이너 버전으로 구성됩니다(예: &lsquo;<samp class="samp">7.1</samp>&rsquo;). 마이너 버전이 생략되면 &lsquo;<samp class="samp">0</samp>&rsquo;으로 간주됩니다. 연산자는 <code class="code">version</code> 문자열 및 버전 번호 인자와 공백으로 구분될 수 있습니다. 다음 예시는 사용 중인 Readline 버전이 7.0 이상인 경우 변수를 설정합니다:
+</p><div class="example">
+<pre class="example-preformatted">$if version &gt;= 7.0
+set show-mode-in-prompt on
+$endif
+</pre></div>
+
+</dd>
+<dt><code class="code">application</code></dt>
+<dd><p><var class="var">application</var> 구조는 애플리케이션 전용 설정을 포함하는 데 사용됩니다. Readline 라이브러리를 사용하는 각 프로그램은 <var class="var">애플리케이션 이름(application name)</var>을 설정하며, 특정 값을 테스트할 수 있습니다. 이는 특정 프로그램에 유용한 함수들에 키 시퀀스를 바인딩하는 데 사용될 수 있습니다. 예를 들어, 다음 명령어는 Bash에서 현재 또는 이전 단어를 따옴표로 감싸는 키 시퀀스를 추가합니다:
+</p><div class="example">
+<pre class="example-preformatted">$if Bash
+# 현재 또는 이전 단어를 따옴표로 감쌈
+&quot;\C-xq&quot;: &quot;\eb\&quot;\ef\&quot;&quot;
+$endif
+</pre></div>
+
+</dd>
+<dt><code class="code">variable</code></dt>
+<dd><p><var class="var">variable</var> 구조는 Readline 변수와 값에 대한 간단한 동등성 테스트를 제공합니다. 허용되는 비교 연산자는 &lsquo;<samp class="samp">=</samp>&rsquo;, &lsquo;<samp class="samp">==</samp>&rsquo;, 그리고 &lsquo;<samp class="samp">!=</samp>&rsquo;입니다. 변수 이름은 비교 연산자와 공백으로 구분되어야 하며, 연산자 또한 오른쪽의 값과 공백으로 구분될 수 있습니다. 문자열 및 불리언 변수를 테스트할 수 있습니다. 불리언 변수는 <var class="var">on</var> 및 <var class="var">off</var> 값과 대조하여 테스트해야 합니다. 다음 예시는 위에서 설명한 <code class="code">mode=emacs</code> 테스트와 동일합니다:
+</p><div class="example">
+<pre class="example-preformatted">$if editing-mode == emacs
+set show-mode-in-prompt on
+$endif
+</pre></div>
+</dd>
+</dl>
+
+</dd>
+<dt><code class="code">$else</code></dt>
+<dd><p><code class="code">$if</code> 지시어의 이 분기에 있는 명령어들은 테스트가 실패했을 때 실행됩니다.
+</p>
+</dd>
+<dt><code class="code">$endif</code></dt>
+<dd><p>이 명령어는 이전 예시들에서 보았듯이 <code class="code">$if</code> 명령어를 종료합니다.
+</p>
+</dd>
+<dt><code class="code">$include</code></dt>
+<dd><p>이 지시어는 단일 파일 이름을 인자로 받아 해당 파일로부터 명령어와 키 바인딩을 읽어들입니다. 예를 들어, 다음 지시어는 <samp class="file">/etc/inputrc</samp>로부터 설정을 읽어옵니다:
+</p><div class="example">
+<pre class="example-preformatted">$include /etc/inputrc
+</pre></div>
+</dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Sample-Init-File.html">예시 초기화 파일</a>, 이전: <a href="Readline-Init-File-Syntax.html">Readline 초기화 파일 문법</a>, 상위: <a href="Readline-Init-File.html">Readline 초기화 파일</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

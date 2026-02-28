@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>조건부 구문 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="조건부 구문 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="조건부 구문 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Compound-Commands.html" rel="up" title="복합 명령어">
+<link href="Command-Grouping.html" rel="next" title="명령어 그룹화">
+<link href="Looping-Constructs.html" rel="prev" title="루프 구문">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsubsection-level-extent" id="Conditional-Constructs">
+<div class="nav-panel">
+<p>
+다음: <a href="Command-Grouping.html" accesskey="n" rel="next">명령어 그룹화</a>, 이전: <a href="Looping-Constructs.html" accesskey="p" rel="prev">루프 구문</a>, 상위: <a href="Compound-Commands.html" accesskey="u" rel="up">복합 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsubsection" id="Conditional-Constructs-1"><span>3.2.5.2 조건부 구문<a class="copiable-link" href="#Conditional-Constructs-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-commands_002c-conditional"></a>
+
+<dl class="table">
+<dt><a class="index-entry-id" id="index-then"></a>
+<a class="index-entry-id" id="index-else"></a>
+<a class="index-entry-id" id="index-elif"></a>
+<a class="index-entry-id" id="index-fi"></a>
+<a id="index-if"></a><span><code class="code">if</code><a class="copiable-link" href="#index-if"> &para;</a></span></dt>
+<dd><p><code class="code">if</code> 명령어의 문법은 다음과 같습니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">if <var class="var">test-commands</var>; then
+  <var class="var">consequent-commands</var>;
+[elif <var class="var">more-test-commands</var>; then
+  <var class="var">more-consequents</var>;]
+[else <var class="var">alternate-consequents</var>;]
+fi
+</pre></div>
+
+<p><var class="var">test-commands</var> 목록이 실행되고, 그 반환 상태가 0이면 <var class="var">consequent-commands</var> 목록이 실행됩니다.
+만약 <var class="var">test-commands</var>가 0이 아닌 상태를 반환하면, 각 <code class="code">elif</code> 목록이 차례대로 실행되며, 그 종료 상태가 0이면 해당되는 <var class="var">more-consequents</var>가 실행되고 명령어가 종료됩니다.
+만약 &lsquo;<samp class="samp">else <var class="var">alternate-consequents</var></samp>&rsquo;가 존재하고, 마지막 <code class="code">if</code> 또는 <code class="code">elif</code> 절의 마지막 명령어가 0이 아닌 종료 상태를 반환하면 <var class="var">alternate-consequents</var>가 실행됩니다.
+반환 상태는 마지막으로 실행된 명령어의 종료 상태이거나, 참으로 판명된 조건이 없는 경우 0입니다.
+</p>
+</dd>
+<dt><a class="index-entry-id" id="index-in"></a>
+<a class="index-entry-id" id="index-esac"></a>
+<a id="index-case"></a><span><code class="code">case</code><a class="copiable-link" href="#index-case"> &para;</a></span></dt>
+<dd><p><code class="code">case</code> 명령어의 문법은 다음과 같습니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">case <var class="var">word</var> in
+    [ [(] <var class="var">pattern</var> [| <var class="var">pattern</var>]...) <var class="var">command-list</var> ;;]...
+esac
+</pre></div>
+
+<p><code class="code">case</code>는 <var class="var">word</var>와 매치되는 첫 번째 <var class="var">pattern</var>에 해당하는 <var class="var">command-list</var>를 선택적으로 실행하며, 첫 번째 패턴부터 마지막 패턴까지 순차적으로 진행합니다.
+매칭은 아래 <a class="ref" href="Pattern-Matching.html">패턴 매칭</a>에 설명된 규칙에 따라 수행됩니다.
+만약 <code class="code">nocasematch</code> 쉘 옵션(<a class="ref" href="The-Shopt-Builtin.html">Shopt 빌트인</a>의 <code class="code">shopt</code> 설명 참조)이 활성화되어 있으면, 알파벳 문자의 대소문자를 구분하지 않고 매칭을 수행합니다.
+&lsquo;<samp class="samp">|</samp>&rsquo;는 패턴 목록에서 여러 패턴을 구분하는 데 사용되며, &lsquo;<samp class="samp">)</samp>&rsquo; 연산자는 패턴 목록을 종료합니다.
+패턴 목록과 그에 연관된 <var class="var">command-list</var>를 하나의 <var class="var">절(clause)</var>이라고 합니다.
+</p>
+<p>각 절은 &lsquo;<samp class="samp">;;</samp>&rsquo;, &lsquo;<samp class="samp">;&amp;</samp>&rsquo;, 또는 &lsquo;<samp class="samp">;;&amp;</samp>&rsquo;로 종료되어야 합니다.
+쉘이 패턴 매칭을 시도하기 전에 <var class="var">word</var>에 대해 물결표 확장, 파라미터 확장, 명령어 치환, 프로세스 치환, 산술 확장 및 따옴표 제거(<a class="pxref" href="Shell-Parameter-Expansion.html">쉘 파라미터 확장</a> 참조)가 수행됩니다.
+각 <var class="var">pattern</var>에 대해서도 물결표 확장, 파라미터 확장, 명령어 치환, 산술 확장, 프로세스 치환 및 따옴표 제거가 수행됩니다.
+</p>
+<p><code class="code">case</code> 절은 임의의 개수만큼 존재할 수 있으며, 각 절은 &lsquo;<samp class="samp">;;</samp>&rsquo;, &lsquo;<samp class="samp">;&amp;</samp>&rsquo;, 또는 &lsquo;<samp class="samp">;;&amp;</samp>&rsquo;로 종료됩니다.
+첫 번째로 매치되는 패턴에 의해 실행될 명령어 목록이 결정됩니다.
+마지막 패턴으로 &lsquo;<samp class="samp">*</samp>&rsquo;를 사용하여 기본 케이스(default case)를 정의하는 것이 일반적인 관례입니다. 이 패턴은 항상 매치되기 때문입니다.
+</p>
+<p>다음은 스크립트에서 동물의 흥미로운 특징 하나를 설명하는 데 <code class="code">case</code>를 사용하는 예시입니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">echo -n &quot;동물 이름을 입력하세요: &quot;
+read ANIMAL
+echo -n &quot;$ANIMAL의 다리 개수는 &quot;
+case $ANIMAL in
+  horse | dog | cat) echo -n &quot;4개&quot;;;
+  man | kangaroo ) echo -n &quot;2개&quot;;;
+  *) echo -n &quot;알 수 없음&quot;;;
+esac
+echo &quot; 입니다.&quot;
+</pre></div>
+
+
+<p>&lsquo;<samp class="samp">;;</samp>&rsquo; 연산자가 사용되면, 첫 번째 패턴 매칭 후에 <code class="code">case</code> 명령어가 종료됩니다.
+&lsquo;<samp class="samp">;;</samp>&rsquo; 대신 &lsquo;<samp class="samp">;&amp;</samp>&rsquo;를 사용하면 다음 절에 연관된 <var class="var">command-list</var>(있는 경우)가 이어서 실행됩니다.
+&lsquo;<samp class="samp">;;</samp>&rsquo; 대신 &lsquo;<samp class="samp">;;&amp;</samp>&rsquo;를 사용하면 쉘은 다음 절의 패턴들을 테스트하고, 매칭에 성공하면 연관된 <var class="var">command-list</var>를 실행하며, 마치 이전 패턴 목록이 매치되지 않았던 것처럼 계속해서 case 문 실행을 이어갑니다.
+</p>
+<p>매치되는 <var class="var">pattern</var>이 없으면 반환 상태는 0입니다.
+그렇지 않은 경우, 반환 상태는 마지막으로 실행된 <var class="var">command-list</var>의 종료 상태입니다.
+</p>
+</dd>
+<dt><a id="index-select"></a><span><code class="code">select</code><a class="copiable-link" href="#index-select"> &para;</a></span></dt>
+<dd>
+<p><code class="code">select</code> 구문을 사용하면 메뉴를 쉽게 생성할 수 있습니다. <code class="code">for</code> 명령어와 거의 동일한 문법을 가집니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">select <var class="var">name</var> [in <var class="var">words</var> ...]; do <var class="var">commands</var>; done
+</pre></div>
+
+<p>먼저 <code class="code">in</code> 뒤에 오는 단어 목록을 확장하여 항목 목록을 생성하고, 확장된 단어 세트를 각 단어 앞에 숫자를 붙여 표준 에러 스트림에 출력합니다.
+만약 &lsquo;<samp class="samp">in <var class="var">words</var></samp>&rsquo;가 생략되면, 마치 &lsquo;<samp class="samp">in &quot;$@&quot;</samp>&rsquo;가 지정된 것처럼 위치 파라미터들을 출력합니다.
+그런 다음 <code class="code">select</code>는 <code class="env">PS3</code> 프롬프트를 표시하고 표준 입력에서 한 줄을 읽습니다.
+입력된 줄이 표시된 단어 중 하나에 해당하는 숫자로 구성되어 있으면, <code class="code">select</code>는 <var class="var">name</var>의 값을 해당 단어로 설정합니다.
+입력된 줄이 비어 있으면 <code class="code">select</code>는 단어들과 프롬프트를 다시 표시합니다.
+<code class="code">EOF</code>가 읽히면 <code class="code">select</code>는 종료되고 1을 반환합니다.
+그 외의 값이 읽히면 <var class="var">name</var>은 null로 설정됩니다. 읽어들인 줄은 <code class="env">REPLY</code> 변수에 저장됩니다.
+</p>
+<p>각 선택 후에 <code class="code">break</code> 명령어가 실행될 때까지 <var class="var">commands</var>가 실행되며, <code class="code">break</code>가 실행되면 <code class="code">select</code> 명령어가 종료됩니다.
+</p>
+<p>다음은 사용자가 현재 디렉토리에서 파일명을 선택하게 하고, 선택된 파일의 이름과 인덱스를 표시하는 예시입니다.
+</p>
+<div class="example">
+<pre class="example-preformatted">select fname in *;
+do
+	echo $fname \($REPLY\) 을(를) 선택하셨습니다.
+	break;
+done
+</pre></div>
+
+</dd>
+<dt><code class="code">((&hellip;))</code></dt>
+<dd><div class="example">
+<pre class="example-preformatted">(( <var class="var">expression</var> ))
+</pre></div>
+
+<p>산술식 <var class="var">expression</var>은 아래에 설명된 규칙(<a class="pxref" href="Shell-Arithmetic.html">쉘 산술 연산</a> 참조)에 따라 평가됩니다.
+<var class="var">expression</var>은 큰따옴표 내에 있는 것처럼 동일한 확장을 거치지만, <var class="var">expression</var> 내의 이스케이프되지 않은 큰따옴표 문자는 특별하게 취급되지 않고 제거됩니다.
+이로 인해 잠재적으로 빈 문자열이 결과로 나올 수 있는데, 이 명령어는 이를 0으로 평가되는 식으로 취급합니다.
+식의 값이 0이 아니면 반환 상태는 0이고, 그렇지 않으면 반환 상태는 1입니다.
+</p>
+</dd>
+<dt><a class="index-entry-id" id="index-_005d_005d"></a>
+<a id="index-_005b_005b"></a><span><code class="code">[[&hellip;]]</code><a class="copiable-link" href="#index-_005b_005b"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">[[ <var class="var">expression</var> ]]
+</pre></div>
+
+<p>조건식 <var class="var">expression</var>을 평가하고 0(참) 또는 0이 아닌 값(거짓)의 상태를 반환합니다.
+식은 아래 <a class="ref" href="Bash-Conditional-Expressions.html">Bash 조건식</a>에 설명된 기본 요소(primaries)들로 구성됩니다.
+<code class="code">[[</code>와 <code class="code">]]</code> 사이의 단어들은 단어 분할(word splitting)과 파일 이름 확장을 거치지 않습니다.
+쉘은 해당 단어들에 대해 물결표 확장, 파라미터 및 변수 확장, 산술 확장, 명령어 치환, 프로세스 치환 및 따옴표 제거를 수행합니다.
+&lsquo;<samp class="samp">-f</samp>&rsquo;와 같은 조건부 연산자들은 기본 요소로 인식되려면 인용되지 않아야 합니다.
+</p>
+<p><code class="code">[[</code>와 함께 사용될 때, &lsquo;<samp class="samp">&lt;</samp>&rsquo; 및 &lsquo;<samp class="samp">&gt;</samp>&rsquo; 연산자는 현재 로케일을 사용하여 사전순으로 정렬합니다.
+</p>
+<p>&lsquo;<samp class="samp">==</samp>&rsquo; 및 &lsquo;<samp class="samp">!=</samp>&rsquo; 연산자가 사용될 때, 연산자 오른쪽의 문자열은 패턴으로 간주되며, 마치 <code class="code">extglob</code> 쉘 옵션이 활성화된 것처럼 아래 <a class="ref" href="Pattern-Matching.html">패턴 매칭</a>에 설명된 규칙에 따라 매칭됩니다.
+&lsquo;<samp class="samp">=</samp>&rsquo; 연산자는 &lsquo;<samp class="samp">==</samp>&rsquo;와 동일합니다.
+만약 <code class="code">nocasematch</code> 쉘 옵션(<a class="ref" href="The-Shopt-Builtin.html">Shopt 빌트인</a>의 <code class="code">shopt</code> 설명 참조)이 활성화되어 있으면, 알파벳 문자의 대소문자를 구분하지 않고 매칭을 수행합니다.
+문자열이 패턴과 매치되면(&lsquo;<samp class="samp">==</samp>&rsquo;) 또는 매치되지 않으면(&lsquo;<samp class="samp">!=</samp>&rsquo;) 반환 값은 0이고, 그렇지 않으면 1입니다.
+</p>
+<p>패턴의 임의의 부분을 쉘의 인용 메커니즘을 사용하여 인용하면, 인용된 부분은 리터럴(literal)로 매치됩니다.
+즉, 인용된 부분의 모든 문자는 특별한 패턴 매칭 의미를 갖지 않고 그 자체로 매치됩니다.
+</p>
+<p>&lsquo;<samp class="samp">==</samp>&rsquo; 및 &lsquo;<samp class="samp">!=</samp>&rsquo;와 동일한 우선순위를 가진 추가적인 이항 연산자 &lsquo;<samp class="samp">=~</samp>&rsquo;를 사용할 수 있습니다.
+&lsquo;<samp class="samp">=~</samp>&rsquo;를 사용하면 연산자 오른쪽의 문자열은 <small class="sc">POSIX</small> 확장 정규 표현식 패턴으로 간주되어 그에 따라 매칭됩니다(보통 <i class="i">regex</i>(3)에 설명된 <small class="sc">POSIX</small> <code class="code">regcomp</code> 및 <code class="code">regexec</code> 인터페이스 사용).
+문자열이 패턴과 매치되면 반환 값은 0이고, 매치되지 않으면 1입니다.
+정규 표현식의 문법이 잘못된 경우 조건식은 2를 반환합니다.
+만약 <code class="code">nocasematch</code> 쉘 옵션(<a class="ref" href="The-Shopt-Builtin.html">Shopt 빌트인</a>의 <code class="code">shopt</code> 설명 참조)이 활성화되어 있으면, 대소문자를 구분하지 않고 매칭을 수행합니다.
+</p>
+<p>패턴의 임의의 부분을 인용하여 해당 부분이 정규 표현식이 아닌 리터럴로 매치되도록 강제할 수 있습니다(위 내용 참조).
+패턴이 쉘 변수에 저장되어 있는 경우, 변수 확장을 인용하면 전체 패턴이 리터럴로 매치되도록 강제합니다.
+</p>
+<p>패턴이 문자열의 어느 부분에라도 매치되면 매칭은 성공합니다.
+패턴이 전체 문자열과 매치되도록 강제하려면 정규 표현식 연산자인 &lsquo;<samp class="samp">^</samp>&rsquo;와 &lsquo;<samp class="samp">$</samp>&rsquo;를 사용하여 앵커(anchor)를 설정하십시오.
+</p>
+<p>예를 들어, 다음은 쉘 변수 <code class="code">line</code>에 저장된 줄에서, <code class="code">space</code> 문자 클래스의 문자가 0개 이상 나타나고, 그 바로 뒤에 &lsquo;<samp class="samp">a</samp>&rsquo;가 0개 또는 1개 나타난 후 &lsquo;<samp class="samp">b</samp>&rsquo;가 이어지는 문자 시퀀스가 값의 어느 곳에든 있는 경우 매치됩니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">[[ $line =~ [[:space:]]*(a)?b ]]
+</pre></div>
+
+<p>이는 <code class="code">line</code>의 값이 &lsquo;<samp class="samp">aab</samp>&rsquo;, &lsquo;<samp class="samp">  aaaaaab</samp>&rsquo;, &lsquo;<samp class="samp">xaby</samp>&rsquo;, &lsquo;<samp class="samp"> ab</samp>&rsquo;인 경우 모두 매치되며, 값의 어느 곳에든 &lsquo;<samp class="samp">b</samp>&rsquo;가 포함된 줄도 모두 매치됨을 의미합니다.
+</p>
+<p>정규 표현식 문법에서 특별한 의미를 갖는 문자(&lsquo;<samp class="samp">^$|[]()\.*+?</samp>&rsquo;)를 매치하고 싶다면, 특별한 의미를 제거하기 위해 반드시 인용되어야 합니다.
+즉, 패턴 &lsquo;<samp class="samp">xxx.txt</samp>&rsquo;에서 &lsquo;<samp class="samp">.</samp>&rsquo;은 문자열의 모든 문자와 매치되지만(일반적인 정규 표현식 의미), 패턴 &lsquo;<samp class="samp">&quot;xxx.txt&quot;</samp>&rsquo;에서는 오직 리터럴 &lsquo;<samp class="samp">.</samp>&rsquo;과만 매치될 수 있습니다.
+</p>
+<p>마찬가지로, 정규 표현식 문법에서 특별한 의미를 갖는 문자를 패턴에 포함시키고 싶다면 해당 문자가 인용되지 않았는지 확인해야 합니다.
+예를 들어 패턴을 문자열의 시작이나 끝에 고정(anchor)하고 싶다면, 그 어떤 형태의 쉘 인용을 사용해서도 &lsquo;<samp class="samp">^</samp>&rsquo; 또는 &lsquo;<samp class="samp">$</samp>&rsquo; 문자를 인용해서는 안 됩니다.
+</p>
+<p>줄의 시작 부분에서 &lsquo;<samp class="samp">initial string</samp>&rsquo;을 매치하고 싶다면 다음과 같이 작성하면 됩니다:
+</p><div class="example">
+<pre class="example-preformatted">[[ $line =~ ^&quot;initial string&quot; ]]
+</pre></div>
+<p>하지만 다음과 같이 작성하면 작동하지 않습니다:
+</p><div class="example">
+<pre class="example-preformatted">[[ $line =~ &quot;^initial string&quot; ]]
+</pre></div>
+<p>두 번째 예시에서는 &lsquo;<samp class="samp">^</samp>&rsquo;가 인용되어 일반적인 특별한 의미를 잃어버렸기 때문입니다.
+</p>
+<p>인용을 사용하지 않고 정규 표현식을 올바르게 지정하거나, 쉘의 인용 처리와 따옴표 제거를 고려하면서 정규 표현식에서 사용되는 인용을 파악하는 것은 때때로 어렵습니다.
+정규 표현식을 쉘 변수에 저장하는 것은 쉘에 특별한 의미를 갖는 문자들을 인용할 때 발생하는 문제들을 피하는 유용한 방법이 되곤 합니다.
+예를 들어, 다음은 위에서 사용된 패턴과 동일합니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">pattern='[[:space:]]*(a)?b'
+[[ $line =~ $pattern ]]
+</pre></div>
+
+<p>쉘 프로그래머는 백슬래시 사용에 특별히 주의해야 합니다. 백슬래시는 쉘과 정규 표현식 모두에서 다음 문자의 특별한 의미를 제거하는 데 사용되기 때문입니다.
+즉, 쉘의 단어 확장이 완료된 후(<a class="pxref" href="Shell-Expansions.html">쉘 확장</a> 참조), 원래 인용되지 않았던 패턴 부분에 남아있는 모든 백슬래시는 패턴 문자의 특별한 의미를 제거할 수 있습니다.
+패턴의 어떤 부분이 인용되어 있다면, 쉘은 정규 표현식 파서가 해당 인용된 부분에 나타난 나머지 백슬래시들을 리터럴로 취급하도록 최선을 다합니다.
+</p>
+<p>다음 두 세트의 명령어는 서로 동일하지 <em class="emph">않습니다</em>:
+</p>
+<div class="example">
+<pre class="example-preformatted">pattern='\.'
+
+[[ . =~ $pattern ]]
+[[ . =~ \. ]]
+
+[[ . =~ &quot;$pattern&quot; ]]
+[[ . =~ '\.' ]]
+</pre></div>
+
+<p>처음 두 매칭은 성공하지만, 뒤의 두 매칭은 실패합니다. 뒤의 두 예시에서는 백슬래시가 매치되어야 할 패턴의 일부가 되기 때문입니다.
+처음 두 예시에서 정규 표현식 파서로 전달되는 패턴은 &lsquo;<samp class="samp">\.</samp>&rsquo;입니다.
+백슬래시가 &lsquo;<samp class="samp">.</samp>&rsquo;의 특별한 의미를 제거하므로 리터럴 &lsquo;<samp class="samp">.</samp>&rsquo;과 매치됩니다.
+뒤의 두 예시에서 정규 표현식 파서로 전달되는 패턴은 백슬래시가 인용되어 있습니다(예: &lsquo;<samp class="samp">\.</samp>&rsquo;). 문자열에는 백슬래시가 포함되어 있지 않으므로 매치되지 않습니다.
+만약 첫 번째 예시들의 문자열이 &lsquo;<samp class="samp">.</samp>&rsquo;이 아닌 다른 것, 예를 들어 &lsquo;<samp class="samp">a</samp>&rsquo;였다면 패턴은 매치되지 않았을 것입니다. 패턴 내의 인용된 &lsquo;<samp class="samp">.</samp>&rsquo;은 모든 단일 문자와 매치되는 특별한 의미를 잃었기 때문입니다.
+</p>
+<p>정규 표현식의 대괄호 표현식(Bracket expressions) 또한 오류의 원인이 될 수 있습니다. 정규 표현식에서 평소에는 특별한 의미를 갖는 문자들이 대괄호 사이에서는 그 의미를 잃기 때문입니다.
+하지만 대괄호 표현식을 사용하면 특별한 패턴 문자들을 인용하지 않고도 매치할 수 있으므로, 때로는 이러한 용도로 유용하게 쓰입니다.
+</p>
+<p>다소 이상한 방식처럼 보일 수 있지만, 다음 패턴은 문자열 내의 &lsquo;<samp class="samp">.</samp>&rsquo;과 매치됩니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">[[ . =~ [.] ]]
+</pre></div>
+
+<p>쉘은 정규 표현식 함수로 패턴을 전달하기 전에 모든 단어 확장을 수행하므로, 쉘의 인용 처리가 우선권을 갖는다고 간주할 수 있습니다.
+위에서 언급했듯이, 정규 표현식 파서는 쉘 확장 후 패턴에 남아있는 인용되지 않은 백슬래시들을 자신의 규칙에 따라 해석합니다.
+이는 쉘 프로그래머가 가능한 한 이중으로 인용해야 하는 번거로움을 피하게 하려는 의도이며, 따라서 필요한 경우 특수 패턴 문자를 인용하는 데 쉘 인용만으로 충분해야 합니다.
+</p>
+<p>배열 변수 <code class="code">BASH_REMATCH</code>는 문자열의 어떤 부분이 패턴과 매치되었는지를 기록합니다.
+인덱스가 0인 <code class="code">BASH_REMATCH</code> 요소는 전체 정규 표현식과 매치된 문자열 부분을 포함합니다.
+정규 표현식 내의 괄호로 감싸진 서브 표현식(parenthesized subexpressions)에 의해 매치된 부분 문자열은 나머지 <code class="code">BASH_REMATCH</code> 인덱스에 저장됩니다.
+인덱스 <var class="var">n</var>인 <code class="code">BASH_REMATCH</code> 요소는 <var class="var">n</var>번째 괄호 서브 표현식과 매치된 문자열 부분입니다.
+</p>
+<p>Bash는 <code class="code">BASH_REMATCH</code>를 전역 범위(global scope)로 설정합니다. 이를 지역 변수로 선언하면 예상치 못한 결과가 발생할 수 있습니다.
+</p>
+<p>식들은 아래 나열된 연산자들을 사용하여 조합될 수 있으며, 우선순위가 높은 순서대로 나열되었습니다:
+</p>
+<dl class="table">
+<dt><code class="code">( <var class="var">expression</var> )</code></dt>
+<dd><p><var class="var">expression</var>의 값을 반환합니다.
+연산자의 일반적인 우선순위를 재정의하는 데 사용될 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">! <var class="var">expression</var></code></dt>
+<dd><p><var class="var">expression</var>이 거짓이면 참입니다.
+</p>
+</dd>
+<dt><code class="code"><var class="var">expression1</var> &amp;&amp; <var class="var">expression2</var></code></dt>
+<dd><p><var class="var">expression1</var>과 <var class="var">expression2</var>가 모두 참이면 참입니다.
+</p>
+</dd>
+<dt><code class="code"><var class="var">expression1</var> || <var class="var">expression2</var></code></dt>
+<dd><p><var class="var">expression1</var> 또는 <var class="var">expression2</var> 중 하나라도 참이면 참입니다.
+</p></dd>
+</dl>
+
+<p><code class="code">&amp;&amp;</code> 및 <code class="code">||</code> 연산자는 <var class="var">expression1</var>의 값만으로 전체 조건식의 반환 값을 결정하기에 충분한 경우 <var class="var">expression2</var>를 평가하지 않습니다.
+</p></dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Command-Grouping.html">명령어 그룹화</a>, 이전: <a href="Looping-Constructs.html">루프 구문</a>, 상위: <a href="Compound-Commands.html">복합 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

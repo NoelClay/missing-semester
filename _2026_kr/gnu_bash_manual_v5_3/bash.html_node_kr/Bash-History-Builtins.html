@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bash 히스토리 빌트인 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Bash 히스토리 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Bash 히스토리 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Using-History-Interactively.html" rel="up" title="히스토리 대화형 사용">
+<link href="History-Interaction.html" rel="next" title="히스토리 확장">
+<link href="Bash-History-Facilities.html" rel="prev" title="Bash 히스토리 기능">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Bash-History-Builtins">
+<div class="nav-panel">
+<p>
+다음: <a href="History-Interaction.html" accesskey="n" rel="next">히스토리 확장</a>, 이전: <a href="Bash-History-Facilities.html" accesskey="p" rel="prev">Bash 히스토리 기능</a>, 상위: <a href="Using-History-Interactively.html" accesskey="u" rel="up">히스토리 대화형 사용</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Bash-History-Builtins-1"><span>9.2 Bash 히스토리 빌트인<a class="copiable-link" href="#Bash-History-Builtins-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-history-builtins"></a>
+
+<p>Bash는 히스토리 목록과 히스토리 파일을 조작하는 두 가지 빌트인 명령어를 제공합니다.
+</p>
+<dl class="table">
+<dt><a id="index-fc"></a><span><code class="code">fc</code><a class="copiable-link" href="#index-fc"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted"><code class="code">fc [-e <var class="var">ename</var>] [-lnr] [<var class="var">first</var>] [<var class="var">last</var>]</code>
+<code class="code">fc -s [<var class="var">pat</var>=<var class="var">rep</var>] [<var class="var">command</var>]</code>
+</pre></div>
+
+<p>첫 번째 형식은 히스토리 목록에서 <var class="var">first</var>부터 <var class="var">last</var>까지의 명령어 범위를 선택하여 표시하거나 편집한 후 다시 실행합니다. <var class="var">first</var>와 <var class="var">last</var>는 모두 문자열(해당 문자열로 시작하는 가장 최근 명령어를 찾기 위해) 또는 숫자(히스토리 목록의 인덱스이며, 음수는 현재 명령어 번호로부터의 오프셋으로 사용됨)로 지정할 수 있습니다.
+</p>
+<p>목록을 나열할 때, <var class="var">first</var> 또는 <var class="var">last</var>가 0이면 -1과 동일하고, -0은 현재 명령어(보통 <code class="code">fc</code> 명령어)와 동일합니다; 그 외의 경우 0은 -1과 동일하고 -0은 유효하지 않습니다.
+</p>
+<p>만약 <var class="var">last</var>가 지정되지 않으면, 목록 나열 시에는 현재 명령어로 설정되고 그 외의 경우에는 <var class="var">first</var>로 설정됩니다. 만약 <var class="var">first</var>가 지정되지 않으면, 편집 시에는 이전 명령어로 설정되고 목록 나열 시에는 &minus;16으로 설정됩니다.
+</p>
+<p><samp class="option">-l</samp> 플래그가 제공되면 명령어들이 표준 출력으로 나열됩니다. <samp class="option">-n</samp> 플래그는 목록 나열 시 명령어 번호를 표시하지 않도록 합니다. <samp class="option">-r</samp> 플래그는 목록의 순서를 역순으로 바꿉니다.
+</p>
+<p>그렇지 않은 경우, <code class="code">fc</code>는 해당 명령어들이 포함된 파일에 대해 <var class="var">ename</var>으로 명명된 에디터를 호출합니다. <var class="var">ename</var>이 제공되지 않으면 <code class="code">fc</code>는 다음 변수 확장 값을 사용합니다: <code class="code">${FCEDIT:-${EDITOR:-vi}}</code>. 이는 <code class="env">FCEDIT</code> 변수가 설정되어 있으면 그 값을 사용하고, 그렇지 않고 <code class="env">EDITOR</code> 변수가 설정되어 있으면 그 값을 사용하며, 둘 다 설정되어 있지 않으면 <code class="code">vi</code>를 사용함을 의미합니다. 편집이 완료되면 <code class="code">fc</code>는 편집된 명령어가 포함된 파일을 읽어 들여 이를 에코(echo)하고 실행합니다.
+</p>
+<p>두 번째 형식에서 <code class="code">fc</code>는 선택된 명령어에서 <var class="var">pat</var>이 나타나는 모든 부분을 <var class="var">rep</var>으로 교체한 뒤 <var class="var">command</var>를 다시 실행합니다. <var class="var">command</var>는 위에서 설명한 <var class="var">first</var>와 동일하게 해석됩니다.
+</p>
+<p><code class="code">fc</code> 명령어와 함께 사용하기 유용한 별칭은 <code class="code">r='fc -s'</code>입니다. 이렇게 하면 &lsquo;<samp class="samp">r cc</samp>&rsquo;를 입력하여 <code class="code">cc</code>로 시작하는 마지막 명령어를 실행하거나, &lsquo;<samp class="samp">r</samp>&rsquo;을 입력하여 마지막 명령어를 다시 실행할 수 있습니다(<a class="pxref" href="Aliases.html">별칭</a> 참조).
+</p>
+<p>첫 번째 형식이 사용된 경우, 잘못된 옵션을 만나거나 <var class="var">first</var> 또는 <var class="var">last</var>가 범위를 벗어난 히스토리 줄을 지정하지 않는 한 반환 값은 0입니다. 명령어 파일을 편집하고 다시 실행하는 경우, 반환 값은 실행된 마지막 명령어의 값이며, 임시 파일 작업 중 에러가 발생하면 실패를 반환합니다. 두 번째 형식이 사용된 경우, 반환 상태는 다시 실행된 명령어의 상태입니다. 단, <var class="var">command</var>가 유효한 히스토리 항목을 지정하지 않는 경우 <code class="code">fc</code>는 0이 아닌 상태를 반환합니다.
+</p>
+</dd>
+<dt><a id="index-history"></a><span><code class="code">history</code><a class="copiable-link" href="#index-history"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">history [<var class="var">n</var>]
+history -c
+history -d <var class="var">offset</var>
+history -d <var class="var">start</var>-<var class="var">end</var>
+history [-anrw] [<var class="var">filename</var>]
+history -ps <var class="var">arg</var>
+</pre></div>
+
+<p>옵션 없이 사용하면 번호와 함께 히스토리 목록을 표시합니다. &lsquo;<samp class="samp">*</samp>&rsquo; 접두사가 붙은 항목은 수정된 항목입니다. 인자 <var class="var">n</var>은 마지막 <var class="var">n</var>개의 항목만 나열하도록 합니다. 쉘 변수 <code class="env">HISTTIMEFORMAT</code>이 설정되어 있고 null이 아니라면, 표시되는 각 히스토리 항목과 연관된 타임스탬프를 표시하기 위해 <code class="code">strftime</code>(3)의 형식 문자열로 사용됩니다. <code class="code">history</code>가 <code class="env">HISTTIMEFORMAT</code>을 사용하는 경우, 형식화된 타임스탬프와 히스토리 항목 사이에 별도의 공백을 출력하지 않습니다.
+</p>
+<p>제공되는 경우 옵션들은 다음과 같은 의미를 갖습니다:
+</p>
+<dl class="table">
+<dt><code class="code">-c</code></dt>
+<dd><p>히스토리 목록을 모두 비웁니다. 다른 옵션들과 결합하여 히스토리 목록을 교체하는 데 사용될 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">-d <var class="var">offset</var></code></dt>
+<dd><p><var class="var">offset</var> 위치의 히스토리 항목을 삭제합니다. <var class="var">offset</var>이 양수이면 히스토리가 표시될 때 나타나는 번호대로 지정해야 합니다. <var class="var">offset</var>이 음수이면 마지막 히스토리 위치보다 하나 더 큰 위치를 기준으로 상대적인 위치로 해석되므로, 음수 인덱스는 히스토리 끝에서부터 거꾸로 세며 인덱스 &lsquo;<samp class="samp">-1</samp>&rsquo;은 현재의 <code class="code">history -d</code> 명령어를 가리킵니다.
+</p>
+</dd>
+<dt><code class="code">-d <var class="var">start</var>-<var class="var">end</var></code></dt>
+<dd><p><var class="var">start</var>부터 <var class="var">end</var>까지(해당 위치 포함)의 히스토리 항목 범위를 삭제합니다. <var class="var">start</var>와 <var class="var">end</var>의 양수 및 음수 값은 위에서 설명한 대로 해석됩니다.
+</p>
+</dd>
+<dt><code class="code">-a</code></dt>
+<dd><p>&ldquo;새로운&rdquo; 히스토리 줄들을 히스토리 파일에 덧붙입니다. 이는 현재 Bash 세션 시작 이후 입력되었지만 아직 히스토리 파일에 덧붙여지지 않은 히스토리 줄들입니다.
+</p>
+</dd>
+<dt><code class="code">-n</code></dt>
+<dd><p>히스토리 파일로부터 아직 읽어 들이지 않은 히스토리 줄들을 읽어 현재 히스토리 목록에 추가합니다. 이는 현재 Bash 세션 시작 이후 히스토리 파일에 덧붙여진 줄들입니다.
+</p>
+</dd>
+<dt><code class="code">-r</code></dt>
+<dd><p>히스토리 파일을 읽어 그 내용을 히스토리 목록 끝에 덧붙입니다.
+</p>
+</dd>
+<dt><code class="code">-w</code></dt>
+<dd><p>현재 히스토리 목록을 히스토리 파일에 기록하여 히스토리 파일을 덮어씁니다.
+</p>
+</dd>
+<dt><code class="code">-p</code></dt>
+<dd><p><var class="var">arg</var>들에 대해 히스토리 치환(history substitution)을 수행하고 결과를 표준 출력에 표시합니다. 결과는 히스토리 목록에 저장되지 않습니다.
+</p>
+</dd>
+<dt><code class="code">-s</code></dt>
+<dd><p><var class="var">arg</var>들을 단일 항목으로 히스토리 목록 끝에 추가합니다. <var class="var">arg</var>들을 추가하기 전에 히스토리 목록의 마지막 명령어가 제거됩니다.
+</p>
+</dd>
+</dl>
+
+<p><samp class="option">-w</samp>, <samp class="option">-r</samp>, <samp class="option">-a</samp>, 또는 <samp class="option">-n</samp> 옵션 중 하나와 함께 <var class="var">filename</var> 인자가 제공되면, Bash는 <var class="var">filename</var>을 히스토리 파일로 사용합니다. 그렇지 않은 경우 <code class="env">HISTFILE</code> 변수의 값을 사용합니다. <code class="env">HISTFILE</code>이 해제되어 있거나 null인 경우 이러한 옵션들은 효과가 없습니다.
+</p>
+<p>만약 <code class="env">HISTTIMEFORMAT</code> 변수가 설정되어 있다면, <code class="code">history</code>는 위에서 설명한 대로 히스토리 주석 문자와 함께 각 히스토리 항목과 연관된 타임스탬프 정보를 히스토리 파일에 기록합니다. 히스토리 파일을 읽을 때, 히스토리 주석 문자로 시작하고 바로 뒤에 숫자가 오는 줄은 그 뒤에 오는 히스토리 항목의 타임스탬프로 해석됩니다.
+</p>
+<p>반환 값은 잘못된 옵션을 만나거나, 히스토리 파일을 읽거나 쓰는 중에 에러가 발생하거나, <samp class="option">-d</samp>의 인자로 잘못된 <var class="var">offset</var>이나 범위가 제공되거나, <samp class="option">-p</samp>의 인자로 제공된 히스토리 확장이 실패하지 않는 한 0입니다.
+</p>
+</dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="History-Interaction.html">히스토리 확장</a>, 이전: <a href="Bash-History-Facilities.html">Bash 히스토리 기능</a>, 상위: <a href="Using-History-Interactively.html">히스토리 대화형 사용</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

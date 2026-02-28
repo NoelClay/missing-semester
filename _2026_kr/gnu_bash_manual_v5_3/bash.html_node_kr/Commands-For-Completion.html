@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>자동 완성 명령어 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="자동 완성 명령어 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="자동 완성 명령어 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Bindable-Readline-Commands.html" rel="up" title="바인딩 가능한 Readline 명령어">
+<link href="Keyboard-Macros.html" rel="next" title="키보드 매크로">
+<link href="Numeric-Arguments.html" rel="prev" title="숫자 인자">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+ul.mark-bullet {list-style-type: disc}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Commands-For-Completion">
+<div class="nav-panel">
+<p>
+다음: <a href="Keyboard-Macros.html" accesskey="n" rel="next">키보드 매크로</a>, 이전: <a href="Numeric-Arguments.html" accesskey="p" rel="prev">숫자 인자 지정하기</a>, 상위: <a href="Bindable-Readline-Commands.html" accesskey="u" rel="up">바인딩 가능한 Readline 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Letting-Readline-Type-For-You"><span>8.4.6 자동 완성 명령어 (Letting Readline Type For You)<a class="copiable-link" href="#Letting-Readline-Type-For-You"> &para;</a></span></h4>
+
+<dl class="ftable">
+<dt><a id="index-complete-_0028TAB_0029"></a><span><code class="code">complete (<kbd class="key">TAB</kbd>)</code><a class="copiable-link" href="#index-complete-_0028TAB_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트에 대해 자동 완성을 시도합니다. 실제 수행되는 자동 완성은 애플리케이션에 따라 다릅니다. Bash는 먼저 명령어 단어에 대해 정의된 프로그래밍 가능한 자동 완성이 있는지 확인하고(<a class="pxref" href="Programmable-Completion.html">프로그래밍 가능한 자동 완성</a> 참조), 그렇지 않은 경우 텍스트를 차례대로 변수(텍스트가 &lsquo;<samp class="samp">$</samp>&rsquo;로 시작하는 경우), 사용자 이름(텍스트가 &lsquo;<samp class="samp">~</samp>&rsquo;로 시작하는 경우), 호스트 이름(텍스트가 &lsquo;<samp class="samp">@</samp>&rsquo;로 시작하는 경우), 또는 명령어(별칭, 함수, 빌트인 포함)로 간주하여 처리를 시도합니다. 이 중 어느 것도 일치하지 않으면 파일 이름 완성으로 대체됩니다.
+</p>
+</dd>
+<dt><a id="index-possible_002dcompletions-_0028M_002d_003f_0029"></a><span><code class="code">possible-completions (M-?)</code><a class="copiable-link" href="#index-possible_002dcompletions-_0028M_002d_003f_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트에 대해 가능한 자동 완성 후보 목록을 보여줍니다. 완성 후보를 표시할 때 Readline은 <code class="code">completion-display-width</code> 변수 값, <code class="env">COLUMNS</code> 환경 변수 값, 또는 화면 너비 순서대로 표시 열 수를 설정합니다.
+</p>
+</dd>
+<dt><a id="index-insert_002dcompletions-_0028M_002d_002a_0029"></a><span><code class="code">insert-completions (M-*)</code><a class="copiable-link" href="#index-insert_002dcompletions-_0028M_002d_002a_0029"> &para;</a></span></dt>
+<dd><p><code class="code">possible-completions</code>에 의해 생성되었을 포인트 앞 텍스트의 모든 자동 완성 후보들을 공백으로 구분하여 줄에 삽입합니다.
+</p>
+</dd>
+<dt><a id="index-menu_002dcomplete-_0028_0029"></a><span><code class="code">menu-complete ()</code><a class="copiable-link" href="#index-menu_002dcomplete-_0028_0029"> &para;</a></span></dt>
+<dd><p><code class="code">complete</code>와 유사하지만, 완성할 단어를 가능한 후보 목록 중 하나의 일치 항목으로 대체합니다. <code class="code">menu-complete</code>를 반복적으로 실행하면 가능한 완성 후보 목록을 하나씩 순환하며 삽입합니다. 목록의 끝에 도달하면 <code class="code">menu-complete</code>는 (<code class="code">bell-style</code> 설정에 따라) 벨을 울리고 원래 텍스트를 복구합니다. 인자 <var class="var">n</var>은 목록에서 앞으로 <var class="var">n</var>칸 이동하게 하며, 음수 인자는 목록에서 뒤로 이동하게 합니다. 이 명령어는 <kbd class="key">TAB</kbd>에 바인딩하도록 설계되었으나 기본적으로는 바인딩되어 있지 않습니다.
+</p>
+</dd>
+<dt><a id="index-menu_002dcomplete_002dbackward-_0028_0029"></a><span><code class="code">menu-complete-backward ()</code><a class="copiable-link" href="#index-menu_002dcomplete_002dbackward-_0028_0029"> &para;</a></span></dt>
+<dd><p><code class="code">menu-complete</code>와 동일하지만, 마치 <code class="code">menu-complete</code>에 음수 인자가 주어진 것처럼 후보 목록을 역방향으로 순환합니다. 기본적으로 바인딩되어 있지 않습니다.
+</p>
+</dd>
+<dt><a id="index-export_002dcompletions-_0028_0029"></a><span><code class="code">export-completions ()</code><a class="copiable-link" href="#index-export_002dcompletions-_0028_0029"> &para;</a></span></dt>
+<dd><p>위에서 설명한 대로 포인트 앞의 단어에 대해 자동 완성을 수행하고, 가능한 완성 후보 목록을 다음 형식을 사용하여 Readline의 출력 스트림에 각 줄별로 씁니다:
+</p>
+<ul class="itemize mark-bullet">
+<li>일치 항목의 개수 <var class="var">N</var>;
+</li><li>완성 중인 단어;
+</li><li><var class="var">S</var>:<var class="var">E</var> (여기서 <var class="var">S</var>와 <var class="var">E</var>는 Readline 라인 버퍼 내에서의 단어의 시작 및 끝 오프셋);
+</li><li>그 후 각 일치 항목을 한 줄에 하나씩 출력합니다.
+</li></ul>
+
+<p>일치 항목이 없는 경우 첫 번째 줄은 &ldquo;0&rdquo;이 되며, <var class="var">S</var>:<var class="var">E</var> 줄 이후에는 아무것도 출력하지 않습니다. 일치 항목이 정확히 하나인 경우 해당 항목을 포함하는 단일 줄을 출력합니다. 일치 항목이 둘 이상인 경우, <var class="var">S</var>:<var class="var">E</var> 바로 다음 줄에 일치 항목들의 공통 접두사(비어 있을 수 있음)를 출력하고, 그 다음 줄부터 각 일치 항목들을 출력합니다. 이 경우 <var class="var">N</var>에는 공통 접두사가 포함된 첫 번째 줄이 포함됩니다.
+</p>
+<p>사용자나 애플리케이션은 빈 줄이 나타날 가능성에 대비해야 합니다. 이 명령어의 의도는 <var class="var">S</var>:<var class="var">E</var>가 포함된 줄 이후에 <var class="var">N</var>개의 줄을 읽어 일치 목록을 얻는 것입니다. 기본적으로 바인딩되어 있지 않습니다.
+</p>
+</dd>
+<dt><a id="index-delete_002dchar_002dor_002dlist-_0028_0029"></a><span><code class="code">delete-char-or-list ()</code><a class="copiable-link" href="#index-delete_002dchar_002dor_002dlist-_0028_0029"> &para;</a></span></dt>
+<dd><p>커서가 줄의 처음이나 끝이 아닌 경우 커서 아래의 문자를 삭제합니다(<code class="code">delete-char</code>와 동일). 줄의 끝에 있는 경우 <code class="code">possible-completions</code>와 똑같이 동작합니다. 기본적으로 바인딩되어 있지 않습니다.
+</p>
+</dd>
+<dt><a id="index-complete_002dfilename-_0028M_002d_002f_0029"></a><span><code class="code">complete-filename (M-/)</code><a class="copiable-link" href="#index-complete_002dfilename-_0028M_002d_002f_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트에 대해 파일 이름 완성을 시도합니다.
+</p>
+</dd>
+<dt><a id="index-possible_002dfilename_002dcompletions-_0028C_002dx-_002f_0029"></a><span><code class="code">possible-filename-completions (C-x /)</code><a class="copiable-link" href="#index-possible_002dfilename_002dcompletions-_0028C_002dx-_002f_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트를 파일 이름으로 간주하여 가능한 완성 후보 목록을 보여줍니다.
+</p>
+</dd>
+<dt><a id="index-complete_002dusername-_0028M_002d_007e_0029"></a><span><code class="code">complete-username (M-~)</code><a class="copiable-link" href="#index-complete_002dusername-_0028M_002d_007e_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트를 사용자 이름으로 간주하여 완성을 시도합니다.
+</p>
+</dd>
+<dt><a id="index-possible_002dusername_002dcompletions-_0028C_002dx-_007e_0029"></a><span><code class="code">possible-username-completions (C-x ~)</code><a class="copiable-link" href="#index-possible_002dusername_002dcompletions-_0028C_002dx-_007e_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트를 사용자 이름으로 간주하여 가능한 완성 후보 목록을 보여줍니다.
+</p>
+</dd>
+<dt><a id="index-complete_002dvariable-_0028M_002d_0024_0029"></a><span><code class="code">complete-variable (M-$)</code><a class="copiable-link" href="#index-complete_002dvariable-_0028M_002d_0024_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트를 쉘 변수로 간주하여 완성을 시도합니다.
+</p>
+</dd>
+<dt><a id="index-possible_002dvariable_002dcompletions-_0028C_002dx-_0024_0029"></a><span><code class="code">possible-variable-completions (C-x $)</code><a class="copiable-link" href="#index-possible_002dvariable_002dcompletions-_0028C_002dx-_0024_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트를 쉘 변수로 간주하여 가능한 완성 후보 목록을 보여줍니다.
+</p>
+</dd>
+<dt><a id="index-complete_002dhostname-_0028M_002d_0040_0029"></a><span><code class="code">complete-hostname (M-@)</code><a class="copiable-link" href="#index-complete_002dhostname-_0028M_002d_0040_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트를 호스트 이름으로 간주하여 완성을 시도합니다.
+</p>
+</dd>
+<dt><a id="index-possible_002dhostname_002dcompletions-_0028C_002dx-_0040_0029"></a><span><code class="code">possible-hostname-completions (C-x @)</code><a class="copiable-link" href="#index-possible_002dhostname_002dcompletions-_0028C_002dx-_0040_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트를 호스트 이름으로 간주하여 가능한 완성 후보 목록을 보여줍니다.
+</p>
+</dd>
+<dt><a id="index-complete_002dcommand-_0028M_002d_0021_0029"></a><span><code class="code">complete-command (M-!)</code><a class="copiable-link" href="#index-complete_002dcommand-_0028M_002d_0021_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트를 명령어 이름으로 간주하여 완성을 시도합니다. 명령어 완성은 텍스트를 별칭, 예약어, 쉘 함수, 쉘 빌트인, 그리고 마지막으로 실행 가능한 파일 이름 순서대로 대조하여 시도합니다.
+</p>
+</dd>
+<dt><a id="index-possible_002dcommand_002dcompletions-_0028C_002dx-_0021_0029"></a><span><code class="code">possible-command-completions (C-x !)</code><a class="copiable-link" href="#index-possible_002dcommand_002dcompletions-_0028C_002dx-_0021_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트를 명령어 이름으로 간주하여 가능한 완성 후보 목록을 보여줍니다.
+</p>
+</dd>
+<dt><a id="index-dynamic_002dcomplete_002dhistory-_0028M_002dTAB_0029"></a><span><code class="code">dynamic-complete-history (M-TAB)</code><a class="copiable-link" href="#index-dynamic_002dcomplete_002dhistory-_0028M_002dTAB_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트를 히스토리 목록의 항목들과 대조하여 가능한 자동 완성 일치 항목을 찾으려고 시도합니다.
+</p>
+</dd>
+<dt><a id="index-dabbrev_002dexpand-_0028_0029"></a><span><code class="code">dabbrev-expand ()</code><a class="copiable-link" href="#index-dabbrev_002dexpand-_0028_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 텍스트를 히스토리 목록의 줄들과 대조하여 가능한 자동 완성 일치 항목을 찾고 메뉴 완성(menu completion)을 시도합니다.
+</p>
+</dd>
+<dt><a id="index-complete_002dinto_002dbraces-_0028M_002d_007e_007b_0029"></a><span><code class="code">complete-into-braces (M-{)</code><a class="copiable-link" href="#index-complete_002dinto_002dbraces-_0028M_002d_007e_007b_0029"> &para;</a></span></dt>
+<dd><p>파일 이름 완성을 수행하고, 가능한 완성 후보 목록을 중괄호로 감싸서 삽입하여 쉘이 해당 목록을 사용할 수 있게 합니다(<a class="pxref" href="Brace-Expansion.html">중괄호 확장</a> 참조).
+</p>
+</dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Keyboard-Macros.html">키보드 매크로</a>, 이전: <a href="Numeric-Arguments.html">숫자 인자 지정하기</a>, 상위: <a href="Bindable-Readline-Commands.html">바인딩 가능한 Readline 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

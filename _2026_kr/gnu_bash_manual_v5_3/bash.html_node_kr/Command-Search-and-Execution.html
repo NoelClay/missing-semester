@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>명령어 검색 및 실행 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="명령어 검색 및 실행 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="명령어 검색 및 실행 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Executing-Commands.html" rel="up" title="명령어 실행">
+<link href="Command-Execution-Environment.html" rel="next" title="명령어 실행 환경">
+<link href="Simple-Command-Expansion.html" rel="prev" title="단순 명령어 확장">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Command-Search-and-Execution">
+<div class="nav-panel">
+<p>
+다음: <a href="Command-Execution-Environment.html" accesskey="n" rel="next">명령어 실행 환경</a>, 이전: <a href="Simple-Command-Expansion.html" accesskey="p" rel="prev">단순 명령어 확장</a>, 상위: <a href="Executing-Commands.html" accesskey="u" rel="up">명령어 실행</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Command-Search-and-Execution-1"><span>3.7.2 명령어 검색 및 실행<a class="copiable-link" href="#Command-Search-and-Execution-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-command-execution"></a>
+<a class="index-entry-id" id="index-command-search"></a>
+
+<p>명령어가 단어들로 분리된 후, 그 결과가 단순 명령어와 선택적인 인자 목록인 경우 쉘은 다음 작업들을 수행합니다.
+</p>
+<ol class="enumerate">
+<li> 명령어 이름에 슬래시(/)가 포함되어 있지 않은 경우, 쉘은 명령어의 위치를 찾으려고 시도합니다.
+해당 이름을 가진 쉘 함수가 존재하면, <a class="ref" href="Shell-Functions.html">쉘 함수</a>에 설명된 대로 해당 함수를 호출합니다.
+
+</li><li> 이름이 함수와 일치하지 않으면, 쉘은 쉘 빌트인 명령어 목록에서 해당 이름을 검색합니다.
+일치하는 빌트인이 발견되면 해당 빌트인을 호출합니다.
+
+</li><li> 이름이 쉘 함수도 아니고 빌트인도 아니며 슬래시를 포함하고 있지 않다면, Bash는 <code class="env">$PATH</code>의 각 요소를 검색하여 해당 이름을 가진 실행 파일이 포함된 디렉토리를 찾습니다.
+Bash는 실행 파일의 전체 경로명을 기억하기 위해 해시 테이블(hash table)을 사용하며, 이를 통해 반복적인 <code class="env">PATH</code> 검색을 피합니다(<a class="ref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a>의 <code class="code">hash</code> 설명 참조).
+해시 테이블에서 명령어를 찾지 못한 경우에만 <code class="env">$PATH</code>의 디렉토리들에 대한 전체 검색을 수행합니다.
+검색에 실패하면, 쉘은 <code class="code">command_not_found_handle</code>이라는 이름으로 정의된 쉘 함수가 있는지 찾습니다.
+만약 해당 함수가 존재하면, 원래의 명령어와 그 인자들을 인자로 하여 별도의 실행 환경에서 이 함수를 호출하며, 함수의 종료 상태가 해당 서브쉘의 종료 상태가 됩니다.
+해당 함수가 정의되어 있지 않으면, 쉘은 에러 메시지를 출력하고 종료 상태 127을 반환합니다.
+
+</li><li> 검색에 성공하거나 명령어 이름에 하나 이상의 슬래시가 포함되어 있다면, 쉘은 별도의 실행 환경에서 해당 프로그램을 실행합니다.
+0번 인자는 주어진 이름으로 설정되며, 명령어의 나머지 인자들은 제공된 인자들(있는 경우)로 설정됩니다.
+
+</li><li> 파일이 실행 가능한 형식이 아니며 디렉토리도 아니어서 실행에 실패한 경우, 해당 파일은 쉘 명령어들을 포함한 <em class="dfn">쉘 스크립트</em>로 간주됩니다. 쉘은 <a class="ref" href="Shell-Scripts.html">쉘 스크립트</a>에 설명된 대로 이를 실행합니다.
+
+</li><li> 명령어가 비동기적으로 시작되지 않았다면, 쉘은 명령어가 완료될 때까지 기다린 후 종료 상태를 수집합니다.
+
+</li></ol>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Command-Execution-Environment.html">명령어 실행 환경</a>, 이전: <a href="Simple-Command-Expansion.html">단순 명령어 확장</a>, 상위: <a href="Executing-Commands.html">명령어 실행</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ANSI-C 방식 인용 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="ANSI-C 방식 인용 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="ANSI-C 방식 인용 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Quoting.html" rel="up" title="인용(Quoting)">
+<link href="Locale-Translation.html" rel="next" title="로케일 번역">
+<link href="Double-Quotes.html" rel="prev" title="큰따옴표">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsubsection-level-extent" id="ANSI_002dC-Quoting">
+<div class="nav-panel">
+<p>
+다음: <a href="Locale-Translation.html" accesskey="n" rel="next">로케일 특정 번역</a>, 이전: <a href="Double-Quotes.html" accesskey="p" rel="prev">큰따옴표</a>, 상위: <a href="Quoting.html" accesskey="u" rel="up">인용(Quoting)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsubsection" id="ANSI_002dC-Quoting-1"><span>3.1.2.4 ANSI-C 방식 인용<a class="copiable-link" href="#ANSI_002dC-Quoting-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-quoting_002c-ANSI"></a>
+<a class="index-entry-id" id="index-dollar_002dsingle-quote-quoting"></a>
+
+<p><code class="code">$'<var class="var">string</var>'</code> 형식의 문자 시퀀스는 특수한 종류의 작은따옴표로 취급됩니다.
+이 시퀀스는 <var class="var">string</var>으로 확장되며, 이때 <var class="var">string</var> 내의 백슬래시로 이스케이프된 문자들은 ANSI C 표준에 명시된 대로 치환됩니다.
+백슬래시 이스케이프 시퀀스가 있는 경우 다음과 같이 디코딩됩니다:
+</p>
+<dl class="table">
+<dt><code class="code">&#92;a</code></dt>
+<dd><p>경고 (벨 소리)
+</p></dd>
+<dt><code class="code">&#92;b</code></dt>
+<dd><p>백스페이스
+</p></dd>
+<dt><code class="code">&#92;e</code></dt>
+<dt><code class="code">&#92;E</code></dt>
+<dd><p>이스케이프 문자 (ANSI C 표준은 아님)
+</p></dd>
+<dt><code class="code">&#92;f</code></dt>
+<dd><p>폼 피드(form feed)
+</p></dd>
+<dt><code class="code">&#92;n</code></dt>
+<dd><p>줄바꿈 (newline)
+</p></dd>
+<dt><code class="code">&#92;r</code></dt>
+<dd><p>캐리지 리턴 (carriage return)
+</p></dd>
+<dt><code class="code">&#92;t</code></dt>
+<dd><p>수평 탭
+</p></dd>
+<dt><code class="code">&#92;v</code></dt>
+<dd><p>수직 탭
+</p></dd>
+<dt><code class="code">&#92;&#92;</code></dt>
+<dd><p>백슬래시
+</p></dd>
+<dt><code class="code">&#92;'</code></dt>
+<dd><p>작은따옴표
+</p></dd>
+<dt><code class="code">&#92;&quot;</code></dt>
+<dd><p>큰따옴표
+</p></dd>
+<dt><code class="code">&#92;?</code></dt>
+<dd><p>물음표
+</p></dd>
+<dt><code class="code">&#92;<var class="var">nnn</var></code></dt>
+<dd><p>팔진수 값 <var class="var">nnn</var>(1~3자리의 팔진수 숫자)을 가지는 8비트 문자.
+</p></dd>
+<dt><code class="code">&#92;x<var class="var">HH</var></code></dt>
+<dd><p>십육진수 값 <var class="var">HH</var>(1~2자리의 십육진수 숫자)를 가지는 8비트 문자.
+</p></dd>
+<dt><code class="code">&#92;u<var class="var">HHHH</var></code></dt>
+<dd><p>십육진수 값 <var class="var">HHHH</var>(1~4자리의 십육진수 숫자)를 가지는 유니코드(ISO/IEC 10646) 문자.
+</p></dd>
+<dt><code class="code">&#92;U<var class="var">HHHHHHHH</var></code></dt>
+<dd><p>십육진수 값 <var class="var">HHHHHHHH</var>(1~8자리의 십육진수 숫자)를 가지는 유니코드(ISO/IEC 10646) 문자.
+</p></dd>
+<dt><code class="code">&#92;c<var class="var">x</var></code></dt>
+<dd><p>제어-<var class="var">x</var>(control-<var class="var">x</var>) 문자.
+</p></dd>
+</dl>
+
+<p>확장된 결과는 마치 달러 기호($)가 없었던 것처럼 작은따옴표로 감싸진 것으로 취급됩니다.
+</p>
+</div>
+
+
+
+</body>
+</html>

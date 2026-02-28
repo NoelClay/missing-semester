@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>기본값 공유 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="기본값 공유 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="기본값 공유 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Installing-Bash.html" rel="up" title="Bash 설치">
+<link href="Operation-Controls.html" rel="next" title="작업 제어">
+<link href="Specifying-the-System-Type.html" rel="prev" title="시스템 유형 지정">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Sharing-Defaults">
+<div class="nav-panel">
+<p>
+다음: <a href="Operation-Controls.html" accesskey="n" rel="next">작업 제어</a>, 이전: <a href="Specifying-the-System-Type.html" accesskey="p" rel="prev">시스템 유형 지정</a>, 상위: <a href="Installing-Bash.html" accesskey="u" rel="up">Bash 설치</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Sharing-Defaults-1"><span>10.6 기본값 공유<a class="copiable-link" href="#Sharing-Defaults-1"> &para;</a></span></h3>
+
+<p><code class="code">configure</code> 스크립트들이 공유할 기본값들을 설정하고 싶다면, <code class="code">CC</code>, <code class="code">cache_file</code>, 그리고 <code class="code">prefix</code>와 같은 변수들에 대한 기본값을 제공하는 <code class="code">config.site</code>라는 사이트 쉘 스크립트를 생성할 수 있습니다. <code class="code">configure</code>는 <samp class="file">PREFIX/share/config.site</samp> 파일이 존재하는지 먼저 확인하고, 그 다음 <samp class="file">PREFIX/etc/config.site</samp> 파일이 존재하는지 확인합니다. 또는 <code class="code">CONFIG_SITE</code> 환경 변수를 해당 사이트 스크립트의 위치로 설정할 수 있습니다. 주의 사항: Bash의 <code class="code">configure</code>는 사이트 스크립트를 찾지만, 모든 <code class="code">configure</code> 스크립트가 그러한 것은 아닙니다.
+</p>
+</div>
+
+
+
+</body>
+</html>

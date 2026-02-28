@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>특수 파라미터 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="특수 파라미터 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="특수 파라미터 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Shell-Parameters.html" rel="up" title="쉘 파라미터">
+<link href="Positional-Parameters.html" rel="prev" title="위치 파라미터">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Special-Parameters">
+<div class="nav-panel">
+<p>
+이전: <a href="Positional-Parameters.html" accesskey="p" rel="prev">위치 파라미터</a>, 상위: <a href="Shell-Parameters.html" accesskey="u" rel="up">쉘 파라미터</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Special-Parameters-1"><span>3.4.2 특수 파라미터<a class="copiable-link" href="#Special-Parameters-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-parameters_002c-special"></a>
+
+<p>쉘은 여러 파라미터들을 특별하게 취급합니다. 이 파라미터들은 오직 참조만 가능하며, 값을 할당하는 것은 허용되지 않습니다.
+특수 파라미터들은 다음 문자들 중 하나로 나타냅니다.
+</p>
+<dl class="vtable">
+<dt><a id="index-_002a"></a><span><code class="code">*</code><a class="copiable-link" href="#index-_002a"> &para;</a></span></dt>
+<dd><a class="index-entry-id" id="index-_0024_002a"></a>
+<p>($*) 1번부터 시작하는 위치 파라미터들로 확장됩니다.
+확장이 큰따옴표 내에서 이루어지지 않을 때, 각 위치 파라미터는 별개의 단어로 확장됩니다.
+단어 확장이 수행되는 컨텍스트에서, 해당 단어들은 추가적인 단어 분할과 파일 이름 확장의 대상이 됩니다.
+확장이 큰따옴표 내에서 이루어질 때, <code class="env">IFS</code> 변수의 첫 번째 문자로 각 파라미터 값이 구분된 단일 단어로 확장됩니다.
+즉, <code class="code">&quot;$*&quot;</code>은 <code class="code">&quot;$1<var class="var">c</var>$2<var class="var">c</var>&hellip;&quot;</code>와 동일하며, 여기서 <var class="var">c</var>는 <code class="code">IFS</code> 변수값의 첫 번째 문자입니다.
+만약 <code class="env">IFS</code>가 설정되어 있지 않으면 파라미터들은 공백으로 구분됩니다.
+만약 <code class="env">IFS</code>가 null(빈 값)이면 파라미터들은 사이에 구분자 없이 연결됩니다.
+</p>
+</dd>
+<dt><a id="index-_0040"></a><span><code class="code">@</code><a class="copiable-link" href="#index-_0040"> &para;</a></span></dt>
+<dd><a class="index-entry-id" id="index-_0024_0040"></a>
+<p>($@) 1번부터 시작하는 위치 파라미터들로 확장됩니다.
+단어 분할이 수행되는 컨텍스트에서, 이는 각 위치 파라미터를 별개의 단어로 확장합니다. 큰따옴표 내에 있지 않은 경우, 이 단어들은 단어 분할의 대상이 됩니다.
+할당문의 값 부분과 같이 단어 분할이 수행되지 않는 컨텍스트에서, 이는 각 위치 파라미터가 공백으로 구분된 단일 단어로 확장됩니다.
+확장이 큰따옴표 내에서 이루어지고 단어 분할이 수행될 때, 각 파라미터는 별개의 단어로 확장됩니다.
+즉, <code class="code">&quot;$@&quot;</code>는 <code class="code">&quot;$1&quot; &quot;$2&quot; &hellip;</code>와 동일합니다.
+큰따옴표로 감싸진 확장이 어떤 단어 내부에서 일어날 경우, 첫 번째 파라미터의 확장 결과는 원래 단어의 앞부분 확장 결과와 결합되고, 마지막 파라미터의 확장 결과는 원래 단어의 뒷부분 확장 결과와 결합됩니다.
+위치 파라미터가 없는 경우, <code class="code">&quot;$@&quot;</code>와 <code class="code">$@</code>는 아무것도 없는 상태로 확장됩니다(즉, 제거됩니다).
+</p>
+</dd>
+<dt><a id="index-_0023"></a><span><code class="code">#</code><a class="copiable-link" href="#index-_0023"> &para;</a></span></dt>
+<dd><a class="index-entry-id" id="index-_0024_0023"></a>
+<p>($#) 위치 파라미터의 개수를 10진수로 확장합니다.
+</p>
+</dd>
+<dt><a id="index-_003f"></a><span><code class="code">?</code><a class="copiable-link" href="#index-_003f"> &para;</a></span></dt>
+<dd><a class="index-entry-id" id="index-_0024_003f"></a>
+<p>($?) 가장 최근에 실행된 명령어의 종료 상태로 확장됩니다.
+</p>
+</dd>
+<dt><a id="index-_002d"></a><span><code class="code">-</code><a class="copiable-link" href="#index-_002d"> &para;</a></span></dt>
+<dd><a class="index-entry-id" id="index-_0024_002d"></a>
+<p>($-, 하이픈) 호출 시 지정되었거나, <code class="code">set</code> 빌트인 명령어로 설정되었거나, 혹은 쉘 자체에 의해 설정된(예: <samp class="option">-i</samp> 옵션) 현재 옵션 플래그들로 확장됩니다.
+</p>
+</dd>
+<dt><a id="index-_0024"></a><span><code class="code">$</code><a class="copiable-link" href="#index-_0024"> &para;</a></span></dt>
+<dd><a class="index-entry-id" id="index-_0024_0024"></a>
+<p>($$) 쉘의 프로세스 <small class="sc">ID</small>로 확장됩니다.
+서브쉘 내에서도 서브쉘의 ID가 아닌, 이를 호출한 쉘의 프로세스 <small class="sc">ID</small>로 확장됩니다.
+</p>
+</dd>
+<dt><a id="index-_0021-1"></a><span><code class="code">!</code><a class="copiable-link" href="#index-_0021-1"> &para;</a></span></dt>
+<dd><a class="index-entry-id" id="index-_0024_0021"></a>
+<p>($!) 비동기 명령어로 실행되었거나 <code class="code">bg</code> 빌트인을 사용하여 가장 최근에 백그라운드로 보내진 작업의 프로세스 <small class="sc">ID</small>로 확장됩니다(<a class="pxref" href="Job-Control-Builtins.html">작업 제어 빌트인</a> 참조).
+</p>
+</dd>
+<dt><a id="index-0"></a><span><code class="code">0</code><a class="copiable-link" href="#index-0"> &para;</a></span></dt>
+<dd><a class="index-entry-id" id="index-_00240"></a>
+<p>($0) 쉘 또는 쉘 스크립트의 이름으로 확장됩니다.
+이는 쉘 초기화 시에 설정됩니다.
+Bash가 명령어 파일과 함께 호출된 경우(<a class="pxref" href="Shell-Scripts.html">쉘 스크립트</a> 참조), <code class="code">$0</code>은 해당 파일의 이름으로 설정됩니다.
+Bash가 <samp class="option">-c</samp> 옵션과 함께 시작된 경우(<a class="pxref" href="Invoking-Bash.html">Bash 호출하기</a> 참조), <code class="code">$0</code>은 실행할 문자열 뒤에 오는 첫 번째 인자(있는 경우)로 설정됩니다.
+그렇지 않은 경우, 0번 인자로 주어지는 Bash 호출에 사용된 파일명으로 설정됩니다.
+</p></dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+이전: <a href="Positional-Parameters.html">위치 파라미터</a>, 상위: <a href="Shell-Parameters.html">쉘 파라미터</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bash POSIX 모드 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Bash POSIX 모드 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Bash POSIX 모드 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Bash-Features.html" rel="up" title="Bash 기능">
+<link href="Shell-Compatibility-Mode.html" rel="next" title="쉘 호환 모드">
+<link href="The-Restricted-Shell.html" rel="prev" title="제한된 쉘">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Bash-POSIX-Mode">
+<div class="nav-panel">
+<p>
+다음: <a href="Shell-Compatibility-Mode.html" accesskey="n" rel="next">쉘 호환 모드</a>, 이전: <a href="The-Restricted-Shell.html" accesskey="p" rel="prev">제한된 쉘</a>, 상위: <a href="Bash-Features.html" accesskey="u" rel="up">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Bash-and-POSIX"><span>6.11 Bash와 POSIX<a class="copiable-link" href="#Bash-and-POSIX"> &para;</a></span></h3>
+
+<ul class="mini-toc">
+<li><a href="#What-is-POSIX_003f" accesskey="1">POSIX란 무엇인가?</a></li>
+<li><a href="#Bash-POSIX-Mode-1" accesskey="2">Bash POSIX 모드</a></li>
+</ul>
+<div class="subsection-level-extent" id="What-is-POSIX_003f">
+<h4 class="subsection"><span>6.11.1 POSIX란 무엇인가?<a class="copiable-link" href="#What-is-POSIX_003f"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-POSIX-description"></a>
+
+<p><small class="sc">POSIX</small>는 유닉스(Unix)에 기반한 표준 패밀리의 이름입니다. 기본적인 시스템 콜(system calls)과 C 라이브러리 함수부터 일반적인 애플리케이션과 도구, 그리고 시스템 관리 및 관리에 이르기까지 다양한 유닉스 서비스, 도구, 함수들이 이 표준의 일부입니다.
+</p>
+<p><small class="sc">POSIX</small> 쉘 및 유틸리티(Shell and Utilities) 표준은 원래 IEEE Working Group 1003.2 (POSIX.2)에 의해 개발되었습니다. 1003.2 표준의 첫 번째 판은 1992년에 출판되었습니다. 이후 원래의 IEEE 1003.1 워킹 그룹과 합쳐졌으며, 현재는 Austin Group (IEEE, The Open Group, ISO/IEC SC22/WG15의 공동 워킹 그룹)에 의해 유지 관리되고 있습니다. 오늘날 쉘 및 유틸리티는 IEEE Std 1003.1-2024를 구성하는 문서 세트 내의 한 권(volume)이며, 따라서 과거의 POSIX.2(1992년 판)는 현재의 통합 <small class="sc">POSIX</small> 표준의 일부입니다.
+</p>
+<p>쉘 및 유틸리티 권은 명령 해석기(command interpreter) 인터페이스와 명령줄 또는 다른 프로그램에 의해 흔히 실행되는 유틸리티 프로그램들에 집중합니다. 이 표준은 웹에서 자유롭게 확인할 수 있습니다:
+<a class="url" href="https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html">https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html</a>.
+</p>
+<p>Bash는 <small class="sc">POSIX</small> 쉘 및 유틸리티 권에서 정의된 쉘 동작의 측면들과 관련이 있습니다. 쉘 명령어 언어는 물론 표준화되었으며, 여기에는 기본적인 흐름 제어 및 프로그램 실행 구조, I/O 리다이렉션 및 파이프라인, 인자 처리, 변수 확장, 그리고 인용(quoting)이 포함됩니다.
+</p>
+<p>원하는 기능을 제공하기 위해 쉘의 일부로 구현되어야 하는 <i class="i">특수(special)</i> 빌트인들이 쉘의 일부로 명시되어 있습니다; <code class="code">eval</code>과 <code class="code">export</code>가 그 예입니다. 쉘에만 전념하지 않는 <small class="sc">POSIX</small>의 다른 섹션들에도 흔히 빌트인 명령어로 구현되는(어떤 경우에는 반드시 구현되어야 하는) 유틸리티들이 나타나는데, <code class="code">read</code>와 <code class="code">test</code>가 그러한 예입니다. <small class="sc">POSIX</small>는 또한 작업 제어(job control)와 명령줄 편집을 포함한 쉘의 대화형 동작 측면도 명시합니다. 오직 vi 스타일의 라인 편집 명령어들만 표준화되었습니다; emacs 편집 명령어들은 반대 의견으로 인해 제외되었습니다.
+</p>
+</div>
+<div class="subsection-level-extent" id="Bash-POSIX-Mode-1">
+<h4 class="subsection"><span>6.11.2 Bash POSIX 모드<a class="copiable-link" href="#Bash-POSIX-Mode-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-POSIX-Mode"></a>
+
+<p>Bash는 <small class="sc">POSIX</small> 쉘 사양의 구현체이지만, Bash의 기본 동작이 사양과 다른 부분들이 있습니다. Bash <em class="dfn">posix 모드</em>는 이러한 부분에서 Bash의 동작을 변경하여 표준을 더 엄격하게 준수하도록 만듭니다.
+</p>
+<p><samp class="option">--posix</samp> 명령줄 옵션과 함께 Bash를 시작하거나, Bash가 실행 중일 때 &lsquo;<samp class="samp">set -o posix</samp>&rsquo;를 실행하면, Bash의 기본값이 다른 영역에서 <small class="sc">POSIX</small>에 명시된 대로 동작을 변경함으로써 <small class="sc">POSIX</small> 표준에 더 가깝게 부합하게 됩니다.
+</p>
+<p><code class="code">sh</code>라는 이름으로 호출되었을 때, Bash는 시작 파일들을 읽은 후 POSIX 모드로 진입합니다.
+</p>
+<p>다음은 <small class="sc">POSIX</small> 모드가 활성화되었을 때 변경되는 사항들의 목록입니다:
+</p>
+<ol class="enumerate">
+<li> Bash는 <code class="env">POSIXLY_CORRECT</code> 변수가 설정되도록 보장합니다.
+
+</li><li> Bash는 일반적인 Bash 파일 대신 <small class="sc">POSIX</small> 시작 파일(<code class="env">$ENV</code>)을 읽고 실행합니다(<a class="pxref" href="Bash-Startup-Files.html">Bash 시작 파일</a> 참조).
+
+</li><li> 비대화형 쉘에서도 별칭 확장(alias expansion)이 항상 활성화됩니다.
+
+</li><li> 예약어(reserved words)가 인식되는 컨텍스트에서 나타나는 예약어들은 별칭 확장의 대상이 되지 않습니다.
+
+</li><li> 명령어 치환(command substitution)을 처음 파싱할 때 별칭 확장이 수행됩니다. 기본(비-posix) 모드에서는 보통 별칭 확장이 활성화되어 있더라도 명령어 치환이 실행될 때까지 지연시킵니다. 이는 명령어 치환이 처음 파싱된 이후에 정의된 별칭(예: 함수의 일부로 정의됨)은 명령어 치환에서 확장되지 않음을 의미합니다.
+
+</li><li> <code class="code">time</code> 예약어를 단독으로 단순 명령어로 사용할 수 있습니다. 이 방식으로 사용되면 쉘과 종료된 자식 프로세스들에 대한 시간 통계를 표시합니다. <code class="env">TIMEFORMAT</code> 변수가 시간 정보의 형식을 제어합니다.
+
+</li><li> 다음 토큰이 &lsquo;<samp class="samp">-</samp>&rsquo;로 시작하면 파서는 <code class="code">time</code>을 예약어로 인식하지 않습니다.
+
+</li><li> 큰따옴표 내에 나타나는 ${&hellip;} 확장을 파싱하고 확장할 때, 연산자가 패턴 제거를 수행하도록 정의된 것들 중 하나가 아닌 한, 작은따옴표는 더 이상 특별하게 취급되지 않으며 닫는 중괄호나 다른 특수 문자를 인용하는 데 사용될 수 없습니다. 패턴 제거 연산자인 경우, 작은따옴표들이 반드시 쌍으로 나타날 필요는 없습니다.
+
+</li><li> 대화형 쉘이 아닌 한, 리다이렉션 연산자는 리다이렉션 대상 단어에 대해 파일 이름 확장(filename expansion)을 수행하지 않습니다.
+
+</li><li> 리다이렉션 연산자는 리다이렉션 대상 단어에 대해 단어 분할(word splitting)을 수행하지 않습니다.
+
+</li><li> 함수 이름은 <small class="sc">POSIX</small> 특수 빌트인 중 하나와 같을 수 없습니다.
+
+</li><li> 물결표 확장(tilde expansion)은 줄의 모든 할당문이 아니라, 명령어 이름 앞에 오는 할당문들에 대해서만 수행됩니다.
+
+</li><li> 변수 간접 참조(variable indirection)가 가능하지만, &lsquo;<samp class="samp">#</samp>&rsquo; 및 &lsquo;<samp class="samp">?</samp>&rsquo; 특수 파라미터에는 적용할 수 없습니다.
+
+</li><li> 확장이 큰따옴표로 감싸진 패턴 컨텍스트에서 &lsquo;<samp class="samp">*</samp>&rsquo; 특수 파라미터를 확장할 때, <code class="code">$*</code>를 큰따옴표로 감싸진 것처럼 취급하지 않습니다.
+
+</li><li> 확장을 거치는 히어 도큐먼트(here-document) 본체 내의 백틱(` `) 명령어 치환에 큰따옴표 문자(&lsquo;<samp class="samp">&quot;</samp>&rsquo;)가 나타나면 특별하게 취급됩니다. 이는 예를 들어 큰따옴표 앞에 오는 백슬래시가 큰따옴표를 이스케이프하며 백슬래시는 제거됨을 의미합니다.
+
+</li><li> 명령어 치환은 &lsquo;<samp class="samp">?</samp>&rsquo; 특수 파라미터를 설정하지 않습니다. 명령어 단어가 없는 단순 명령어의 종료 상태는 여전히 해당 명령어의 변수 할당 및 리다이렉션을 평가하는 동안 발생한 마지막 명령어 치환의 종료 상태이지만, 이는 모든 할당과 리다이렉션이 끝난 후에야 발생합니다.
+
+</li><li> <code class="env">PATH</code> 변수 요소의 첫 번째 문자로 나타나는 리터럴 물결표는 위 <a class="ref" href="Tilde-Expansion.html">물결표 확장</a>에서 설명한 대로 확장되지 않습니다.
+
+</li><li> 명령어 검색 시 <code class="code">type</code> 및 <code class="code">command</code> 빌트인에 의해 출력되는 내용을 포함하여, 쉘 함수보다 <small class="sc">POSIX</small> 특수 빌트인을 먼저 찾습니다.
+
+</li><li> 슬래시를 포함한 이름을 가진 쉘 함수가 <small class="sc">POSIX</small> 모드 진입 전에 정의되었더라도, 쉘은 이름에 하나 이상의 슬래시가 포함된 함수를 실행하지 않습니다.
+
+</li><li> 해시 테이블(hash table)에 있는 명령어가 더 이상 존재하지 않을 때, Bash는 새로운 위치를 찾기 위해 <code class="env">$PATH</code>를 다시 검색합니다. 이는 &lsquo;<samp class="samp">shopt -s checkhash</samp>&rsquo;로도 사용 가능합니다.
+
+</li><li> Bash는 실행 비트(execute bit)가 설정되지 않은 명령어를 <code class="env">$PATH</code> 검색의 (최후의) 결과로 반환하더라도 명령어 해시 테이블에 삽입하지 않습니다.
+
+</li><li> 작업 제어(job control) 코드와 빌트인이 작업이 0이 아닌 상태로 종료될 때 출력하는 메시지는 &lsquo;Done(status)&rsquo;입니다.
+
+</li><li> 작업 제어 코드와 빌트인이 작업이 중단되었을 때 출력하는 메시지는 &lsquo;Stopped(<var class="var">signame</var>)&rsquo;입니다 (예: <var class="var">signame</var>은 <code class="code">SIGTSTP</code>).
+
+</li><li> 대화형 쉘인 경우, Bash는 &lsquo;<samp class="samp">;</samp>&rsquo; 또는 줄바꿈으로 구분된 목록 내의 명령어들을 실행하는 도중에는 작업 알림(job notifications)을 수행하지 않습니다. 비대화형 쉘은 목록 내의 포그라운드 작업이 완료된 후 상태 메시지를 출력합니다.
+
+</li><li> 대화형 쉘인 경우, Bash는 상태가 변경된 백그라운드 작업이나 시그널로 인해 종료된 포그라운드 작업의 상태를 출력하기 전에 다음 프롬프트가 뜰 때까지 기다립니다. 비대화형 쉘은 포그라운드 작업이 완료된 후 상태 메시지를 출력합니다.
+
+</li><li> Bash는 <code class="code">wait</code> 또는 <code class="code">jobs</code> 빌트인을 통해 사용자에게 종료 사실을 알린 후 작업 테이블에서 작업을 영구히 제거합니다. 사용자에게 종료를 알린 후 작업 목록에서 해당 작업을 제거하지만, <code class="code">wait</code>에 <small class="sc">PID</small> 인자가 제공되는 한 상태 정보는 여전히 <code class="code">wait</code>을 통해 확인 가능합니다.
+
+</li><li> <code class="code">vi</code> 편집 모드에서 &lsquo;<samp class="samp">v</samp>&rsquo; 명령이 실행될 때, <code class="code">$VISUAL</code> 및 <code class="code">$EDITOR</code>를 확인하는 대신 <code class="code">vi</code> 에디터를 직접 호출합니다.
+
+</li><li> 프롬프트 확장은 &lsquo;<samp class="samp">!</samp>&rsquo;를 히스토리 번호로, &lsquo;<samp class="samp">!!</samp>&rsquo;를 &lsquo;<samp class="samp">!</samp>&rsquo;로 바꾸는 <small class="sc">POSIX</small> <code class="env">PS1</code> 및 <code class="env">PS2</code> 확장을 활성화하며, Bash는 <code class="code">promptvars</code> 옵션 설정과 관계없이 <code class="env">PS1</code> 및 <code class="env">PS2</code> 값에 대해 파라미터 확장을 수행합니다.
+
+</li><li> 기본 히스토리 파일은 <samp class="file">~/.sh_history</samp>입니다 (이는 쉘이 <code class="env">$HISTFILE</code>에 할당하는 기본값입니다).
+
+</li><li> <code class="code">histexpand</code> 옵션이 활성화되어 있더라도, 큰따옴표로 감싸진 문자열 내의 &lsquo;<samp class="samp">!</samp>&rsquo; 문자는 히스토리 확장을 시작하지 않습니다.
+
+</li><li> 쉘 함수 정의를 출력할 때(예: <code class="code">type</code>에 의해), Bash는 꼭 필요한 경우가 아니면 <code class="code">function</code> 예약어를 출력하지 않습니다.
+
+</li><li> 비대화형 쉘은 산술 확장(arithmetic expansion)의 문법 오류로 인해 유효하지 않은 식이 생성될 경우 종료됩니다.
+
+</li><li> 비대화형 쉘은 파라미터 확장 에러가 발생하면 종료됩니다.
+
+</li><li> <small class="sc">POSIX</small> 특수 빌트인이 에러 상태를 반환하면 비대화형 쉘은 종료됩니다. 치명적인 에러들은 <small class="sc">POSIX</small> 표준에 나열된 것들이며, 잘못된 옵션 전달, 리다이렉션 에러, 명령어 이름 앞의 변수 할당 에러 등이 포함됩니다.
+
+</li><li> 할당문 뒤에 명령어 이름이 오지 않을 때 변수 할당 에러가 발생하면 비대화형 쉘은 에러 상태로 종료됩니다. 변수 할당 에러는 예를 들어 읽기 전용(readonly) 변수에 값을 할당하려고 할 때 발생합니다.
+
+</li><li> 특수 빌트인 앞의 할당문에서 변수 할당 에러가 발생하면 비대화형 쉘은 에러 상태로 종료되지만, 다른 단순 명령어의 경우에는 그렇지 않습니다. 다른 단순 명령어의 경우 쉘은 해당 명령어의 실행을 중단하고 최상위 레벨에서 실행을 계속합니다(&quot;쉘은 에러가 발생한 명령어에 대해 더 이상의 처리를 수행하지 않아야 함&quot;).
+
+</li><li> <code class="code">for</code> 문의 반복 변수나 <code class="code">select</code> 문의 선택 변수가 읽기 전용 변수이거나 유효하지 않은 이름인 경우, 비대화형 쉘은 에러 상태로 종료됩니다.
+
+</li><li> <code class="code">. <var class="var">filename</var></code> 에서 <var class="var">filename</var>을 찾을 수 없으면 비대화형 쉘은 종료됩니다.
+
+</li><li> <code class="code">.</code> 이나 <code class="code">source</code> 빌트인으로 읽어들인 스크립트에 문법 오류가 있거나, <code class="code">eval</code> 빌트인에 의해 처리되는 문자열에 문법 오류가 있으면 비대화형 쉘은 종료됩니다.
+
+</li><li> <code class="code">export</code>, <code class="code">readonly</code>, 또는 <code class="code">unset</code> 빌트인 명령어가 유효한 식별자가 아닌 인자를 받았고 쉘 함수에 작용하는 것이 아니라면, 비대화형 쉘은 종료됩니다. 이들은 특수 빌트인이기 때문에 이러한 에러는 종료를 강제합니다.
+
+</li><li> <small class="sc">POSIX</small> 특수 빌트인 앞에 오는 할당문은 빌트인이 완료된 후에도 쉘 환경에 유지됩니다.
+
+</li><li> <code class="code">command</code> 빌트인은 할당문을 인자로 받는 빌트인들이 할당문으로서 확장하는 것을 막지 않습니다; <small class="sc">POSIX</small> 모드가 아닐 때 선언 명령어들은 <code class="code">command</code> 뒤에 올 경우 할당문 확장 특성을 잃게 됩니다.
+
+</li><li> <small class="sc">POSIX</small> 모드를 활성화하면 <code class="code">inherit_errexit</code> 옵션이 설정되는 효과가 있어, 명령어 치환을 실행하기 위해 생성된 서브쉘은 부모 쉘로부터 <samp class="option">-e</samp> 옵션 값을 상속받습니다. <code class="code">inherit_errexit</code> 옵션이 활성화되지 않았을 때 Bash는 그러한 서브쉘에서 <samp class="option">-e</samp> 옵션을 해제합니다.
+
+</li><li> <small class="sc">POSIX</small> 모드를 활성화하면 <code class="code">shift_verbose</code> 옵션이 설정되는 효과가 있어, <code class="code">shift</code>에 전달된 숫자 인자가 위치 파라미터의 개수를 초과하면 에러 메시지가 출력됩니다.
+
+</li><li> <small class="sc">POSIX</small> 모드를 활성화하면 <code class="code">interactive_comments</code> 옵션이 설정되는 효과가 있습니다(<a class="pxref" href="Comments.html">주석</a> 참조).
+
+</li><li> <code class="code">.</code> 및 <code class="code">source</code> 빌트인은 <code class="env">PATH</code> 검색을 통해 파일 이름을 찾지 못한 경우 현재 디렉토리에서 찾으려 하지 않습니다.
+
+</li><li> <code class="code">alias</code> 빌트인이 별칭 정의를 표시할 때, <samp class="option">-p</samp> 옵션이 제공되지 않는 한 앞에 &lsquo;<samp class="samp">alias </samp>&rsquo;를 붙여 표시하지 않습니다.
+
+</li><li> <code class="code">bg</code> 빌트인은 백그라운드로 보내진 각 작업을 설명하기 위해 필수 형식을 사용하며, 여기에는 해당 작업이 현재 작업인지 이전 작업인지에 대한 표시가 포함되지 않습니다.
+
+</li><li> <code class="code">cd</code> 빌트인이 논리(logical) 모드로 호출되었을 때, <code class="code">$PWD</code>와 인자로 제공된 디렉토리 이름으로 구성된 경로명이 실존하는 디렉토리를 참조하지 않는다면, 물리(physical) 모드로 대체하지 않고 실패합니다.
+
+</li><li> <code class="code">$PWD</code>와 인자로 제공된 디렉토리 이름으로 구성된 경로명의 길이가 정규화(canonicalized)되었을 때 <code class="code">PATH_MAX</code>를 초과하여 <code class="code">cd</code> 빌트인이 디렉토리를 변경할 수 없는 경우, <code class="code">cd</code>는 제공된 디렉토리 이름을 그대로 사용하려고 시도합니다.
+
+</li><li> <code class="code">xpg_echo</code> 옵션이 활성화되었을 때, Bash는 <code class="code">echo</code>의 그 어떤 인자도 옵션으로 해석하려 하지 않습니다. <code class="code">echo</code>는 각 인자의 이스케이프 시퀀스를 변환한 후 표시합니다.
+
+</li><li> <code class="code">export</code> 및 <code class="code">readonly</code> 빌트인 명령어는 <small class="sc">POSIX</small>가 요구하는 형식으로 출력을 표시합니다.
+
+</li><li> 히스토리를 나열할 때, <code class="code">fc</code> 빌트인은 히스토리 항목의 수정 여부를 표시하지 않습니다.
+
+</li><li> <code class="code">fc</code>가 사용하는 기본 에디터는 <code class="code">ed</code>입니다.
+
+</li><li> <code class="code">fc</code>는 추가적인 인자들을 무시하지 않고 에러로 처리합니다.
+
+</li><li> <code class="code">fc -s</code>에 너무 많은 인자가 제공되면 <code class="code">fc</code>는 에러 메시지를 출력하고 실패를 반환합니다.
+
+</li><li> &lsquo;<samp class="samp">kill -l</samp>&rsquo;의 출력은 모든 시그널 이름을 &lsquo;<samp class="samp">SIG</samp>&rsquo; 접두사 없이 공백으로 구분하여 한 줄에 출력합니다.
+
+</li><li> <code class="code">kill</code> 빌트인은 &lsquo;<samp class="samp">SIG</samp>&rsquo; 접두사가 붙은 시그널 이름을 허용하지 않습니다.
+
+</li><li> <code class="code">kill</code> 빌트인은 pid나 작업 인자 중 하나라도 유효하지 않거나, 그 중 하나에라도 지정된 시그널을 보내는 데 실패하면 실패 상태를 반환합니다. 기본 모드에서 <code class="code">kill</code>은 지정된 프로세스들 중 하나라도 시그널 전송에 성공하면 성공을 반환합니다.
+
+</li><li> <code class="code">printf</code> 빌트인은 부동 소수점 변환 지정자에 대응하는 인자들을 변환할 때, 사용 가능하더라도 <code class="code">long double</code> 대신 (<code class="code">strtod</code>를 통해) <code class="code">double</code>을 사용합니다. &lsquo;<samp class="samp">L</samp>&rsquo; 길이 수정자를 사용하면 <code class="code">printf</code>가 사용 가능한 경우 <code class="code">long double</code>을 사용하도록 강제할 수 있습니다.
+
+</li><li> <code class="code">pwd</code> 빌트인은 <samp class="option">-P</samp> 옵션을 통해 파일 시스템 확인을 요청받지 않았더라도, 자신이 출력하는 값이 현재 디렉토리와 동일한지 검증합니다.
+
+</li><li> <code class="code">read</code> 빌트인은 트랩이 설정된 시그널에 의해 중단될 수 있습니다. Bash가 <code class="code">read</code> 실행 중에 트랩된 시그널을 받으면 트랩 핸들러가 실행되고 <code class="code">read</code>는 128보다 큰 종료 상태를 반환합니다.
+
+</li><li> 옵션 없이 <code class="code">set</code> 빌트인이 호출될 때, 쉘 함수 이름과 정의를 표시하지 않습니다.
+
+</li><li> 옵션 없이 <code class="code">set</code> 빌트인이 호출될 때, 변수 값에 쉘 메타 문자가 포함되어 있지 않다면 (출력 불가능한 문자가 포함되어 있더라도) 따옴표 없이 값을 표시합니다.
+
+</li><li> <code class="code">test</code> 빌트인은 &lsquo;<samp class="samp">&lt;</samp>&rsquo; 및 &lsquo;<samp class="samp">&gt;</samp>&rsquo; 이항 연산자를 평가할 때 현재 로케일을 사용하여 문자열을 비교합니다.
+
+</li><li> <code class="code">test</code> 빌트인의 <samp class="option">-t</samp> 단항 기본 요소는 인자를 요구합니다. 과거 버전의 <code class="code">test</code>는 특정 경우에 인자를 선택 사항으로 만들었으며, Bash는 하위 호환성을 위해 이를 수용하려고 시도합니다.
+
+</li><li> <code class="code">trap</code> 빌트인은 시작 부분의 <code class="code">SIG</code> 없이 시그널 이름을 표시합니다.
+
+</li><li> <code class="code">trap</code> 빌트인은 첫 번째 인자가 오직 숫자로만 구성된 유효한 시그널 번호가 아닌 한, 해당 인자가 시그널 사양일 가능성을 확인하여 시그널 처리를 원래의 배치(disposition)로 되돌리지 않습니다. 사용자가 특정 시그널의 핸들러를 원래 배치로 리셋하고 싶다면 첫 번째 인자로 &lsquo;<samp class="samp">-</samp>&rsquo;를 사용해야 합니다.
+
+</li><li> 인자 없는 <code class="code">trap -p</code>는 트랩된 시그널뿐만 아니라, 배치가 SIG_DFL로 설정된 시그널들과 쉘 시작 시 무시되었던 시그널들도 표시합니다.
+
+</li><li> <code class="code">type</code> 및 <code class="code">command</code> 빌트인은 실행 가능하지 않은 파일을 발견된 것으로 보고하지 않지만, 해당 이름의 파일이 <code class="code">$PATH</code>에서 유일하게 발견된 것이라면 쉘은 그 파일을 실행하려고 시도합니다.
+
+</li><li> <code class="code">ulimit</code> 빌트인은 <samp class="option">-c</samp> 및 <samp class="option">-f</samp> 옵션에 대해 512바이트의 블록 크기를 사용합니다.
+
+</li><li> <code class="code">unset</code> 빌트인에 <samp class="option">-v</samp> 옵션이 지정되었을 때 <code class="code">readonly</code> 또는 <code class="code">해제 불가능한</code> 변수를 해제하려고 시도하면 치명적인 에러를 반환하며, 이로 인해 비대화형 쉘은 종료됩니다.
+
+</li><li> 명령어 앞에 오는 할당문에 나타나는 변수를 해제하도록 요청받았을 때, <code class="code">unset</code> 빌트인은 현재 또는 이전 범위에 있는 동일한 이름의 변수 또한 해제하려고 시도합니다. 이는 &quot;할당된 변수가 유틸리티에 의해 더 수정된다면, 유틸리티에 의해 행해진 수정 사항이 유지되어야 함&quot;이라는 요구 사항을 구현한 것입니다.
+
+</li><li> <code class="code">SIGCHLD</code>에 트랩이 설정되어 있을 때 <code class="code">SIGCHLD</code>가 도착하더라도 <code class="code">wait</code> 빌트인을 중단시키고 즉시 반환하게 만들지 않습니다. 트랩 명령어는 종료된 각 자식 프로세스에 대해 한 번씩 실행됩니다.
+
+</li><li> Bash는 <code class="code">wait</code> 빌트인이 종료된 백그라운드 프로세스의 상태를 반환한 후 해당 상태를 상태 목록에서 제거합니다.
+
+</li></ol>
+
+<p><small class="sc">POSIX</small> 모드일 때라도 Bash가 기본적으로 구현하지 않는 추가적인 <small class="sc">POSIX</small> 동작들이 있습니다. 구체적으로는 다음과 같습니다:
+</p>
+<ol class="enumerate">
+<li> <small class="sc">POSIX</small>는 단어 분할(word splitting)이 바이트 지향적(byte-oriented)일 것을 요구합니다. 즉, <code class="env">IFS</code> 값의 각 <em class="emph">바이트</em>가 잠재적으로 단어를 분할하며, 이는 해당 바이트가 <code class="env">IFS</code> 내의 다중 바이트 문자의 일부이거나 단어 내의 다중 바이트 문자의 일부일 때도 마찬가지입니다. Bash는 <code class="env">IFS</code> 값에 다중 바이트 문자를 허용하며, 유효한 다중 바이트 문자를 단일 구분자로 취급하고, 해당 문자를 구성하는 바이트 중 하나가 <code class="env">IFS</code>에 나타나더라도 유효한 다중 바이트 문자를 분할하지 않습니다. 이는 POSIX 해석 1560이며, 이슈 1924에 의해 추가로 수정되었습니다.
+
+</li><li> <code class="code">fc</code> 빌트인은 <code class="code">FCEDIT</code>이 설정되어 있지 않을 때 직접 <code class="code">ed</code>를 기본값으로 사용하는 대신, 히스토리 항목을 편집할 프로그램으로 <code class="code">$EDITOR</code>를 확인합니다. Bash는 <code class="code">EDITOR</code>도 설정되어 있지 않은 경우에만 <code class="code">ed</code>를 사용합니다.
+
+</li><li> 위에서 언급했듯이, Bash는 <code class="code">echo</code> 빌트인이 완전히 호환되도록 하기 위해 <code class="code">xpg_echo</code> 옵션이 활성화될 것을 요구합니다.
+
+</li></ol>
+
+<p>Bash를 빌드할 때 <code class="code">configure</code>에 <samp class="option">--enable-strict-posix-default</samp>를 지정함으로써 기본적으로 <small class="sc">POSIX</small> 준수 상태가 되도록 구성할 수 있습니다(<a class="pxref" href="Optional-Features.html">선택적 기능</a> 참조).
+</p>
+</div>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Shell-Compatibility-Mode.html">쉘 호환 모드</a>, 이전: <a href="The-Restricted-Shell.html">제한된 쉘</a>, 상위: <a href="Bash-Features.html">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

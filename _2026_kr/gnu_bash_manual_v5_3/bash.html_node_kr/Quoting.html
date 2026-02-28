@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>인용(Quoting) (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="인용(Quoting) (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="인용(Quoting) (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Shell-Syntax.html" rel="up" title="쉘 문법">
+<link href="Comments.html" rel="next" title="주석">
+<link href="Shell-Operation.html" rel="prev" title="쉘 동작 방식">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Quoting">
+<div class="nav-panel">
+<p>
+다음: <a href="Comments.html" accesskey="n" rel="next">주석</a>, 이전: <a href="Shell-Operation.html" accesskey="p" rel="prev">쉘 동작 방식</a>, 상위: <a href="Shell-Syntax.html" accesskey="u" rel="up">쉘 문법</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Quoting-1"><span>3.1.2 인용(Quoting)<a class="copiable-link" href="#Quoting-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-quoting"></a>
+
+<p>인용(Quoting)은 쉘에 대해 특정 문자나 단어의 특별한 의미를 제거하기 위해 사용됩니다.
+인용을 통해 특수 문자에 대한 특별한 처리를 중단시키거나, 예약어가 예약어로 인식되지 않도록 방지하며, 파라미터 확장이 일어나지 않도록 막을 수 있습니다.
+</p>
+<p>각각의 쉘 메타 문자(<a class="pxref" href="Definitions.html">용어 정의</a> 참조)는 쉘에 대해 특별한 의미를 가지며, 문자 그 자체를 나타내려면 반드시 인용되어야 합니다.
+</p>
+<p>명령어 히스토리 확장 기능(<a class="pxref" href="History-Interaction.html">히스토리 확장</a> 참조)이 사용 중일 때, 보통 &lsquo;<samp class="samp">!</samp>&rsquo;인 <em class="dfn">히스토리 확장</em> 문자는 히스토리 확장을 방지하기 위해 인용되어야 합니다.
+히스토리 확장에 관한 더 자세한 내용은 <a class="xref" href="Bash-History-Facilities.html">Bash 히스토리 기능</a>을 참조하십시오.
+</p>
+<p>인용 메커니즘에는 네 가지가 있습니다: <em class="dfn">이스케이프 문자(escape character)</em>, 작은따옴표, 큰따옴표, 그리고 달러-작은따옴표(dollar-single quotes)입니다.
+</p>
+<ul class="mini-toc">
+<li><a href="Escape-Character.html" accesskey="1">이스케이프 문자</a></li>
+<li><a href="Single-Quotes.html" accesskey="2">작은따옴표</a></li>
+<li><a href="Double-Quotes.html" accesskey="3">큰따옴표</a></li>
+<li><a href="ANSI_002dC-Quoting.html" accesskey="4">ANSI-C 방식 인용</a></li>
+<li><a href="Locale-Translation.html" accesskey="5">로케일 특정 번역</a></li>
+</ul>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>프로그래밍 가능한 자동 완성 빌트인 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="프로그래밍 가능한 자동 완성 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="프로그래밍 가능한 자동 완성 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Command-Line-Editing.html" rel="up" title="명령줄 편집">
+<link href="A-Programmable-Completion-Example.html" rel="next" title="프로그래밍 가능한 자동 완성 예시">
+<link href="Programmable-Completion.html" rel="prev" title="프로그래밍 가능한 자동 완성">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Programmable-Completion-Builtins">
+<div class="nav-panel">
+<p>
+다음: <a href="A-Programmable-Completion-Example.html" accesskey="n" rel="next">프로그래밍 가능한 자동 완성 예시</a>, 이전: <a href="Programmable-Completion.html" accesskey="p" rel="prev">프로그래밍 가능한 자동 완성</a>, 상위: <a href="Command-Line-Editing.html" accesskey="u" rel="up">명령줄 편집</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Programmable-Completion-Builtins-1"><span>8.7 프로그래밍 가능한 자동 완성 빌트인<a class="copiable-link" href="#Programmable-Completion-Builtins-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-completion-builtins"></a>
+
+<p>프로그래밍 가능한 자동 완성 시설을 조작하기 위해 세 가지 빌트인 명령어를 사용할 수 있습니다: 하나는 특정 명령어의 인자가 어떻게 자동 완성되어야 하는지 지정하는 것이고, 나머지 둘은 자동 완성이 진행되는 도중에 이를 수정하는 것입니다.
+</p>
+<dl class="table">
+<dt><a id="index-compgen"></a><span><code class="code">compgen</code><a class="copiable-link" href="#index-compgen"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted"><code class="code">compgen [-V <var class="var">varname</var>] [<var class="var">option</var>] [<var class="var">word</var>]</code>
+</pre></div>
+
+<p><var class="var">option</var>들에 따라 <var class="var">word</var>에 대해 가능한 자동 완성 일치 항목들을 생성합니다. <var class="var">option</var>은 <samp class="option">-p</samp>, <samp class="option">-r</samp>, <samp class="option">-D</samp>, <samp class="option">-E</samp>, 그리고 <samp class="option">-I</samp>를 제외하고 <code class="code">complete</code> 빌트인에서 허용되는 모든 옵션이 가능하며, 일치 항목들을 표준 출력으로 씁니다.
+</p>
+<p>만약 <samp class="option">-V</samp> 옵션이 제공되면, <code class="code">compgen</code>은 생성된 자동 완성 후보들을 표준 출력으로 내보내는 대신 인덱스 배열 변수 <var class="var">varname</var>에 저장합니다.
+</p>
+<p><samp class="option">-F</samp> 또는 <samp class="option">-C</samp> 옵션을 사용할 때, 프로그래밍 가능한 자동 완성 시설에 의해 설정된 다양한 쉘 변수들은 사용 가능하긴 하지만 유용한 값을 가지지는 않습니다.
+</p>
+<p>일치 항목들은 프로그래밍 가능한 자동 완성 코드가 동일한 플래그를 가진 자동 완성 사양(compspec)으로부터 직접 생성한 것과 동일한 방식으로 생성됩니다. 만약 <var class="var">word</var>가 지정되면, <var class="var">word</var>와 일치하는 자동 완성 후보들만 표시되거나 저장됩니다.
+</p>
+<p>반환 값은 잘못된 옵션이 제공되거나 일치 항목이 생성되지 않은 경우를 제외하고 참(true)입니다.
+</p>
+</dd>
+<dt><a id="index-complete"></a><span><code class="code">complete</code><a class="copiable-link" href="#index-complete"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted"><code class="code">complete [-abcdefgjksuv] [-o <var class="var">comp-option</var>] [-DEI] [-A <var class="var">action</var>]
+[-G <var class="var">globpat</var>] [-W <var class="var">wordlist</var>] [-F <var class="var">function</var>] [-C <var class="var">command</var>]
+[-X <var class="var">filterpat</var>] [-P <var class="var">prefix</var>] [-S <var class="var">suffix</var>] <var class="var">name</var> [<var class="var">name</var> ...]</code>
+<code class="code">complete -pr [-DEI] [<var class="var">name</var> ...]</code>
+</pre></div>
+
+<p>각 <var class="var">name</var>에 대한 인자들이 어떻게 자동 완성되어야 하는지 지정합니다.
+</p>
+<p>만약 <samp class="option">-p</samp> 옵션이 제공되거나 옵션 또는 <var class="var">name</var>이 전혀 제공되지 않으면, 기존의 자동 완성 사양들을 입력으로 재사용할 수 있는 형식으로 출력합니다. <samp class="option">-r</samp> 옵션은 각 <var class="var">name</var>에 대한 자동 완성 사양을 제거하거나, <var class="var">name</var>이 주어지지 않은 경우 모든 자동 완성 사양을 제거합니다.
+</p>
+<p>실제 스크립팅에서의 편의를 위해 <samp class="option">-D</samp> 옵션은 다른 옵션들과 액션들이 &ldquo;기본(default)&rdquo; 명령어 자동 완성에 적용되어야 함을 나타냅니다; 즉, 이전에 자동 완성이 정의되지 않은 명령어에 대해 자동 완성이 시도될 때 사용됩니다. <samp class="option">-E</samp> 옵션은 &ldquo;빈(empty)&rdquo; 명령어 자동 완성, 즉 빈 줄에서 자동 완성이 시도될 때 적용됨을 나타냅니다. <samp class="option">-I</samp> 옵션은 줄의 첫 번째 할당문이 아닌 단어, 또는 &lsquo;<samp class="samp">;</samp>&rsquo; 나 &lsquo;<samp class="samp">|</samp>&rsquo;와 같은 명령어 구분자 뒤의 첫 단어에 대한 자동 완성에 적용됨을 나타내며, 이는 대개 명령어 이름 완성입니다. 만약 여러 옵션이 제공되면 <samp class="option">-D</samp> 옵션이 <samp class="option">-E</samp>보다 우선하고, 둘 다 <samp class="option">-I</samp>보다 우선합니다. 만약 <samp class="option">-D</samp>, <samp class="option">-E</samp>, 또는 <samp class="option">-I</samp> 중 하나라도 제공되면 다른 모든 <var class="var">name</var> 인자들은 무시됩니다; 이러한 자동 완성은 해당 옵션으로 지정된 케이스에만 적용됩니다.
+</p>
+<p>단어 자동 완성이 시도될 때 이러한 자동 완성 사양들을 적용하는 과정은 위에서 설명되었습니다(<a class="pxref" href="Programmable-Completion.html">프로그래밍 가능한 자동 완성</a> 참조).
+</p>
+<p>기타 지정된 옵션들은 다음과 같은 의미를 갖습니다. <samp class="option">-G</samp>, <samp class="option">-W</samp>, 그리고 <samp class="option">-X</samp> 옵션(그리고 필요한 경우 <samp class="option">-P</samp> 및 <samp class="option">-S</samp> 옵션)의 인자들은 <code class="code">complete</code> 빌트인이 호출되기 전에 확장되는 것을 방지하기 위해 반드시 인용 처리되어야 합니다.
+</p>
+<dl class="table">
+<dt><code class="code">-o <var class="var">comp-option</var></code></dt>
+<dd><p><var class="var">comp-option</var>은 단순한 자동 완성 후보 생성을 넘어 compspec의 여러 동작 측면을 제어합니다. <var class="var">comp-option</var>은 다음 중 하나일 수 있습니다:
+</p>
+<dl class="table">
+<dt><code class="code">bashdefault</code></dt>
+<dd><p>compspec이 일치 항목을 생성하지 못한 경우 Bash의 나머지 기본 자동 완성을 수행합니다.
+</p>
+</dd>
+<dt><code class="code">default</code></dt>
+<dd><p>compspec이 일치 항목을 생성하지 못한 경우 Readline의 기본 파일 이름 완성을 사용합니다.
+</p>
+</dd>
+<dt><code class="code">dirnames</code></dt>
+<dd><p>compspec이 일치 항목을 생성하지 못한 경우 디렉토리 이름 완성을 수행합니다.
+</p>
+</dd>
+<dt><code class="code">filenames</code></dt>
+<dd><p>Readline에 compspec이 파일 이름을 생성함을 알려서, Readline이 파일 이름 전용 처리(디렉토리 이름 뒤에 슬래시 추가, 특수 문자 인용 처리, 또는 끝부분의 공백 억제 등)를 수행할 수 있게 합니다. 이 옵션은 <samp class="option">-F</samp>로 지정된 쉘 함수와 함께 사용하도록 고안되었습니다.
+</p>
+</dd>
+<dt><code class="code">fullquote</code></dt>
+<dd><p>Readline이 파일 이름이 아니더라도 모든 완성된 단어들을 인용 처리하도록 합니다.
+</p>
+</dd>
+<dt><code class="code">noquote</code></dt>
+<dd><p>완성된 단어들이 파일 이름이더라도 Readline이 이를 인용 처리하지 않도록 합니다(파일 이름 인용은 기본 동작입니다).
+</p>
+</dd>
+<dt><code class="code">nosort</code></dt>
+<dd><p>Readline이 가능한 자동 완성 후보 목록을 알파벳 순서로 정렬하지 않도록 합니다.
+</p>
+</dd>
+<dt><code class="code">nospace</code></dt>
+<dd><p>줄의 끝에서 완성된 단어들 뒤에 공백을 추가하지 않도록 Readline에 지시합니다(공백 추가는 기본 동작입니다).
+</p>
+</dd>
+<dt><code class="code">plusdirs</code></dt>
+<dd><p>compspec에 정의된 모든 일치 항목을 생성한 후, 추가로 디렉토리 이름 완성을 시도하여 발견된 모든 일치 항목을 다른 액션들의 결과에 추가합니다.
+</p></dd>
+</dl>
+
+</dd>
+<dt><code class="code">-A <var class="var">action</var></code></dt>
+<dd><p><var class="var">action</var>은 가능한 자동 완성 후보 목록을 생성하기 위해 다음 중 하나일 수 있습니다:
+</p>
+<dl class="table">
+<dt><code class="code">alias</code></dt>
+<dd><p>별칭(Alias) 이름들. <samp class="option">-a</samp>로도 지정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">arrayvar</code></dt>
+<dd><p>배열 변수 이름들.
+</p>
+</dd>
+<dt><code class="code">binding</code></dt>
+<dd><p>Readline 키 바인딩 이름들(<a class="pxref" href="Bindable-Readline-Commands.html">바인딩 가능한 Readline 명령어</a> 참조).
+</p>
+</dd>
+<dt><code class="code">builtin</code></dt>
+<dd><p>쉘 빌트인 명령어의 이름들. <samp class="option">-b</samp>로도 지정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">command</code></dt>
+<dd><p>명령어 이름들. <samp class="option">-c</samp>로도 지정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">directory</code></dt>
+<dd><p>디렉토리 이름들. <samp class="option">-d</samp>로도 지정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">disabled</code></dt>
+<dd><p>비활성화된 쉘 빌트인의 이름들.
+</p>
+</dd>
+<dt><code class="code">enabled</code></dt>
+<dd><p>활성화된 쉘 빌트인의 이름들.
+</p>
+</dd>
+<dt><code class="code">export</code></dt>
+<dd><p>내보내기(export)된 쉘 변수의 이름들. <samp class="option">-e</samp>로도 지정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">file</code></dt>
+<dd><p>파일 및 디렉토리 이름들. Readline의 파일 이름 완성 기능과 유사합니다. <samp class="option">-f</samp>로도 지정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">function</code></dt>
+<dd><p>쉘 함수의 이름들.
+</p>
+</dd>
+<dt><code class="code">group</code></dt>
+<dd><p>그룹 이름들. <samp class="option">-g</samp>로도 지정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">helptopic</code></dt>
+<dd><p><code class="code">help</code> 빌트인에서 허용되는 도움말 주제들(<a class="pxref" href="Bash-Builtins.html">Bash 빌트인 명령어</a> 참조).
+</p>
+</dd>
+<dt><code class="code">hostname</code></dt>
+<dd><p><code class="env">HOSTFILE</code> 쉘 변수로 지정된 파일로부터 가져온 호스트 이름들(<a class="pxref" href="Bash-Variables.html">Bash 변수</a> 참조).
+</p>
+</dd>
+<dt><code class="code">job</code></dt>
+<dd><p>작업 제어가 활성 상태인 경우 작업(Job) 이름들. <samp class="option">-j</samp>로도 지정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">keyword</code></dt>
+<dd><p>쉘 예약어들. <samp class="option">-k</samp>로도 지정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">running</code></dt>
+<dd><p>작업 제어가 활성 상태인 경우 실행 중인 작업의 이름들.
+</p>
+</dd>
+<dt><code class="code">service</code></dt>
+<dd><p>서비스 이름들. <samp class="option">-s</samp>로도 지정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">setopt</code></dt>
+<dd><p><code class="code">set</code> 빌트인의 <samp class="option">-o</samp> 옵션에 대한 유효한 인자들(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조).
+</p>
+</dd>
+<dt><code class="code">shopt</code></dt>
+<dd><p><code class="code">shopt</code> 빌트인에서 허용되는 쉘 옵션 이름들(<a class="pxref" href="Bash-Builtins.html">Bash 빌트인 명령어</a> 참조).
+</p>
+</dd>
+<dt><code class="code">signal</code></dt>
+<dd><p>시그널 이름들.
+</p>
+</dd>
+<dt><code class="code">stopped</code></dt>
+<dd><p>작업 제어가 활성 상태인 경우 중단된 작업의 이름들.
+</p>
+</dd>
+<dt><code class="code">user</code></dt>
+<dd><p>사용자 이름들. <samp class="option">-u</samp>로도 지정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">variable</code></dt>
+<dd><p>모든 쉘 변수의 이름들. <samp class="option">-v</samp>로도 지정할 수 있습니다.
+</p></dd>
+</dl>
+
+</dd>
+<dt><code class="code">-C <var class="var">command</var></code></dt>
+<dd><p><var class="var">command</var>는 서브쉘 환경에서 실행되며, 그 출력 결과가 가능한 자동 완성 후보로 사용됩니다. 인자들은 <samp class="option">-F</samp> 옵션과 동일한 방식으로 전달됩니다.
+</p>
+</dd>
+<dt><code class="code">-F <var class="var">function</var></code></dt>
+<dd><p>쉘 함수 <var class="var">function</var>은 현재 쉘 환경에서 실행됩니다. 함수 실행 시 첫 번째 인자($1)는 인자가 완성 중인 명령어의 이름이고, 두 번째 인자($2)는 완성 중인 단어이며, 세 번째 인자($3)는 위에서 설명한 대로 완성 중인 단어 바로 앞의 단어입니다(<a class="pxref" href="Programmable-Completion.html">프로그래밍 가능한 자동 완성</a> 참조). <var class="var">function</var>이 완료되면, 프로그래밍 가능한 자동 완성 시설은 <code class="env">COMPREPLY</code> 배열 변수 값으로부터 가능한 자동 완성 후보들을 가져옵니다.
+</p>
+</dd>
+<dt><code class="code">-G <var class="var">globpat</var></code></dt>
+<dd><p>파일명 확장 패턴 <var class="var">globpat</var>을 확장하여 가능한 자동 완성 후보들을 생성합니다.
+</p>
+</dd>
+<dt><code class="code">-P <var class="var">prefix</var></code></dt>
+<dd><p>다른 모든 옵션들이 적용된 후, 가능한 각 자동 완성 후보의 시작 부분에 <var class="var">prefix</var>를 추가합니다.
+</p>
+</dd>
+<dt><code class="code">-S <var class="var">suffix</var></code></dt>
+<dd><p>다른 모든 옵션들이 적용된 후, 가능한 각 자동 완성 후보의 끝부분에 <var class="var">suffix</var>를 추가합니다.
+</p>
+</dd>
+<dt><code class="code">-W <var class="var">wordlist</var></code></dt>
+<dd><p><code class="env">IFS</code> 특수 변수의 문자들을 구분자로 사용하여 <var class="var">wordlist</var>를 분할하고, 결과로 나온 각 단어를 확장합니다. 단어들이 쉘 메타 문자나 <code class="env">IFS</code> 값에 포함된 문자들을 포함할 수 있도록 <var class="var">wordlist</var> 내의 쉘 인용 규칙을 준수합니다. 가능한 자동 완성 후보들은 결과 목록 중 완성 중인 단어의 접두사와 일치하는 항목들입니다.
+</p>
+</dd>
+<dt><code class="code">-X <var class="var">filterpat</var></code></dt>
+<dd><p><var class="var">filterpat</var>은 파일 이름 확장에서 사용되는 것과 같은 패턴입니다. 이전의 옵션과 인자들에 의해 생성된 가능한 자동 완성 후보 목록에 적용되며, <var class="var">filterpat</var>과 일치하는 각 완성 후보는 목록에서 제거됩니다. <var class="var">filterpat</var> 시작 부분의 &lsquo;<samp class="samp">!</samp>&rsquo;는 패턴을 부정합니다; 이 경우 <var class="var">filterpat</var>과 일치하지 않는 모든 완성 후보가 제거됩니다.
+</p></dd>
+</dl>
+
+<p>반환 값은 잘못된 옵션이 제공된 경우, <samp class="option">-p</samp>, <samp class="option">-r</samp>, <samp class="option">-D</samp>, <samp class="option">-E</samp>, 또는 <samp class="option">-I</samp> 이외의 옵션이 <var class="var">name</var> 인자 없이 제공된 경우, 자동 완성 사양이 존재하지 않는 <var class="var">name</var>에 대해 사양 제거를 시도한 경우, 또는 자동 완성 사양 추가 중에 에러가 발생한 경우를 제외하고 참(true)입니다.
+</p>
+</dd>
+<dt><a id="index-compopt"></a><span><code class="code">compopt</code><a class="copiable-link" href="#index-compopt"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted"><code class="code">compopt</code> [-o <var class="var">option</var>] [-DEI] [+o <var class="var">option</var>] [<var class="var">name</var>]
+</pre></div>
+<p>각 <var class="var">name</var>에 대한 자동 완성 옵션들을 수정하거나, <var class="var">name</var>이 주어지지 않은 경우 현재 실행 중인 자동 완성에 대해 수정합니다. 만약 <var class="var">option</var>들이 주어지지 않으면, 각 <var class="var">name</var> 또는 현재 자동 완성에 대한 옵션들을 표시합니다. 가능한 <var class="var">option</var> 값들은 위에서 설명한 <code class="code">complete</code> 빌트인에서 유효한 것들입니다.
+</p>
+<p><samp class="option">-D</samp> 옵션은 제공된 다른 옵션들이 &ldquo;기본(default)&rdquo; 명령어 자동 완성에 적용되어야 함을 나타냅니다; <samp class="option">-E</samp> 옵션은 &ldquo;빈(empty)&rdquo; 명령어 자동 완성에, 그리고 <samp class="option">-I</samp> 옵션은 줄의 첫 단어에 대한 자동 완성에 적용됨을 나타냅니다. 이들은 <code class="code">complete</code> 빌트인과 동일한 방식으로 결정됩니다.
+</p>
+<p>여러 옵션이 제공되면 <samp class="option">-D</samp> 옵션이 <samp class="option">-E</samp>보다 우선하고, 둘 다 <samp class="option">-I</samp>보다 우선합니다.
+</p>
+<p>반환 값은 잘못된 옵션이 제공되거나, 자동 완성 사양이 존재하지 않는 <var class="var">name</var>에 대해 옵션 수정을 시도하거나, 출력 에러가 발생한 경우를 제외하고 참(true)입니다.
+</p></dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="A-Programmable-Completion-Example.html">프로그래밍 가능한 자동 완성 예시</a>, 이전: <a href="Programmable-Completion.html">프로그래밍 가능한 자동 완성</a>, 상위: <a href="Command-Line-Editing.html">명령줄 편집</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

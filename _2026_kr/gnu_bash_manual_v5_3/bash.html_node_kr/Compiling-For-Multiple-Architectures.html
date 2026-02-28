@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>다중 아키텍처를 위한 컴파일 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="다중 아키텍처를 위한 컴파일 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="다중 아키텍처를 위한 컴파일 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Installing-Bash.html" rel="up" title="Bash 설치">
+<link href="Installation-Names.html" rel="next" title="설치 이름">
+<link href="Compilers-and-Options.html" rel="prev" title="컴파일러 및 옵션">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Compiling-For-Multiple-Architectures">
+<div class="nav-panel">
+<p>
+다음: <a href="Installation-Names.html" accesskey="n" rel="next">설치 이름</a>, 이전: <a href="Compilers-and-Options.html" accesskey="p" rel="prev">컴파일러 및 옵션</a>, 상위: <a href="Installing-Bash.html" accesskey="u" rel="up">Bash 설치</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Compiling-For-Multiple-Architectures-1"><span>10.3 다중 아키텍처를 위한 컴파일<a class="copiable-link" href="#Compiling-For-Multiple-Architectures-1"> &para;</a></span></h3>
+
+<p>각 아키텍처를 위한 오브젝트 파일들을 각각의 디렉토리에 배치함으로써, 여러 종류의 컴퓨터를 위한 Bash를 동시에 컴파일할 수 있습니다. 이를 위해서는 <code class="code">VPATH</code> 변수를 지원하는 <code class="code">make</code> 버전(예: GNU <code class="code">make</code>)을 사용해야 합니다. 오브젝트 파일과 실행 파일들이 생성되길 원하는 디렉토리로 <code class="code">cd</code> 명령어를 사용하여 이동한 뒤, 소스 디렉토리에 있는 <code class="code">configure</code> 스크립트를 실행하십시오(<a class="pxref" href="Basic-Installation.html">기본 설치</a> 참조). 소스 파일들이 어디에 있는지 <code class="code">configure</code>에 알려주기 위해 <samp class="option">--srcdir=PATH</samp> 인자를 제공해야 할 수도 있습니다. <code class="code">configure</code>는 자동으로 자신이 위치한 디렉토리와 <samp class="file">..</samp> 디렉토리에서 소스 코드를 찾습니다.
+</p>
+<p><code class="code">VPATH</code> 변수를 지원하지 않는 <code class="code">make</code>를 사용해야 하는 경우, 소스 코드 디렉토리에서 한 번에 한 아키텍처씩 Bash를 컴파일할 수 있습니다. 한 아키텍처를 위해 Bash를 설치한 후에는 다른 아키텍처를 위한 구성을 수행하기 전에 &lsquo;<samp class="samp">make distclean</samp>&rsquo;을 실행하십시오.
+</p>
+<p>또는 시스템이 심볼릭 링크를 지원하는 경우, <samp class="file">support/mkclone</samp> 스크립트를 사용하여 소스 디렉토리의 각 파일로 연결되는 심볼릭 링크들을 가진 빌드 트리(build tree)를 생성할 수 있습니다. 다음은 소스 디렉토리 <samp class="file">/usr/gnu/src/bash-2.0</samp>으로부터 현재 디렉토리에 빌드 디렉토리를 생성하는 예시입니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">bash /usr/gnu/src/bash-2.0/support/mkclone -s /usr/gnu/src/bash-2.0 .
+</pre></div>
+
+<p><code class="code">mkclone</code> 스크립트는 Bash를 필요로 하므로, 다른 아키텍처를 위한 빌드 디렉토리를 생성하기 전에 최소 한 개의 아키텍처를 위한 Bash가 이미 빌드되어 있어야 합니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Installation-Names.html">설치 이름</a>, 이전: <a href="Compilers-and-Options.html">컴파일러 및 옵션</a>, 상위: <a href="Installing-Bash.html">Bash 설치</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

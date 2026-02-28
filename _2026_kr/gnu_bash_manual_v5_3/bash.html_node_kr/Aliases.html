@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>별칭(Alias) (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="별칭(Alias) (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="별칭(Alias) (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Bash-Features.html" rel="up" title="Bash 기능">
+<link href="Arrays.html" rel="next" title="배열">
+<link href="Shell-Arithmetic.html" rel="prev" title="쉘 산술 연산">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Aliases">
+<div class="nav-panel">
+<p>
+다음: <a href="Arrays.html" accesskey="n" rel="next">배열</a>, 이전: <a href="Shell-Arithmetic.html" accesskey="p" rel="prev">쉘 산술 연산</a>, 상위: <a href="Bash-Features.html" accesskey="u" rel="up">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Aliases-1"><span>6.6 별칭(Alias)<a class="copiable-link" href="#Aliases-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-alias-expansion"></a>
+
+<p><em class="dfn">별칭(Aliases)</em>은 입력된 단어가 단순 명령어의 첫 번째 단어로 올 수 있는 위치에 있을 때, 해당 단어를 다른 문자열로 치환할 수 있게 해줍니다.
+별칭은 <code class="code">alias</code> 및 <code class="code">unalias</code> 빌트인 명령어를 사용하여 설정하거나 해제할 수 있는 이름과 그에 대응하는 값을 가집니다(<a class="pxref" href="Shell-Builtin-Commands.html">쉘 빌트인 명령어</a> 참조).
+</p>
+<p>쉘이 적절한 위치에서 인용되지 않은 단어를 읽으면, 해당 단어가 별칭 이름과 일치하는지 확인합니다. 일치한다면 쉘은 그 단어를 별칭 값으로 교체하고, 마치 그 값이 원래 입력된 것처럼 다시 읽어들입니다. 쉘은 별칭 치환을 시도하기 전에 해당 단어 뒤에 오는 문자들을 미리 살펴보지 않습니다.
+</p>
+<p>문자 &lsquo;<samp class="samp">/</samp>&rsquo;, &lsquo;<samp class="samp">$</samp>&rsquo;, &lsquo;<samp class="samp">`</samp>&rsquo;, &lsquo;<samp class="samp">=</samp>&rsquo; 그리고 위에서 나열한 그 어떤 쉘 메타 문자나 인용 문자도 별칭 이름에 포함될 수 없습니다. 치환될 텍스트는 쉘 메타 문자를 포함하여 유효한 모든 쉘 입력을 포함할 수 있습니다. 치환된 텍스트의 첫 번째 단어에 대해 다시 별칭 검사를 수행하지만, 현재 확장 중인 별칭과 동일한 단어는 두 번 확장되지 않습니다. 이는 예를 들어 <code class="code">ls</code>를 <code class="code">&quot;ls -F&quot;</code>로 별칭을 지정할 수 있음을 의미하며, Bash는 치환된 텍스트를 재귀적으로 확장하려고 시도하지 않습니다.
+</p>
+<p>만약 별칭 값의 마지막 문자가 <code class="code">blank</code>(공백)라면, 쉘은 별칭 뒤에 오는 다음 명령어 단어에 대해서도 별칭 확장을 수행할지 확인합니다.
+</p>
+<p>별칭은 <code class="code">alias</code> 명령어로 생성 및 나열하고, <code class="code">unalias</code> 명령어로 제거합니다.
+</p>
+<p><code class="code">csh</code>에서와 같이 치환될 텍스트 내에서 인자(arguments)를 사용하는 메커니즘은 없습니다. 인자가 필요한 경우 대신 쉘 함수(<a class="pxref" href="Shell-Functions.html">쉘 함수</a> 참조)를 사용하십시오.
+</p>
+<p><code class="code">shopt</code>을 통해 <code class="code">expand_aliases</code> 쉘 옵션이 설정되어 있지 않은 한, 쉘이 대화형이 아닐 때는 별칭이 확장되지 않습니다(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조).
+</p>
+<p>별칭의 정의와 사용에 관한 규칙은 다소 혼란스러울 수 있습니다. Bash는 항상 한 줄 이상의 완전한 입력을 읽고, 복합 명령어의 경우 이를 구성하는 모든 줄을 읽은 후에 해당 줄이나 복합 명령어 내의 명령어를 실행합니다. 별칭은 명령어가 실행될 때가 아니라 읽혀질 때 확장됩니다. 따라서 다른 명령어와 동일한 줄에 나타나는 별칭 정의는 쉘이 다음 입력 줄을 읽기 전까지는 효력을 발휘하지 않습니다. 또한 복합 명령어 내의 별칭 정의는 쉘이 복합 명령어 전체를 파싱하고 실행할 때까지 효력을 발휘하지 않습니다. 해당 줄의 별칭 정의 뒤에 오는 명령어들이나 복합 명령어의 나머지 부분은 새로운 별칭의 영향을 받지 않습니다. 이 동작은 함수가 실행될 때도 문제가 됩니다. 별칭은 함수가 실행될 때가 아니라 함수 정의가 읽혀질 때 확장되는데, 이는 함수 정의 자체가 하나의 명령어이기 때문입니다. 결과적으로 함수 내에서 정의된 별칭은 해당 함수가 실행된 이후에야 사용할 수 있게 됩니다. 안전을 위해 항상 별칭 정의는 별도의 줄에 배치하고, 복합 명령어 내에서는 <code class="code">alias</code>를 사용하지 마십시오.
+</p>
+<p>거의 모든 용도에서 쉘 함수가 별칭보다 선호됩니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Arrays.html">배열</a>, 이전: <a href="Shell-Arithmetic.html">쉘 산술 연산</a>, 상위: <a href="Bash-Features.html">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

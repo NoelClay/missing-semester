@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>쉘 문법 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="쉘 문법 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="쉘 문법 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Basic-Shell-Features.html" rel="up" title="기본 쉘 기능">
+<link href="Shell-Commands.html" rel="next" title="쉘 명령어">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Shell-Syntax">
+<div class="nav-panel">
+<p>
+다음: <a href="Shell-Commands.html" accesskey="n" rel="next">쉘 명령어</a>, 상위: <a href="Basic-Shell-Features.html" accesskey="u" rel="up">기본 쉘 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Shell-Syntax-1"><span>3.1 쉘 문법<a class="copiable-link" href="#Shell-Syntax-1"> &para;</a></span></h3>
+
+<p>쉘이 입력을 읽을 때, 일련의 작업을 거칩니다. 만약 입력이 주석의 시작을 나타내면, 쉘은 주석 기호(&lsquo;<samp class="samp">#</samp>&rsquo;)와 해당 줄의 나머지 부분을 무시합니다.
+</p>                                
+<p>그렇지 않은 경우, 대략적으로 말하자면, 쉘은 입력을 읽고 이를 단어(word)와 연산자(operator)로 나눕니다. 이때 인용(quoting) 규칙을 적용하여 다양한 단어와 문자에 어떤 의미를 부여할지 선택합니다.
+</p>
+<p>그런 다음 쉘은 이러한 토큰들을 명령어 및 기타 구조로 파싱하고, 특정 단어나 문자의 특별한 의미를 제거하거나 다른 것들을 확장(expand)하며, 필요에 따라 입출력을 리다이렉트합니다. 그 후 지정된 명령어를 실행하고, 명령어의 종료 상태를 기다린 뒤, 그 종료 상태를 이후의 검사나 처리에 사용할 수 있도록 만듭니다.
+</p>
+<ul class="mini-toc">
+<li><a href="Shell-Operation.html" accesskey="1">쉘 동작 방식</a></li>
+<li><a href="Quoting.html" accesskey="2">인용(Quoting)</a></li>
+<li><a href="Comments.html" accesskey="3">주석</a></li>
+</ul>
+</div>
+
+
+
+</body>
+</html>

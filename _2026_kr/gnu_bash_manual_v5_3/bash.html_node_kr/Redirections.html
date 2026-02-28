@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>리다이렉션 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="리다이렉션 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="리다이렉션 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Basic-Shell-Features.html" rel="up" title="기본 쉘 기능">
+<link href="Executing-Commands.html" rel="next" title="명령어 실행">
+<link href="Shell-Expansions.html" rel="prev" title="쉘 확장">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Redirections">
+<div class="nav-panel">
+<p>
+다음: <a href="Executing-Commands.html" accesskey="n" rel="next">명령어 실행</a>, 이전: <a href="Shell-Expansions.html" accesskey="p" rel="prev">쉘 확장</a>, 상위: <a href="Basic-Shell-Features.html" accesskey="u" rel="up">기본 쉘 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Redirections-1"><span>3.6 리다이렉션<a class="copiable-link" href="#Redirections-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-redirection"></a>
+
+<p>명령어가 실행되기 전, 쉘이 해석하는 특별한 표기법을 사용하여 입출력을 <em class="dfn">리다이렉트(redirected)</em>할 수 있습니다.
+<em class="dfn">리다이렉션(Redirection)</em>은 명령어의 파일 핸들을 복제, 오픈, 클로즈하거나 다른 파일을 참조하게 할 수 있으며, 명령어가 읽고 쓰는 파일을 변경할 수 있습니다.
+<code class="code">exec</code> 빌트인과 함께 사용하면 리다이렉션은 현재 쉘 실행 환경의 파일 핸들을 수정합니다.
+다음 리다이렉션 연산자들은 단순 명령어 앞에 오거나 내부의 어느 곳에든 나타날 수 있으며, 명령어 뒤에 올 수도 있습니다.
+리다이렉션은 나타나는 순서대로 왼쪽에서 오른쪽 방향으로 처리됩니다.
+</p>
+<p>파일 서술자(file descriptor) 번호가 앞에 올 수 있는 각 리다이렉션은 대신 {<var class="var">varname</var>} 형식의 단어가 앞에 올 수 있습니다.
+이 경우 <code class="code">&gt;&amp;-</code> 및 <code class="code">&lt;&amp;-</code>를 제외한 각 리다이렉션 연산자에 대해, 쉘은 10보다 크거나 같은 파일 서술자를 할당하고 이를 {<var class="var">varname</var>}에 할당합니다.
+만약 {<var class="var">varname</var>}이 <code class="code">&gt;&amp;-</code> 또는 <code class="code">&lt;&amp;-</code> 앞에 오면, <var class="var">varname</var>의 값은 닫을 파일 서술자를 정의합니다.
+{<var class="var">varname</var>}이 제공되면 리다이렉션은 명령어의 범위를 넘어서도 유지되므로, 쉘 프로그래머는 <code class="code">exec</code> 빌트인을 사용하지 않고도 파일 서술자의 수명을 수동으로 관리할 수 있습니다.
+<code class="code">varredir_close</code> 쉘 옵션이 이 동작을 관리합니다(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조).
+</p>
+<p>이하의 설명에서 파일 서술자 번호가 생략되고 리다이렉션 연산자의 첫 번째 문자가 &lsquo;<samp class="samp">&lt;</samp>&rsquo;이면, 해당 리다이렉션은 표준 입력(파일 서술자 0)을 참조합니다.
+리다이렉션 연산자의 첫 번째 문자가 &lsquo;<samp class="samp">&gt;</samp>&rsquo;이면, 표준 출력(파일 서술자 1)을 참조합니다.
+</p>
+<p>별도로 언급하지 않는 한, 이하 설명의 리다이렉션 연산자 뒤에 오는 <var class="var">word</var>는 중괄호 확장, 물결표 확장, 파라미터 및 변수 확장, 명령어 치환, 산술 확장, 따옴표 제거, 파일 이름 확장, 그리고 단어 분할의 대상이 됩니다.
+만약 확장의 결과가 하나 이상의 단어라면, Bash는 에러를 보고합니다.
+</p>
+<p>리다이렉션의 순서는 매우 중요합니다.
+예를 들어, 다음 명령어는
+</p><div class="example">
+<pre class="example-preformatted">ls &gt; <var class="var">dirlist</var> 2&gt;&amp;1
+</pre></div>
+<p>표준 출력(파일 서술자 1)과 표준 에러(파일 서술자 2)를 모두 <var class="var">dirlist</var> 파일로 보냅니다. 반면 다음 명령어는
+</p><div class="example">
+<pre class="example-preformatted">ls 2&gt;&amp;1 &gt; <var class="var">dirlist</var>
+</pre></div>
+<p>표준 출력만을 <var class="var">dirlist</var> 파일로 보냅니다. 표준 출력이 <var class="var">dirlist</var>로 리다이렉트되기 전에 표준 에러가 표준 출력의 복사본이 되었기 때문입니다.
+</p>
+<p>Bash는 리다이렉션에 사용되는 몇몇 파일 이름들을 특별하게 처리합니다. 이는 다음 표에 설명되어 있습니다.
+만약 Bash가 실행 중인 운영체제가 이러한 특수 파일들을 제공한다면 Bash는 그것을 사용하고, 그렇지 않으면 아래 설명된 동작을 통해 내부적으로 이를 에뮬레이트합니다.
+</p>
+<dl class="table">
+<dt><code class="code">/dev/fd/<var class="var">fd</var></code></dt>
+<dd><p><var class="var">fd</var>가 유효한 정수이면, 파일 서술자 <var class="var">fd</var>를 복제합니다.
+</p>
+</dd>
+<dt><code class="code">/dev/stdin</code></dt>
+<dd><p>파일 서술자 0을 복제합니다.
+</p>
+</dd>
+<dt><code class="code">/dev/stdout</code></dt>
+<dd><p>파일 서술자 1을 복제합니다.
+</p>
+</dd>
+<dt><code class="code">/dev/stderr</code></dt>
+<dd><p>파일 서술자 2을 복제합니다.
+</p>
+</dd>
+<dt><code class="code">/dev/tcp/<var class="var">host</var>/<var class="var">port</var></code></dt>
+<dd><p><var class="var">host</var>가 유효한 호스트 이름이나 인터넷 주소이고, <var class="var">port</var>가 정수 포트 번호이거나 서비스 이름인 경우, Bash는 해당 TCP 소켓을 열려고 시도합니다.
+</p>
+</dd>
+<dt><code class="code">/dev/udp/<var class="var">host</var>/<var class="var">port</var></code></dt>
+<dd><p><var class="var">host</var>가 유효한 호스트 이름이나 인터넷 주소이고, <var class="var">port</var>가 정수 포트 번호이거나 서비스 이름인 경우, Bash는 해당 UDP 소켓을 열려고 시도합니다.
+</p></dd>
+</dl>
+
+<p>파일을 열거나 생성하는 데 실패하면 리다이렉션은 실패하게 됩니다.
+</p>
+<p>9보다 큰 파일 서술자를 사용하는 리다이렉션은 쉘이 내부적으로 사용하는 파일 서술자와 충돌할 수 있으므로 주의해서 사용해야 합니다.
+</p>
+<ul class="mini-toc">
+<li><a href="#Redirecting-Input" accesskey="1">입력 리다이렉션</a></li>
+<li><a href="#Redirecting-Output" accesskey="2">출력 리다이렉션</a></li>
+<li><a href="#Appending-Redirected-Output" accesskey="3">리다이렉션된 출력 추가</a></li>
+<li><a href="#Redirecting-Standard-Output-and-Standard-Error" accesskey="4">표준 출력 및 표준 에러 리다이렉션</a></li>
+<li><a href="#Appending-Standard-Output-and-Standard-Error" accesskey="5">표준 출력 및 표준 에러 추가</a></li>
+<li><a href="#Here-Documents" accesskey="6">히어 도큐먼트 (Here Documents)</a></li>
+<li><a href="#Here-Strings" accesskey="7">히어 스트링 (Here Strings)</a></li>
+<li><a href="#Duplicating-File-Descriptors" accesskey="8">파일 서술자 복제</a></li>
+<li><a href="#Moving-File-Descriptors" accesskey="9">파일 서술자 이동</a></li>
+<li><a href="#Opening-File-Descriptors-for-Reading-and-Writing">읽기 및 쓰기를 위한 파일 서술자 열기</a></li>
+</ul>
+<div class="subsection-level-extent" id="Redirecting-Input">
+<h4 class="subsection"><span>3.6.1 입력 리다이렉션<a class="copiable-link" href="#Redirecting-Input"> &para;</a></span></h4>
+<p>입력 리다이렉션은 <var class="var">word</var>의 확장 결과로 나온 이름의 파일을 파일 서술자 <code class="code">n</code>에서 읽기 위해 엽니다. <code class="code">n</code>이 지정되지 않으면 표준 입력(파일 서술자 0)을 사용합니다.
+</p>
+<p>입력 리다이렉션의 일반적인 형식은 다음과 같습니다:
+</p><div class="example">
+<pre class="example-preformatted">[<var class="var">n</var>]&lt;<var class="var">word</var>
+</pre></div>
+
+</div>
+<div class="subsection-level-extent" id="Redirecting-Output">
+<h4 class="subsection"><span>3.6.2 출력 리다이렉션<a class="copiable-link" href="#Redirecting-Output"> &para;</a></span></h4>
+<p>출력 리다이렉션은 <var class="var">word</var>의 확장 결과로 나온 이름의 파일을 파일 서술자 <var class="var">n</var>에 쓰기 위해 엽니다. <var class="var">n</var>이 지정되지 않으면 표준 출력(파일 서술자 1)을 사용합니다.
+파일이 존재하지 않으면 새로 생성하고, 이미 존재하면 크기를 0으로 줄입니다(내용 삭제).
+</p>
+<p>출력 리다이렉션의 일반적인 형식은 다음과 같습니다:
+</p><div class="example">
+<pre class="example-preformatted">[<var class="var">n</var>]&gt;[|]<var class="var">word</var>
+</pre></div>
+
+<p>리다이렉션 연산자가 &lsquo;<samp class="samp">&gt;</samp>&rsquo;이고 <code class="code">set</code> 빌트인 명령어의 <code class="code">noclobber</code> 옵션이 활성화된 경우, <var class="var">word</var>의 확장 결과로 나온 이름의 파일이 이미 존재하며 일반 파일이라면 리다이렉션은 실패합니다.
+리다이렉션 연산자가 &lsquo;<samp class="samp">&gt;|</samp>&rsquo;이거나, 연산자가 &lsquo;<samp class="samp">&gt;</samp>&rsquo;이면서 <code class="code">noclobber</code> 옵션이 활성화되어 있지 않다면, 파일이 존재하더라도 리다이렉션을 시도합니다.
+</p>
+</div>
+<div class="subsection-level-extent" id="Appending-Redirected-Output">
+<h4 class="subsection"><span>3.6.3 리다이렉션된 출력 추가<a class="copiable-link" href="#Appending-Redirected-Output"> &para;</a></span></h4>
+<p>이 방식의 출력 리다이렉션은 <var class="var">word</var>의 확장 결과로 나온 이름의 파일을 파일 서술자 <var class="var">n</var>에 덧붙이기(append) 위해 엽니다. <var class="var">n</var>이 지정되지 않으면 표준 출력(파일 서술자 1)을 사용합니다.
+파일이 존재하지 않으면 새로 생성합니다.
+</p>
+<p>출력 추가의 일반적인 형식은 다음과 같습니다:
+</p><div class="example">
+<pre class="example-preformatted">[<var class="var">n</var>]&gt;&gt;<var class="var">word</var>
+</pre></div>
+
+</div>
+<div class="subsection-level-extent" id="Redirecting-Standard-Output-and-Standard-Error">
+<h4 class="subsection"><span>3.6.4 표준 출력 및 표준 에러 리다이렉션<a class="copiable-link" href="#Redirecting-Standard-Output-and-Standard-Error"> &para;</a></span></h4>
+<p>이 구조는 표준 출력(파일 서술자 1)과 표준 에러 출력(파일 서술자 2)을 모두 <var class="var">word</var>의 확장 결과물인 파일로 리다이렉트합니다.
+</p>
+<p>표준 출력과 표준 에러를 동시에 리다이렉트하는 형식은 두 가지가 있습니다:
+</p><div class="example">
+<pre class="example-preformatted">&amp;&gt;<var class="var">word</var>
+</pre></div>
+<p>그리고
+</p><div class="example">
+<pre class="example-preformatted">&gt;&amp;<var class="var">word</var>
+</pre></div>
+<p>두 형식 중 첫 번째 형식이 선호됩니다. 이는 의미상 다음과 동일합니다:
+</p><div class="example">
+<pre class="example-preformatted">&gt;<var class="var">word</var> 2&gt;&amp;1
+</pre></div>
+<p>두 번째 형식을 사용할 때, <var class="var">word</var>는 숫자로 확장되거나 &lsquo;<samp class="samp">-</samp>&rsquo;가 되어서는 안 됩니다.
+그렇게 될 경우, 호환성 이유로 다른 리다이렉션 연산자가 적용됩니다 (아래의 파일 서술자 복제 참조).
+</p>
+</div>
+<div class="subsection-level-extent" id="Appending-Standard-Output-and-Standard-Error">
+<h4 class="subsection"><span>3.6.5 표준 출력 및 표준 에러 추가<a class="copiable-link" href="#Appending-Standard-Output-and-Standard-Error"> &para;</a></span></h4>
+<p>이 구조는 표준 출력(파일 서술자 1)과 표준 에러 출력(파일 서술자 2)을 모두 <var class="var">word</var>의 확장 결과물인 파일에 덧붙입니다.
+</p>
+<p>표준 출력과 표준 에러를 추가하는 형식은 다음과 같습니다:
+</p><div class="example">
+<pre class="example-preformatted">&amp;&gt;&gt;<var class="var">word</var>
+</pre></div>
+<p>이는 의미상 다음과 동일합니다:
+</p><div class="example">
+<pre class="example-preformatted">&gt;&gt;<var class="var">word</var> 2&gt;&amp;1
+</pre></div>
+<p>(아래의 파일 서술자 복제 참조).
+</p>
+</div>
+<div class="subsection-level-extent" id="Here-Documents">
+<h4 class="subsection"><span>3.6.6 히어 도큐먼트 (Here Documents)<a class="copiable-link" href="#Here-Documents"> &para;</a></span></h4>
+<p>이 유형의 리다이렉션은 오직 <var class="var">delimiter</var>만을 포함하는 줄(뒤에 공백이 없는 줄)을 읽을 때까지 현재 소스에서 입력을 읽도록 쉘에 지시합니다.
+그 시점까지 읽어들인 모든 줄들은 명령어의 표준 입력(또는 <var class="var">n</var>이 지정된 경우 파일 서술자 <var class="var">n</var>)이 됩니다.
+</p>
+<p>히어 도큐먼트의 형식은 다음과 같습니다:
+</p><div class="example">
+<pre class="example-preformatted">[<var class="var">n</var>]&lt;&lt;[&minus;]<var class="var">word</var>
+        <var class="var">here-document</var>
+<var class="var">delimiter</var>
+</pre></div>
+
+<p>쉘은 <var class="var">word</var>에 대해 파라미터 및 변수 확장, 명령어 치환, 산술 확장, 또는 파일 이름 확장을 수행하지 않습니다.
+</p>
+<p>만약 <var class="var">word</var>의 어느 부분이라도 인용되어 있다면, <var class="var">delimiter</var>는 <var class="var">word</var>에 대한 따옴표 제거 결과가 되며, 히어 도큐먼트 내의 줄들은 확장되지 않습니다.
+만약 <var class="var">word</var>가 인용되지 않았다면, <var class="var">delimiter</var>는 <var class="var">word</var> 자체가 되며, 히어 도큐먼트의 텍스트는 큰따옴표로 감싸진 문자열과 유사하게 처리됩니다: 히어 도큐먼트의 모든 줄은 파라미터 확장, 명령어 치환 및 산술 확장의 대상이 되고, 문자 시퀀스 <code class="code">&#92;newline</code>은 리터럴로 취급되며, 문자 &lsquo;<samp class="samp">\</samp>&rsquo;, &lsquo;<samp class="samp">$</samp>&rsquo;, &lsquo;<samp class="samp">`</samp>&rsquo;를 인용하려면 &lsquo;<samp class="samp">\</samp>&rsquo;를 사용해야 합니다. 하지만 큰따옴표 문자는 특별한 의미를 갖지 않습니다.
+</p>
+<p>만약 리다이렉션 연산자가 &lsquo;<samp class="samp">&lt;&lt;-</samp>&rsquo;이면, 입력 줄들과 <var class="var">delimiter</var>를 포함한 줄의 앞에 있는 모든 탭(tab) 문자들을 제거합니다.
+이를 통해 쉘 스크립트 내의 히어 도큐먼트를 자연스러운 방식으로 들여쓰기할 수 있습니다.
+</p>
+<p>구분자가 인용되지 않은 경우, <code class="code">\&lt;newline&gt;</code> 시퀀스는 줄 이어짐으로 취급됩니다: 두 줄이 합쳐지고 백슬래시-줄바꿈은 제거됩니다.
+이 과정은 히어 도큐먼트를 읽는 동안, 종료 구분자를 확인하기 전에 발생하므로 합쳐진 줄이 종료 구분자를 형성할 수도 있습니다.
+</p>
+</div>
+<div class="subsection-level-extent" id="Here-Strings">
+<h4 class="subsection"><span>3.6.7 히어 스트링 (Here Strings)<a class="copiable-link" href="#Here-Strings"> &para;</a></span></h4>
+<p>히어 도큐먼트의 변형으로, 형식은 다음과 같습니다:
+</p><div class="example">
+<pre class="example-preformatted">[<var class="var">n</var>]&lt;&lt;&lt; <var class="var">word</var>
+</pre></div>
+
+<p><var class="var">word</var>는 물결표 확장, 파라미터 및 변수 확장, 명령어 치환, 산술 확장 및 따옴표 제거 과정을 거칩니다.
+파일 이름 확장과 단어 분할은 수행되지 않습니다.
+그 결과물은 마지막에 줄바꿈이 추가된 단일 문자열로써 명령어의 표준 입력(또는 <var class="var">n</var>이 지정된 경우 파일 서술자 <var class="var">n</var>)으로 공급됩니다.
+</p>
+</div>
+<div class="subsection-level-extent" id="Duplicating-File-Descriptors">
+<h4 class="subsection"><span>3.6.8 파일 서술자 복제<a class="copiable-link" href="#Duplicating-File-Descriptors"> &para;</a></span></h4>
+<p>리다이렉션 연산자
+</p><div class="example">
+<pre class="example-preformatted">[<var class="var">n</var>]&lt;&amp;<var class="var">word</var>
+</pre></div>
+<p>는 입력 파일 서술자를 복제하는 데 사용됩니다.
+만약 <var class="var">word</var>가 하나 이상의 숫자로 확장되면, 파일 서술자 <var class="var">n</var>은 해당 파일 서술자의 복사본이 됩니다.
+만약 <var class="var">word</var>의 숫자들이 입력을 위해 열린 파일 서술자를 지정하지 않는다면 리다이렉션 에러가 발생합니다.
+만약 <var class="var">word</var>가 &lsquo;<samp class="samp">-</samp>&rsquo;로 평가되면, 파일 서술자 <var class="var">n</var>은 닫힙니다.
+만약 <var class="var">n</var>이 지정되지 않으면 표준 입력(파일 서술자 0)을 사용합니다.
+</p>
+<p>연산자
+</p><div class="example">
+<pre class="example-preformatted">[<var class="var">n</var>]&gt;&amp;<var class="var">word</var>
+</pre></div>
+<p>는 출력 파일 서술자를 복제하기 위해 유사한 방식으로 사용됩니다.
+만약 <var class="var">n</var>이 지정되지 않으면 표준 출력(파일 서술자 1)을 사용합니다.
+만약 <var class="var">word</var>의 숫자들이 출력을 위해 열린 파일 서술자를 지정하지 않는다면 리다이렉션 에러가 발생합니다.
+만약 <var class="var">word</var>가 &lsquo;<samp class="samp">-</samp>&rsquo;로 평가되면, 파일 서술자 <var class="var">n</var>은 닫힙니다.
+특수한 경우로, 만약 <var class="var">n</var>이 생략되고 <var class="var">word</var>가 하나 이상의 숫자로 확장되지 않거나 &lsquo;<samp class="samp">-</samp>&rsquo;가 아니라면, 이전에 설명한 대로 표준 출력과 표준 에러를 리다이렉트합니다.
+</p>
+</div>
+<div class="subsection-level-extent" id="Moving-File-Descriptors">
+<h4 class="subsection"><span>3.6.9 파일 서술자 이동<a class="copiable-link" href="#Moving-File-Descriptors"> &para;</a></span></h4>
+<p>리다이렉션 연산자
+</p><div class="example">
+<pre class="example-preformatted">[<var class="var">n</var>]&lt;&amp;<var class="var">digit</var>-
+</pre></div>
+<p>는 파일 서술자 <var class="var">digit</var>을 파일 서술자 <var class="var">n</var>으로 이동합니다. <var class="var">n</var>이 지정되지 않으면 표준 입력(파일 서술자 0)을 사용합니다.
+<var class="var">digit</var>은 <var class="var">n</var>으로 복제된 후에 닫힙니다.
+</p>
+<p>마찬가지로 리다이렉션 연산자
+</p><div class="example">
+<pre class="example-preformatted">[<var class="var">n</var>]&gt;&amp;<var class="var">digit</var>-
+</pre></div>
+<p>는 파일 서술자 <var class="var">digit</var>을 파일 서술자 <var class="var">n</var>으로 이동합니다. <var class="var">n</var>이 지정되지 않으면 표준 출력(파일 서술자 1)을 사용합니다.
+</p>
+</div>
+<div class="subsection-level-extent" id="Opening-File-Descriptors-for-Reading-and-Writing">
+<h4 class="subsection"><span>3.6.10 읽기 및 쓰기를 위한 파일 서술자 열기<a class="copiable-link" href="#Opening-File-Descriptors-for-Reading-and-Writing"> &para;</a></span></h4>
+<p>리다이렉션 연산자
+</p><div class="example">
+<pre class="example-preformatted">[<var class="var">n</var>]&lt;&gt;<var class="var">word</var>
+</pre></div>
+<p>는 <var class="var">word</var>의 확장 결과물인 파일 이름을 파일 서술자 <var class="var">n</var>에서 읽기 및 쓰기용으로 모두 엽니다. <var class="var">n</var>이 지정되지 않으면 파일 서술자 0에서 엽니다.
+파일이 존재하지 않으면 새로 생성합니다.
+</p>
+</div>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Executing-Commands.html">명령어 실행</a>, 이전: <a href="Shell-Expansions.html">쉘 확장</a>, 상위: <a href="Basic-Shell-Features.html">기본 쉘 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>프로그래밍 가능한 자동 완성 예시 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="프로그래밍 가능한 자동 완성 예시 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="프로그래밍 가능한 자동 완성 예시 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Command-Line-Editing.html" rel="up" title="명령줄 편집">
+<link href="Programmable-Completion-Builtins.html" rel="prev" title="프로그래밍 가능한 자동 완성 빌트인">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="A-Programmable-Completion-Example">
+<div class="nav-panel">
+<p>
+이전: <a href="Programmable-Completion-Builtins.html" accesskey="p" rel="prev">프로그래밍 가능한 자동 완성 빌트인</a>, 상위: <a href="Command-Line-Editing.html" accesskey="u" rel="up">명령줄 편집</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="A-Programmable-Completion-Example-1"><span>8.8 프로그래밍 가능한 자동 완성 예시<a class="copiable-link" href="#A-Programmable-Completion-Example-1"> &para;</a></span></h3>
+
+<p><code class="code">complete</code> 및 <code class="code">compgen</code>이 제공하는 기본 액션들을 넘어 추가적인 자동 완성 기능을 얻는 가장 흔한 방법은 쉘 함수를 사용하고 <code class="code">complete -F</code>를 사용하여 특정 명령어에 바인딩하는 것입니다.
+</p>
+<p>다음 함수는 <code class="code">cd</code> 빌트인 명령어를 위한 자동 완성 기능을 제공합니다. 이는 자동 완성을 위해 사용되는 쉘 함수가 무엇을 해야 하는지 보여주는 아주 좋은 예시입니다. 이 함수는 <code class="code">$2</code>로 전달된 단어를 사용하여 완성할 디렉토리 이름을 결정합니다. <code class="code">COMP_WORDS</code> 배열 변수를 사용할 수도 있으며, 현재 단어는 <code class="code">COMP_CWORD</code> 변수에 의해 인덱싱됩니다.
+</p>
+<p>이 함수는 작업의 상당 부분을 <code class="code">complete</code> 및 <code class="code">compgen</code> 빌트인에 의존하며, 기본적인 디렉토리 이름을 받아들이는 것 외에 Bash의 <code class="code">cd</code>가 수행하는 추가적인 기능들만 더합니다: 물결표 확장(<a class="pxref" href="Tilde-Expansion.html">물결표 확장</a> 참조), 위에서 설명한 <var class="var">$CDPATH</var> 내의 디렉토리 검색(<a class="pxref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a> 참조), 그리고 <code class="code">cdable_vars</code> 쉘 옵션에 대한 기본적인 지원(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조)이 그것입니다. <code class="code">_comp_cd</code>는 공백이나 탭이 포함된 파일 이름을 수용하기 위해 <var class="var">IFS</var>의 값을 줄바꿈(newline)만 포함하도록 수정합니다 &ndash; <code class="code">compgen</code>은 생성한 자동 완성 후보들을 한 줄에 하나씩 출력하기 때문입니다.
+</p>
+<p>가능한 자동 완성 후보들은 <var class="var">COMPREPLY</var> 배열 변수에 배열 요소당 하나씩 들어갑니다. 프로그래밍 가능한 자동 완성 시스템은 함수가 반환될 때 해당 변수로부터 완성 후보들을 가져옵니다.
+</p>
+<div class="example">
+<pre class="example-preformatted"># cd 빌트인을 위한 자동 완성 함수
+# bash_completion 패키지의 cd 완성 함수를 기반으로 함
+_comp_cd()
+{
+    local IFS=$' &#92;t&#92;n'    # IFS 정규화
+    local cur _skipdot _cdpath
+    local i j k
+
+    # 물결표 확장 (물결표를 전체 경로명으로 확장함)
+    case &quot;$2&quot; in
+    &#92;~*)    eval cur=&quot;$2&quot; ;;
+    *)      cur=$2 ;;
+    esac
+
+    # cdpath가 없거나 절대 경로인 경우 -- 일반적인 디렉토리 완성 수행
+    if [[ -z &quot;${CDPATH:-}&quot; ]] || [[ &quot;$cur&quot; == @(./*|../*|/*) ]]; then
+        # compgen은 경로를 한 줄에 하나씩 출력함; while 루프를 사용할 수도 있음
+        IFS=$'&#92;n'
+        COMPREPLY=( $(compgen -d -- &quot;$cur&quot;) )
+        IFS=$' &#92;t&#92;n'
+    # CDPATH 검색 + CDPATH에 없는 경우 현재 디렉토리의 디렉토리들 검색
+    else
+        IFS=$'&#92;n'
+        _skipdot=false
+        # CDPATH를 전처리하여 빈 디렉토리 이름을 .으로 변환
+        _cdpath=${CDPATH/#:/.:}
+        _cdpath=${_cdpath//::/:.:}
+        _cdpath=${_cdpath/%:/:.}
+        for i in ${_cdpath//:/$'&#92;n'}; do
+            if [[ $i -ef . ]]; then _skipdot=true; fi
+            k=&quot;${#COMPREPLY[@]}&quot;
+            for j in $( compgen -d -- &quot;$i/$cur&quot; ); do
+                COMPREPLY[k++]=${j#$i/}        # 디렉토리 부분 잘라내기
+            done
+        done
+        $_skipdot || COMPREPLY+=( $(compgen -d -- &quot;$cur&quot;) )
+        IFS=$' &#92;t&#92;n'
+    fi
+
+    # 적절한 쉘 옵션이 설정되어 있고 완성 후보가 없는 경우 변수 이름 검색
+    if shopt -q cdable_vars &amp;&amp; [[ ${#COMPREPLY[@]} -eq 0 ]]; then
+        COMPREPLY=( $(compgen -v -- &quot;$cur&quot;) )
+    fi
+
+    return 0
+}
+</pre></div>
+
+<p>우리는 <code class="code">complete</code>의 <samp class="option">-F</samp> 옵션을 사용하여 자동 완성 함수를 설치합니다:
+</p>
+<div class="example">
+<pre class="example-preformatted"># Readline이 적절하게 인용 처리를 하고 디렉토리 뒤에 슬래시를 붙이도록 지시;
+# 다른 인자들에 대해서는 bash 기본 자동 완성을 사용
+complete -o filenames -o nospace -o bashdefault -F _comp_cd cd
+</pre></div>
+
+<p>Bash와 Readline이 세부 사항 중 일부를 대신 처리해주길 원하므로, 몇 가지 다른 옵션들을 사용하여 Bash와 Readline이 무엇을 해야 할지 알려줍니다. <samp class="option">-o filenames</samp> 옵션은 Readline에 가능한 자동 완성 후보들을 파일 이름으로 취급하고 적절하게 인용 처리하라고 지시합니다. 또한 이 옵션은 Readline이 디렉토리로 판단되는 파일 이름 뒤에 슬래시를 붙이게 만듭니다(이것이 우리가 <code class="code">_comp_cd</code>를 확장하여 <var class="var">CDPATH</var>를 통해 찾은 디렉토리를 사용할 때 슬래시를 붙이고 싶어 하는 이유입니다: Readline은 해당 후보들이 디렉토리인지 알 수 없기 때문입니다). <samp class="option">-o nospace</samp> 옵션은 우리가 디렉토리 이름 뒤에 무언가를 덧붙이고 싶을 경우를 대비해 Readline이 디렉토리 이름 뒤에 공백 문자를 붙이지 않도록 지시합니다. <samp class="option">-o bashdefault</samp> 옵션은 &ldquo;Bash 기본&rdquo; 자동 완성의 나머지를 가져옵니다 &ndash; 이는 Bash가 기본 Readline 세트에 추가하는 가능한 자동 완성 후보들입니다. 여기에는 명령어 이름 완성, &lsquo;<samp class="samp">$</samp>&rsquo; 또는 &lsquo;<samp class="samp">${</samp>&rsquo;로 시작하는 단어에 대한 변수 완성, 경로명 확장 패턴을 포함하는 완성(<a class="pxref" href="Filename-Expansion.html">파일 이름 확장</a> 참조) 등이 포함됩니다.
+</p>
+<p><code class="code">complete</code>를 사용하여 설치하고 나면, 우리가 <code class="code">cd</code> 명령어에 대해 단어 완성을 시도할 때마다 <code class="code">_comp_cd</code>가 호출될 것입니다.
+</p>
+<p>대부분의 일반적인 GNU, Unix, 및 Linux 명령어들에 대한 방대한 자동 완성 모음인 더 많은 예시들은 <code class="code">bash_completion</code> 프로젝트의 일부로 제공됩니다. 이는 많은 GNU/Linux 배포판에 기본적으로 설치되어 있습니다. 원래 Ian Macdonald에 의해 작성되었으며, 현재는 <a class="url" href="https://github.com/scop/bash-completion/">https://github.com/scop/bash-completion/</a>에서 프로젝트가 유지되고 있습니다. Solaris 및 Mac OS X와 같은 다른 시스템을 위한 포트(ports)들도 존재합니다.
+</p>
+<p><code class="code">bash_completion</code> 패키지의 이전 버전은 Bash와 함께 <samp class="file">examples/complete</samp> 하위 디렉토리에 배포됩니다.
+</p>
+<a class="index-entry-id" id="index-History_002c-how-to-use"></a>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+이전: <a href="Programmable-Completion-Builtins.html">프로그래밍 가능한 자동 완성 빌트인</a>, 상위: <a href="Command-Line-Editing.html">명령줄 편집</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

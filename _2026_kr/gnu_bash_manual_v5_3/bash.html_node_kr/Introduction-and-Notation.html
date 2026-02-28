@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>라인 편집 소개 및 표기법 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="라인 편집 소개 및 표기법 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="라인 편집 소개 및 표기법 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Command-Line-Editing.html" rel="up" title="명령줄 편집">
+<link href="Readline-Interaction.html" rel="next" title="Readline 상호작용">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+kbd.kbd {font-style: oblique}
+kbd.key {font-style: normal}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Introduction-and-Notation">
+<div class="nav-panel">
+<p>
+다음: <a href="Readline-Interaction.html" accesskey="n" rel="next">Readline 상호작용</a>, 상위: <a href="Command-Line-Editing.html" accesskey="u" rel="up">명령줄 편집</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Introduction-to-Line-Editing"><span>8.1 라인 편집 소개<a class="copiable-link" href="#Introduction-to-Line-Editing"> &para;</a></span></h3>
+
+<p>다음 문단들에서는 키 입력(keystrokes)을 나타내는 표기법을 설명하기 위해 Emacs 스타일을 사용합니다.
+</p>
+<p><kbd class="kbd">C-k</kbd> 표기법은 &lsquo;Control-K&rsquo;로 읽으며, Control 키를 누른 상태에서 <kbd class="key">k</kbd> 키를 눌렀을 때 생성되는 문자를 설명합니다.
+</p>
+<p><kbd class="kbd">M-k</kbd> 표기법은 &lsquo;Meta-K&rsquo;로 읽으며, Meta 키(있는 경우)를 누른 상태에서 <kbd class="key">k</kbd> 키를 눌러(<em class="dfn">메타 문자</em>) 생성된 후 두 키를 모두 떼었을 때의 문자를 설명합니다. Meta 키는 많은 키보드에서 <kbd class="key">ALT</kbd> 또는 <kbd class="key">Option</kbd>으로 표시되어 있습니다. 두 개의 <kbd class="key">ALT</kbd> 키가 있는 키보드(보통 스페이스 바의 양옆)에서는 일반적으로 왼쪽의 <kbd class="key">ALT</kbd> 키가 Meta 키로 작동하도록 설정되어 있습니다. <kbd class="key">ALT</kbd> 키 중 하나는 액센트가 붙은 문자를 입력하기 위한 Compose 키와 같은 다른 수식 키(modifier)로 구성될 수도 있습니다.
+</p>
+<p>일부 키보드에서 Meta 수식 키는 여덟 번째 비트(0200)가 설정된 문자를 생성합니다. 키보드가 이를 허용하는 경우 <code class="code">enable-meta-key</code> 변수를 사용하여 이 동작 여부를 제어할 수 있습니다. 다른 많은 경우, 터미널이나 터미널 에뮬레이터는 메타화된(metafied) 키를 다음 문단에서 설명하는 대로 <kbd class="key">ESC</kbd>로 시작하는 키 시퀀스로 변환합니다.
+</p>
+<p>만약 Meta 키나 <kbd class="key">ALT</kbd> 키, 또는 Meta 키로 작동하는 다른 키가 없다면, 일반적으로 <kbd class="key">ESC</kbd>를 <em class="emph">먼저</em> 누른 다음 <kbd class="key">k</kbd>를 입력함으로써 동일한 효과를 얻을 수 있습니다. <kbd class="key">ESC</kbd> 문자는 <em class="dfn">메타 접두사(meta prefix)</em>라고 알려져 있습니다.
+</p>
+<p>어느 쪽이든 이 과정을 <kbd class="key">k</kbd> 키를 <em class="dfn">메타화(metafying)</em>한다고 부릅니다.
+</p>
+<p>만약 Meta 키가 <kbd class="key">ESC</kbd> 메타 접두사를 포함하는 키 시퀀스를 생성한다면, <code class="code">force-meta-prefix</code> 변수를 설정하여 직접 지정한 <kbd class="kbd">M-key</kbd> 키 바인딩(<a class="ref" href="Readline-Init-File-Syntax.html">Readline 초기화 파일 문법</a>의 <code class="code">키 바인딩</code> 참조)이 동일하게 작동하도록 만들 수 있습니다.
+</p>
+<p><kbd class="kbd">M-C-k</kbd> 표기법은 &lsquo;Meta-Control-k&rsquo;로 읽으며, <kbd class="kbd">C-k</kbd>를 메타화하여 생성된 문자를 설명합니다.
+</p>
+<p>추가로, 여러 키들은 고유한 이름을 가지고 있습니다. 구체적으로 <kbd class="key">DEL</kbd>, <kbd class="key">ESC</kbd>, <kbd class="key">LFD</kbd>, <kbd class="key">SPC</kbd>, <kbd class="key">RET</kbd>, 그리고 <kbd class="key">TAB</kbd>은 본문이나 초기화 파일(<a class="pxref" href="Readline-Init-File.html">Readline 초기화 파일</a> 참조)에서 쓰일 때 해당 키 자체를 의미합니다. 만약 키보드에 <kbd class="key">LFD</kbd> 키가 없다면 <kbd class="key">C-j</kbd>를 입력하여 해당 문자를 출력할 수 있습니다. <kbd class="key">RET</kbd> 키는 일부 키보드에서 <kbd class="key">Return</kbd> 또는 <kbd class="key">Enter</kbd>로 표시되어 있을 수 있습니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Readline-Interaction.html">Readline 상호작용</a>, 상위: <a href="Command-Line-Editing.html">명령줄 편집</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

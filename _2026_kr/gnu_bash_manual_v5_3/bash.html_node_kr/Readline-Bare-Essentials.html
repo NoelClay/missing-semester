@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Readline 기초 필수 기능 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Readline 기초 필수 기능 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Readline 기초 필수 기능 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Readline-Interaction.html" rel="up" title="Readline 상호작용">
+<link href="Readline-Movement-Commands.html" rel="next" title="Readline 이동 명령어">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+kbd.kbd {font-style: oblique}
+kbd.key {font-style: normal}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Readline-Bare-Essentials">
+<div class="nav-panel">
+<p>
+다음: <a href="Readline-Movement-Commands.html" accesskey="n" rel="next">Readline 이동 명령어</a>, 상위: <a href="Readline-Interaction.html" accesskey="u" rel="up">Readline 상호작용</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Readline-Bare-Essentials-1"><span>8.2.1 Readline 기초 필수 기능<a class="copiable-link" href="#Readline-Bare-Essentials-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-notation_002c-readline"></a>
+<a class="index-entry-id" id="index-command-editing"></a>
+<a class="index-entry-id" id="index-editing-command-lines"></a>
+
+<p>명령줄에 문자를 입력하려면 그냥 타이핑하면 됩니다. 입력한 문자는 커서가 있던 위치에 나타나고, 커서는 오른쪽으로 한 칸 이동합니다. 문자를 잘못 입력했다면 삭제(erase) 키를 사용하여 뒤로 돌아가 잘못된 문자를 지울 수 있습니다.
+</p>
+<p>때로는 문자를 잘못 입력했다는 사실을 다른 여러 문자들을 더 입력한 후에야 알아차릴 수도 있습니다. 그런 경우에는 <kbd class="kbd">C-b</kbd>를 눌러 커서를 왼쪽으로 이동시킨 뒤 실수를 수정할 수 있습니다. 수정한 후에는 <kbd class="kbd">C-f</kbd>를 사용하여 커서를 다시 오른쪽으로 이동시킬 수 있습니다.
+</p>
+<p>줄의 중간에 텍스트를 추가하면, 커서 오른쪽에 있던 문자들은 삽입된 텍스트를 위한 공간을 만들기 위해 오른쪽으로 &lsquo;밀려나게&rsquo; 됩니다. 마찬가지로 커서 뒤의 텍스트를 삭제하면, 커서 오른쪽에 있던 문자들은 텍스트가 제거되면서 생긴 빈 공간을 채우기 위해 왼쪽으로 &lsquo;당겨집니다&rsquo;. 다음은 입력줄의 텍스트를 편집하기 위한 가장 기초적인 필수 기능들입니다:
+</p>
+<dl class="table">
+<dt><kbd class="kbd">C-b</kbd></dt>
+<dd><p>뒤로 한 문자 이동.
+</p></dd>
+<dt><kbd class="kbd">C-f</kbd></dt>
+<dd><p>앞으로 한 문자 이동.
+</p></dd>
+<dt><kbd class="key">DEL</kbd> 또는 <kbd class="key">Backspace</kbd></dt>
+<dd><p>커서 왼쪽의 문자 삭제.
+</p></dd>
+<dt><kbd class="kbd">C-d</kbd></dt>
+<dd><p>커서 위치의 문자 삭제.
+</p></dd>
+<dt>일반&nbsp;문자들<!-- /@w --></dt>
+<dd><p>커서 위치에 문자를 삽입.
+</p></dd>
+<dt><kbd class="kbd">C-_</kbd> 또는 <kbd class="kbd">C-x C-u</kbd></dt>
+<dd><p>마지막 편집 명령 취소(Undo). 빈 줄이 될 때까지 계속 취소할 수 있습니다.
+</p></dd>
+</dl>
+
+<p>설정에 따라 <kbd class="key">Backspace</kbd> 키가 커서 왼쪽의 문자를 지우고, <kbd class="key">DEL</kbd> 키가 (커서 왼쪽이 아닌) <kbd class="kbd">C-d</kbd>와 같이 커서 위치의 문자를 지우도록 설정되어 있을 수도 있습니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Readline-Movement-Commands.html">Readline 이동 명령어</a>, 상위: <a href="Readline-Interaction.html">Readline 상호작용</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

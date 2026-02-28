@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bash 조건식 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Bash 조건식 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Bash 조건식 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Bash-Features.html" rel="up" title="Bash 기능">
+<link href="Shell-Arithmetic.html" rel="next" title="쉘 산술 연산">
+<link href="Interactive-Shells.html" rel="prev" title="대화형 쉘">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Bash-Conditional-Expressions">
+<div class="nav-panel">
+<p>
+다음: <a href="Shell-Arithmetic.html" accesskey="n" rel="next">쉘 산술 연산</a>, 이전: <a href="Interactive-Shells.html" accesskey="p" rel="prev">대화형 쉘</a>, 상위: <a href="Bash-Features.html" accesskey="u" rel="up">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Bash-Conditional-Expressions-1"><span>6.4 Bash 조건식<a class="copiable-link" href="#Bash-Conditional-Expressions-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-expressions_002c-conditional"></a>
+
+<p>조건식(Conditional expressions)은 <code class="code">[[</code> 복합 명령어(<a class="pxref" href="Conditional-Constructs.html">조건부 구문</a> 참조)와 <code class="code">test</code> 및 <code class="code">[</code> 빌트인 명령어(<a class="pxref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a> 참조)에서 사용됩니다.
+<code class="code">test</code>와 <code class="code">[</code> 명령어는 인자의 개수에 따라 동작을 결정합니다; 명령어별 추가 동작에 대해서는 해당 명령어들의 설명을 참조하십시오.
+</p>
+<p>식은 단항(unary) 또는 이항(binary)일 수 있으며, 아래 나열된 기본 요소(primaries)들로 구성됩니다.
+단항 식은 종종 파일이나 쉘 변수의 상태를 검사하는 데 사용됩니다.
+이항 연산자는 문자열, 숫자, 그리고 파일 속성 비교를 위해 사용됩니다.
+</p>
+<p>Bash는 식 내에서 사용되는 몇몇 파일 이름들을 특별하게 처리합니다.
+만약 Bash가 실행 중인 운영체제가 이러한 특수 파일들을 제공한다면 Bash는 그것을 사용하고, 그렇지 않으면 아래 동작을 통해 내부적으로 에뮬레이트합니다:
+만약 기본 요소의 <var class="var">file</var> 인자가 <samp class="file">/dev/fd/<var class="var">N</var></samp> 형식이면, Bash는 파일 서술자 <var class="var">N</var>을 확인합니다.
+만약 기본 요소의 <var class="var">file</var> 인자가 <samp class="file">/dev/stdin</samp>, <samp class="file">/dev/stdout</samp>, 또는 <samp class="file">/dev/stderr</samp> 중 하나라면, Bash는 각각 파일 서술자 0, 1, 또는 2를 확인합니다.
+</p>
+<p><code class="code">[[</code>와 함께 사용될 때, &lsquo;<samp class="samp">&lt;</samp>&rsquo; 및 &lsquo;<samp class="samp">&gt;</samp>&rsquo; 연산자는 현재 로케일을 사용하여 사전순으로 정렬합니다.
+<code class="code">test</code> 명령어는 ASCII 순서를 사용합니다.
+</p>
+<p>별도로 언급하지 않는 한, 파일에 작용하는 기본 요소들은 심볼릭 링크를 따라가며 링크 자체가 아닌 링크의 대상을 대상으로 작용합니다.
+</p>
+<dl class="table">
+<dt><code class="code">-a <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하면 참(true)입니다.
+</p>
+</dd>
+<dt><code class="code">-b <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 블록 특수 파일(block special file)이면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-c <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 문자 특수 파일(character special file)이면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-d <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 디렉토리이면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-e <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-f <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 일반 파일(regular file)이면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-g <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 set-group-id 비트가 설정되어 있으면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-h <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 심볼릭 링크이면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-k <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 &quot;sticky&quot; 비트가 설정되어 있으면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-p <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 명명된 파이프(named pipe, FIFO)이면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-r <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 읽기 가능하면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-s <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 크기가 0보다 크면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-t <var class="var">fd</var></code></dt>
+<dd><p>파일 서술자 <var class="var">fd</var>가 열려 있고 터미널을 참조하고 있으면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-u <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 set-user-id 비트가 설정되어 있으면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-w <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 쓰기 가능하면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-x <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 실행 가능하면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-G <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 유효 그룹 ID(effective group id)에 의해 소유되고 있으면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-L <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 심볼릭 링크이면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-N <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 마지막으로 액세스된 이후에 수정되었다면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-O <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 유효 사용자 ID(effective user id)에 의해 소유되고 있으면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-S <var class="var">file</var></code></dt>
+<dd><p><var class="var">file</var>이 존재하고 소켓(socket)이면 참입니다.
+</p>
+</dd>
+<dt><code class="code"><var class="var">file1</var> -ef <var class="var">file2</var></code></dt>
+<dd><p><var class="var">file1</var>과 <var class="var">file2</var>가 동일한 장치 및 아이노드(inode) 번호를 참조하고 있으면 참입니다.
+</p>
+</dd>
+<dt><code class="code"><var class="var">file1</var> -nt <var class="var">file2</var></code></dt>
+<dd><p>(수정 날짜 기준으로) <var class="var">file1</var>이 <var class="var">file2</var>보다 최신이거나, <var class="var">file1</var>은 존재하는데 <var class="var">file2</var>는 존재하지 않으면 참입니다.
+</p>
+</dd>
+<dt><code class="code"><var class="var">file1</var> -ot <var class="var">file2</var></code></dt>
+<dd><p><var class="var">file1</var>이 <var class="var">file2</var>보다 오래되었거나, <var class="var">file2</var>는 존재하는데 <var class="var">file1</var>은 존재하지 않으면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-o <var class="var">optname</var></code></dt>
+<dd><p>쉘 옵션 <var class="var">optname</var>이 활성화되어 있으면 참입니다. 옵션 목록은 <code class="code">set</code> 빌트인의 <samp class="option">-o</samp> 옵션 설명 부분에 나와 있습니다(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조).
+</p>
+</dd>
+<dt><code class="code">-v <var class="var">varname</var></code></dt>
+<dd><p>쉘 변수 <var class="var">varname</var>이 설정되어 있으면(값이 할당되어 있으면) 참입니다.
+만약 <var class="var">varname</var>이 &lsquo;<samp class="samp">@</samp>&rsquo; 또는 &lsquo;<samp class="samp">*</samp>&rsquo;로 서브스크립트가 붙은 인덱스 배열 변수 이름인 경우, 배열에 설정된 요소가 하나라도 있으면 참을 반환합니다.
+만약 <var class="var">varname</var>이 &lsquo;<samp class="samp">@</samp>&rsquo; 또는 &lsquo;<samp class="samp">*</samp>&rsquo;로 서브스크립트가 붙은 연관 배열 변수 이름인 경우, 해당 키를 가진 요소가 설정되어 있으면 참을 반환합니다.
+</p>
+</dd>
+<dt><code class="code">-R <var class="var">varname</var></code></dt>
+<dd><p>쉘 변수 <var class="var">varname</var>이 설정되어 있고 네임레프(name reference) 속성을 가지고 있으면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-z <var class="var">string</var></code></dt>
+<dd><p><var class="var">string</var>의 길이가 0이면 참입니다.
+</p>
+</dd>
+<dt><code class="code">-n <var class="var">string</var></code></dt>
+<dt><code class="code"><var class="var">string</var></code></dt>
+<dd><p><var class="var">string</var>의 길이가 0이 아니면 참입니다.
+</p>
+</dd>
+<dt><code class="code"><var class="var">string1</var> == <var class="var">string2</var></code></dt>
+<dt><code class="code"><var class="var">string1</var> = <var class="var">string2</var></code></dt>
+<dd><p>두 문자열이 동일하면 참입니다.
+<code class="code">[[</code> 명령어와 함께 사용될 때, 이는 위에서 설명한 패턴 매칭을 수행합니다(<a class="pxref" href="Conditional-Constructs.html">조건부 구문</a> 참조).
+<small class="sc">POSIX</small> 준수를 위해서는 <code class="code">test</code> 명령어와 함께 &lsquo;<samp class="samp">=</samp>&rsquo;를 사용해야 합니다.
+</p>
+</dd>
+<dt><code class="code"><var class="var">string1</var> != <var class="var">string2</var></code></dt>
+<dd><p>두 문자열이 동일하지 않으면 참입니다.
+</p>
+</dd>
+<dt><code class="code"><var class="var">string1</var> &lt; <var class="var">string2</var></code></dt>
+<dd><p><var class="var">string1</var>이 <var class="var">string2</var>보다 사전순으로 앞서면 참입니다.
+</p>
+</dd>
+<dt><code class="code"><var class="var">string1</var> &gt; <var class="var">string2</var></code></dt>
+<dd><p><var class="var">string1</var>이 <var class="var">string2</var>보다 사전순으로 뒤에 오면 참입니다.
+</p>
+</dd>
+<dt><code class="code"><var class="var">arg1</var> OP <var class="var">arg2</var></code></dt>
+<dd><p><code class="code">OP</code>는 &lsquo;<samp class="samp">-eq</samp>&rsquo;, &lsquo;<samp class="samp">-ne</samp>&rsquo;, &lsquo;<samp class="samp">-lt</samp>&rsquo;, &lsquo;<samp class="samp">-le</samp>&rsquo;, &lsquo;<samp class="samp">-gt</samp>&rsquo;, 또는 &lsquo;<samp class="samp">-ge</samp>&rsquo; 중 하나입니다.
+이러한 산술 이항 연산자들은 각각 <var class="var">arg1</var>이 <var class="var">arg2</var>와 같음, 같지 않음, 작음, 작거나 같음, 큼, 크거나 같음인 경우 참을 반환합니다. <var class="var">Arg1</var>과 <var class="var">arg2</var>는 양수 또는 음수 정수일 수 있습니다.
+<code class="code">[[</code> 명령어와 함께 사용될 때, <var class="var">arg1</var>과 <var class="var">arg2</var>는 산술식으로 평가됩니다(<a class="pxref" href="Shell-Arithmetic.html">쉘 산술 연산</a> 참조).
+<code class="code">[[</code> 명령어가 <var class="var">arg1</var>과 <var class="var">arg2</var>에 대해 수행하는 확장 결과가 잠재적으로 빈 문자열이 될 수 있으므로, 산술식 평가는 이를 0으로 평가되는 식으로 취급합니다.
+</p></dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Shell-Arithmetic.html">쉘 산술 연산</a>, 이전: <a href="Interactive-Shells.html">대화형 쉘</a>, 상위: <a href="Bash-Features.html">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

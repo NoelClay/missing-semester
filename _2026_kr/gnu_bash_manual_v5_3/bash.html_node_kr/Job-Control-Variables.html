@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>작업 제어 변수 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="작업 제어 변수 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="작업 제어 변수 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Job-Control.html" rel="up" title="작업 제어">
+<link href="Job-Control-Builtins.html" rel="prev" title="작업 제어 빌트인">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Job-Control-Variables">
+<div class="nav-panel">
+<p>
+이전: <a href="Job-Control-Builtins.html" accesskey="p" rel="prev">작업 제어 빌트인</a>, 상위: <a href="Job-Control.html" accesskey="u" rel="up">작업 제어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Job-Control-Variables-1"><span>7.3 작업 제어 변수<a class="copiable-link" href="#Job-Control-Variables-1"> &para;</a></span></h3>
+
+<dl class="vtable">
+<dt><a id="index-auto_005fresume"></a><span><code class="code">auto_resume</code><a class="copiable-link" href="#index-auto_005fresume"> &para;</a></span></dt>
+<dd><p>이 변수는 쉘이 사용자와 작업 제어 시스템 사이에서 어떻게 상호작용할지를 제어합니다. 이 변수가 존재하면, 리다이렉션 없이 단일 단어로만 구성된 단순 명령어는 기존 작업의 재개(resumption) 후보로 간주됩니다. 모호함은 허용되지 않습니다; 해당 단어로 시작하거나 단어를 포함하는 작업이 둘 이상인 경우 가장 최근에 접근된 작업을 선택합니다. 이 컨텍스트에서 중단된 작업의 이름은 <code class="code">jobs</code> 명령어로 표시되는, 작업을 시작할 때 사용된 명령줄입니다. 만약 이 변수의 값이 &lsquo;<samp class="samp">exact</samp>&rsquo;로 설정되어 있다면, 입력된 단어가 중단된 작업의 이름과 정확히 일치해야 합니다; &lsquo;<samp class="samp">substring</samp>&rsquo;으로 설정되어 있다면, 단어가 중단된 작업 이름의 부분 문자열과 일치하면 됩니다. &lsquo;<samp class="samp">substring</samp>&rsquo; 값은 &lsquo;<samp class="samp">%?string</samp>&rsquo; 작업 <small class="sc">ID</small>와 유사한 기능을 제공합니다(<a class="pxref" href="Job-Control-Basics.html">작업 제어 기초</a> 참조). 그 외의 값(예: &lsquo;<samp class="samp">prefix</samp>&rsquo;)으로 설정된 경우, 단어는 중단된 작업 이름의 접두사여야 하며, 이는 &lsquo;<samp class="samp">%string</samp>&rsquo; 작업 <small class="sc">ID</small>와 유사한 기능을 제공합니다.
+</p>
+</dd>
+</dl>
+
+<a class="index-entry-id" id="index-Readline_002c-how-to-use"></a>
+
+
+
+
+</div>
+
+
+
+</body>
+</html>

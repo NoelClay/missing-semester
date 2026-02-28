@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>특수 빌트인 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="특수 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="특수 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Shell-Builtin-Commands.html" rel="up" title="쉘 빌트인 명령어">
+<link href="Modifying-Shell-Behavior.html" rel="prev" title="쉘 동작 수정하기">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Special-Builtins">
+<div class="nav-panel">
+<p>
+이전: <a href="Modifying-Shell-Behavior.html" accesskey="p" rel="prev">쉘 동작 수정하기</a>, 상위: <a href="Shell-Builtin-Commands.html" accesskey="u" rel="up">쉘 빌트인 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Special-Builtins-1"><span>4.4 특수 빌트인 (Special Builtins)<a class="copiable-link" href="#Special-Builtins-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-special-builtin-1"></a>
+
+<p>역사적인 이유로, <small class="sc">POSIX</small> 표준은 여러 빌트인 명령어들을 <em class="emph">특수(special)</em> 빌트인으로 분류했습니다. Bash가 <small class="sc">POSIX</small> 모드에서 실행 중일 때, 특수 빌트인은 다른 빌트인 명령어들과 세 가지 측면에서 다르게 동작합니다:
+</p>
+<ol class="enumerate">
+<li> 명령어 검색 시 쉘 함수보다 특수 빌트인을 먼저 찾습니다.
+
+</li><li> 특수 빌트인이 에러 상태를 반환하면, 비대화형 쉘은 종료됩니다.
+
+</li><li> 명령어 앞에 오는 할당문(assignment statements)은 명령어가 완료된 후에도 쉘 환경에 유지됩니다.
+</li></ol>
+
+<p>Bash가 <small class="sc">POSIX</small> 모드에서 실행 중이 아닐 때, 이 빌트인들은 다른 Bash 빌트인 명령어들과 아무런 차이 없이 동작합니다. Bash <small class="sc">POSIX</small> 모드에 대한 설명은 <a class="ref" href="Bash-POSIX-Mode.html">Bash와 POSIX</a>를 참조하십시오.
+</p>
+<p>다음은 <small class="sc">POSIX</small> 특수 빌트인 목록입니다:
+</p><div class="example">
+<pre class="example-preformatted">break : . source continue eval exec exit export readonly return set<!-- /@w -->
+shift times trap unset<!-- /@w -->
+</pre></div>
+
+</div>
+
+
+
+</body>
+</html>

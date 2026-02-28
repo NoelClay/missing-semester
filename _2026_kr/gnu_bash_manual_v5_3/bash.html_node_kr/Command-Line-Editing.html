@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>명령줄 편집 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="명령줄 편집 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="명령줄 편집 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="index.html" rel="up" title="최상위">
+<link href="Using-History-Interactively.html" rel="next" title="히스토리 대화형 사용">
+<link href="Job-Control.html" rel="prev" title="작업 제어">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Command-Line-Editing">
+<div class="nav-panel">
+<p>
+다음: <a href="Using-History-Interactively.html" accesskey="n" rel="next">히스토리 대화형 사용</a>, 이전: <a href="Job-Control.html" accesskey="p" rel="prev">작업 제어</a>, 상위: <a href="index.html" accesskey="u" rel="up">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h2 class="chapter" id="Command-Line-Editing-1"><span>8 명령줄 편집 (Command Line Editing)<a class="copiable-link" href="#Command-Line-Editing-1"> &para;</a></span></h2>
+
+<p>이 장에서는 <small class="sc">GNU</small> 명령줄 편집 인터페이스의 기본 기능들에 대해 설명합니다. 명령줄 편집 기능은 Readline 라이브러리에 의해 제공되며, 이 라이브러리는 Bash를 포함한 여러 다른 프로그램들에서도 사용됩니다. 명령줄 편집 기능은 대화형 쉘을 사용할 때 기본적으로 활성화되어 있으며, 쉘 호출 시 <samp class="option">--noediting</samp> 옵션을 사용하면 비활성화할 수 있습니다. 라인 편집 기능은 <code class="code">read</code> 빌트인 명령어의 <samp class="option">-e</samp> 옵션을 사용할 때도 사용됩니다(<a class="pxref" href="Bash-Builtins.html">Bash 빌트인 명령어</a> 참조). 기본적으로 라인 편집 명령어들은 Emacs의 명령어들과 유사하며, vi 스타일의 라인 편집 인터페이스도 사용할 수 있습니다. 라인 편집 기능은 <code class="code">set</code> 빌트인 명령어의 <samp class="option">-o emacs</samp> 또는 <samp class="option">-o vi</samp> 옵션을 사용하여 언제든지 활성화할 수 있으며(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조), <code class="code">set</code>의 <samp class="option">+o emacs</samp> 또는 <samp class="option">+o vi</samp> 옵션을 사용하여 비활성화할 수 있습니다.
+</p>
+
+<ul class="mini-toc">
+<li><a href="Introduction-and-Notation.html" accesskey="1">라인 편집 소개</a></li>
+<li><a href="Readline-Interaction.html" accesskey="2">Readline 상호작용</a></li>
+<li><a href="Readline-Init-File.html" accesskey="3">Readline 초기화 파일</a></li>
+<li><a href="Bindable-Readline-Commands.html" accesskey="4">바인딩 가능한 Readline 명령어</a></li>
+<li><a href="Readline-vi-Mode.html" accesskey="5">Readline vi 모드</a></li>
+<li><a href="Programmable-Completion.html" accesskey="6">프로그래밍 가능한 자동 완성</a></li>
+<li><a href="Programmable-Completion-Builtins.html" accesskey="7">프로그래밍 가능한 자동 완성 빌트인</a></li>
+<li><a href="A-Programmable-Completion-Example.html" accesskey="8">프로그래밍 가능한 자동 완성 예시</a></li>
+</ul>
+</div>
+
+
+
+</body>
+</html>

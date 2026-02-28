@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>명령어 실행 환경 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="명령어 실행 환경 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="명령어 실행 환경 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Executing-Commands.html" rel="up" title="명령어 실행">
+<link href="Environment.html" rel="next" title="환경">
+<link href="Command-Search-and-Execution.html" rel="prev" title="명령어 검색 및 실행">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+ul.mark-bullet {list-style-type: disc}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Command-Execution-Environment">
+<div class="nav-panel">
+<p>
+다음: <a href="Environment.html" accesskey="n" rel="next">환경</a>, 이전: <a href="Command-Search-and-Execution.html" accesskey="p" rel="prev">명령어 검색 및 실행</a>, 상위: <a href="Executing-Commands.html" accesskey="u" rel="up">명령어 실행</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Command-Execution-Environment-1"><span>3.7.3 명령어 실행 환경<a class="copiable-link" href="#Command-Execution-Environment-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-execution-environment"></a>
+
+<p>쉘은 다음 항목들로 구성된 <em class="dfn">실행 환경(execution environment)</em>을 가집니다:
+</p>
+<ul class="itemize mark-bullet">
+<li>쉘 호출 시 상속받은 열린 파일들. <code class="code">exec</code> 빌트인에 제공된 리다이렉션에 의해 수정될 수 있습니다.
+
+</li><li><code class="code">cd</code>, <code class="code">pushd</code>, <code class="code">popd</code>에 의해 설정되었거나 호출 시 상속받은 현재 작업 디렉토리.
+
+</li><li><code class="code">umask</code>에 의해 설정되었거나 부모 프로세스로부터 상속받은 파일 생성 모드 마스크(mask).
+
+</li><li><code class="code">trap</code>에 의해 설정된 현재 트랩(traps).
+
+</li><li>변수 할당이나 <code class="code">set</code>으로 설정되었거나 부모로부터 상속받은 쉘 파라미터들.
+
+</li><li>실행 중에 정의되었거나 부모로부터 상속받은 쉘 함수들.
+
+</li><li>호출 시(기본값 또는 명령줄 인자) 또는 <code class="code">set</code>에 의해 활성화된 옵션들.
+
+</li><li><code class="code">shopt</code>에 의해 활성화된 옵션들(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조).
+
+</li><li><code class="code">alias</code>로 정의된 쉘 별칭들(<a class="pxref" href="Aliases.html">별칭</a> 참조).
+
+</li><li>백그라운드 작업을 포함한 다양한 프로세스 <small class="sc">ID</small>들(<a class="pxref" href="Lists.html">명령어 목록</a> 참조), <code class="code">$$</code>의 값, 그리고 <code class="env">$PPID</code>의 값.
+
+</li></ul>
+
+<p>빌트인이나 쉘 함수가 아닌 단순 명령어가 실행될 때, 해당 명령어는 다음과 같은 항목들로 구성된 별도의 실행 환경에서 호출됩니다. 별도로 언급하지 않는 한, 값들은 쉘로부터 상속받습니다.
+</p>
+<ul class="itemize mark-bullet">
+<li>쉘의 열린 파일들 및 해당 명령어에 지정된 리다이렉션에 의한 수정 및 추가 사항들.
+
+</li><li>현재 작업 디렉토리.
+
+</li><li>파일 생성 모드 마스크.
+
+</li><li>내보내기(export)로 표시된 쉘 변수 및 함수들, 그리고 해당 명령어를 위해 내보내진 변수들(<a class="pxref" href="Environment.html">환경</a> 참조).
+
+</li><li>쉘에 의해 포착된 트랩들은 부모로부터 상속받은 값으로 초기화되고, 쉘이 무시한 트랩들은 그대로 무시됩니다.
+
+</li></ul>
+
+<p>이 별도의 환경에서 호출된 명령어는 쉘의 실행 환경에 영향을 미칠 수 없습니다.
+</p>
+<p><em class="dfn">서브쉘(subshell)</em>은 쉘 프로세스의 복사본입니다.
+</p>
+<p>명령어 치환, 소괄호로 그룹화된 명령어들, 그리고 비동기 명령어들은 쉘 환경의 복제본인 서브쉘 환경에서 호출됩니다. 단, 쉘에 의해 포착된 트랩들은 호출 시 부모로부터 상속받은 값으로 초기화됩니다.
+파이프라인의 일부로 호출된 빌트인 명령어들 또한 <code class="code">lastpipe</code> 쉘 옵션의 값에 따라 마지막 요소가 아닐 경우 서브쉘 환경에서 실행됩니다(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조).
+서브쉘 환경에서 행해진 변경 사항은 원래 쉘의 실행 환경에 영향을 줄 수 없습니다.
+</p>
+<p>쉘이 <small class="sc">POSIX</small> 모드일 때, 명령어 치환을 실행하기 위해 생성된 서브쉘은 부모 쉘로부터 <samp class="option">-e</samp> 옵션의 값을 상속받습니다.
+<small class="sc">POSIX</small> 모드가 아닐 때 Bash는 그러한 서브쉘에서 <samp class="option">-e</samp> 옵션을 해제합니다.
+<small class="sc">POSIX</small> 모드가 아닐 때 이 동작을 제어하는 방법은 <code class="code">inherit_errexit</code> 쉘 옵션 설명(<a class="pxref" href="Bash-Builtins.html">Bash 빌트인 명령어</a> 참조)을 확인하십시오.
+</p>
+<p>명령어 뒤에 &lsquo;<samp class="samp">&amp;</samp>&rsquo;가 붙고 작업 제어가 활성 상태가 아니라면, 해당 명령어의 기본 표준 입력은 빈 파일인 <samp class="file">/dev/null</samp>이 됩니다.
+그렇지 않은 경우, 호출된 명령어는 호출한 쉘의 파일 서술자들을 (리다이렉션에 의해 수정된 상태로) 상속받습니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Environment.html">환경</a>, 이전: <a href="Command-Search-and-Execution.html">명령어 검색 및 실행</a>, 상위: <a href="Executing-Commands.html">명령어 실행</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>바인딩 가능한 Readline 명령어 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="바인딩 가능한 Readline 명령어 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="바인딩 가능한 Readline 명령어 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Command-Line-Editing.html" rel="up" title="명령줄 편집">
+<link href="Readline-vi-Mode.html" rel="next" title="Readline vi 모드">
+<link href="Readline-Init-File.html" rel="prev" title="Readline 초기화 파일">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Bindable-Readline-Commands">
+<div class="nav-panel">
+<p>
+다음: <a href="Readline-vi-Mode.html" accesskey="n" rel="next">Readline vi 모드</a>, 이전: <a href="Readline-Init-File.html" accesskey="p" rel="prev">Readline 초기화 파일</a>, 상위: <a href="Command-Line-Editing.html" accesskey="u" rel="up">명령줄 편집</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Bindable-Readline-Commands-1"><span>8.4 바인딩 가능한 Readline 명령어<a class="copiable-link" href="#Bindable-Readline-Commands-1"> &para;</a></span></h3>
+
+
+<p>이 섹션은 키 시퀀스에 바인딩될 수 있는 Readline 명령어들에 대해 설명합니다. <code class="code">bind -P</code> 명령어를 실행하여 현재의 키 바인딩 목록을 확인하거나, <var class="var">inputrc</var> 파일에 적합한 더 간결한 형식인 <code class="code">bind -p</code>를 사용할 수 있습니다. (<a class="xref" href="Bash-Builtins.html">Bash 빌트인 명령어</a> 참조.) 키 시퀀스가 할당되지 않은 명령어 이름들은 기본적으로 바인딩되지 않은(unbound) 상태입니다.
+</p>
+<p>이하의 설명에서, <em class="dfn">포인트(point)</em>는 현재 커서 위치를 참조하고, <em class="dfn">마크(mark)</em>는 <code class="code">set-mark</code> 명령어에 의해 저장된 커서 위치를 참조합니다. 포인트와 마크 사이의 텍스트를 <em class="dfn">리전(region)</em>이라고 부릅니다. Readline에는 <em class="emph">활성 리전(active region)</em>이라는 개념이 있습니다: 리전이 활성 상태일 때, Readline은 <code class="code">active-region-start-color</code> 변수 값을 사용하여 리전을 다시 그릴 때 강조 표시합니다. <code class="code">enable-active-region</code> 변수가 이 기능을 켜고 끕니다. 리전을 활성 상태로 설정하는 여러 명령어들이 있으며, 이는 아래에 언급되어 있습니다.
+</p>
+<ul class="mini-toc">
+<li><a href="Commands-For-Moving.html" accesskey="1">이동 명령어</a></li>
+<li><a href="Commands-For-History.html" accesskey="2">히스토리 조작 명령어</a></li>
+<li><a href="Commands-For-Text.html" accesskey="3">텍스트 변경 명령어</a></li>
+<li><a href="Commands-For-Killing.html" accesskey="4">삭제 및 붙여넣기(Yanking)</a></li>
+<li><a href="Numeric-Arguments.html" accesskey="5">숫자 인자 지정하기</a></li>
+<li><a href="Commands-For-Completion.html" accesskey="6">자동 완성 명령어</a></li>
+<li><a href="Keyboard-Macros.html" accesskey="7">키보드 매크로</a></li>
+<li><a href="Miscellaneous-Commands.html" accesskey="8">기타 명령어들</a></li>
+</ul>
+</div>
+
+
+
+</body>
+</html>

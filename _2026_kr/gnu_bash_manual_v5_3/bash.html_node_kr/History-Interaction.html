@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>히스토리 확장 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="히스토리 확장 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="히스토리 확장 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Using-History-Interactively.html" rel="up" title="히스토리 대화형 사용">
+<link href="Bash-History-Builtins.html" rel="prev" title="Bash 히스토리 빌트인">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="History-Interaction">
+<div class="nav-panel">
+<p>
+이전: <a href="Bash-History-Builtins.html" accesskey="p" rel="prev">Bash 히스토리 빌트인</a>, 상위: <a href="Using-History-Interactively.html" accesskey="u" rel="up">히스토리 대화형 사용</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="History-Expansion-1"><span>9.3 히스토리 확장<a class="copiable-link" href="#History-Expansion-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-history-expansion"></a>
+
+<p>쉘은 <code class="code">csh</code>에서 제공하는 것과 유사한 히스토리 확장(history expansion) 기능을 제공합니다(상황에 따라 히스토리 치환(history substitution)이라고도 부릅니다). 이 섹션에서는 히스토리 정보를 조작하는 데 사용되는 문법을 설명합니다.
+</p>
+<p>히스토리 확장은 대화형 쉘에서 기본적으로 활성화되어 있으며, <code class="code">set</code> 빌트인 명령어의 <samp class="option">+H</samp> 옵션을 사용하여 비활성화할 수 있습니다(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조). 비대화형 쉘은 기본적으로 히스토리 확장을 수행하지 않지만, <code class="code">set -H</code>로 활성화할 수 있습니다.
+</p>
+<p>히스토리 확장은 히스토리 목록의 단어들을 입력 스트림으로 가져와서, 명령어를 반복하거나 이전 명령어의 인자를 현재 입력 줄에 삽입하거나 이전 명령어의 에러를 빠르게 수정하는 것을 쉽게 만들어줍니다.
+</p>
+<p>히스토리 확장은 전체 줄이 읽혀진 직후, 쉘이 이를 단어들로 분리하기 전에 수행되며, 각 줄에 대해 개별적으로 이루어집니다. Bash는 이전 줄로부터 유효한 인용(quoting) 상태를 히스토리 확장 함수에 알리려고 시도합니다.
+</p>
+<p>히스토리 확장은 두 부분으로 나뉘어 일어납니다. 첫 번째는 치환 중에 히스토리 목록의 어떤 항목을 사용할지 결정하는 것입니다. 두 번째는 해당 항목의 일부를 선택하여 현재 줄에 포함시키는 것입니다.
+</p>
+<p>히스토리에서 선택된 항목을 <em class="dfn">이벤트(event)</em>라고 부르고, 해당 항목에서 조작 대상이 되는 부분들을 <em class="dfn">단어(words)</em>라고 부릅니다. 선택된 단어들을 조작하기 위해 다양한 <em class="dfn">수정자(modifiers)</em>를 사용할 수 있습니다. 항목은 Bash가 입력을 읽을 때와 동일한 방식으로 단어들로 분리되므로, 따옴표로 감싸진 여러 단어는 하나의 단어로 간주됩니다. <em class="dfn">이벤트 지시자(event designator)</em>는 이벤트를 선택하고, 선택적인 <em class="dfn">단어 지시자(word designator)</em>는 이벤트에서 단어들을 선택하며, 다양한 선택적인 <em class="dfn">수정자</em>들을 사용하여 선택된 단어들을 조작할 수 있습니다.
+</p>
+<p>히스토리 확장은 히스토리 확장 문자(기본값은 &lsquo;<samp class="samp">!</samp>&rsquo;)가 나타날 때 시작됩니다. 히스토리 확장은 입력의 어느 곳에나 나타날 수 있지만, 중첩(nest)되지는 않습니다.
+</p>
+<p>히스토리 확장은 쉘과 유사한 인용 규칙을 구현합니다: 백슬래시(&lsquo;&#92;&rsquo;)는 다음 문자의 특수한 처리를 제거하는 데 사용될 수 있고, 작은따옴표는 문자 시퀀스를 문자 그대로 감싸 히스토리 확장을 억제하는 데 사용될 수 있습니다. 큰따옴표로 감싸진 문자들은 히스토리 확장의 대상이 될 수 있는데, 백슬래시가 히스토리 확장 문자를 이스케이프할 수 있기 때문입니다. 반면 작은따옴표는 큰따옴표 내에서 특별하게 취급되지 않으므로 확장을 막지 못합니다.
+</p>
+<p>쉘을 사용할 때 오직 &lsquo;&#92;&rsquo;와 &lsquo;<samp class="samp">'</samp>&rsquo;만이 히스토리 확장 문자를 이스케이프하는 데 사용될 수 있습니다. 하지만 히스토리 확장 문자가 큰따옴표로 감싸진 문자열 내에서 닫는 큰따옴표 바로 앞에 오는 경우에도 인용된 것으로 취급됩니다.
+</p>
+<p>히스토리 확장 문자 바로 뒤에 공백, 탭, 줄바꿈, 캐리지 리턴, &lsquo;<samp class="samp">=</samp>&rsquo;, 그리고 다른 쉘 메타 문자들이 오는 경우, 인용 처리되지 않았더라도 히스토리 확장이 일어나지 않습니다.
+</p>
+<p>줄의 첫 번째 문자가 <var class="var">빠른 치환(quick substitution)</var> 문자(<code class="code">histchars</code>에서 설명됨)인 경우에 활성화되는 특별한 치환 약어 형식이 있습니다. 이는 <code class="code">!!</code>와 동일한 이벤트 지시자를 사용하여 이전 히스토리 항목을 선택하고, 해당 항목에서 특정 문자열을 다른 것으로 치환합니다. 이는 아래에서 설명됩니다(<a class="pxref" href="Event-Designators.html">이벤트 지시자</a> 참조). 이것이 히스토리 확장 문자로 시작하지 않는 유일한 히스토리 확장입니다.
+</p>
+<p><code class="code">shopt</code> 빌트인으로 설정 가능한 여러 쉘 옵션들이 히스토리 확장 동작을 수정합니다(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조). <code class="code">histverify</code> 쉘 옵션이 활성화되어 있고 Readline이 사용 중인 경우, 히스토리 치환 결과가 즉시 쉘 파서로 전달되지 않습니다. 대신 확장된 줄이 추가적인 수정을 위해 Readline 편집 버퍼로 다시 로드됩니다. Readline이 사용 중이고 <code class="code">histreedit</code> 쉘 옵션이 활성화되어 있는 경우, 실패한 히스토리 확장이 수정을 위해 Readline 편집 버퍼로 다시 로드됩니다.
+</p>
+<p><code class="code">history</code> 빌트인 명령어의 <samp class="option">-p</samp> 옵션은 히스토리 확장을 실제로 사용하기 전에 그 결과를 미리 보여줍니다. <code class="code">history</code> 빌트인의 <samp class="option">-s</samp> 옵션은 명령어를 실제로 실행하지 않고 히스토리 목록 끝에 추가하여, 나중에 다시 불러올 수 있게 하는 데 사용될 수 있습니다. 이는 Readline과 함께 사용할 때 특히 유용합니다.
+</p>
+<p>쉘은 위에서 설명한 대로 <code class="code">histchars</code> 변수를 통해 히스토리 확장 메커니즘에서 사용되는 다양한 문자들을 제어할 수 있게 해줍니다(<a class="pxref" href="Bash-Variables.html">Bash 변수</a> 참조). 쉘은 히스토리 파일을 기록할 때 히스토리 타임스탬프를 표시하기 위해 히스토리 주석 문자를 사용합니다.
+</p>
+
+<ul class="mini-toc">
+<li><a href="Event-Designators.html" accesskey="1">이벤트 지시자</a></li>
+<li><a href="Word-Designators.html" accesskey="2">단어 지시자</a></li>
+<li><a href="Modifiers.html" accesskey="3">수정자</a></li>
+</ul>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+이전: <a href="Bash-History-Builtins.html">Bash 히스토리 빌트인</a>, 상위: <a href="Using-History-Interactively.html">히스토리 대화형 사용</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

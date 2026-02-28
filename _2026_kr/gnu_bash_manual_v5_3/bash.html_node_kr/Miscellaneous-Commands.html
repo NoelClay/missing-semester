@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>기타 명령어들 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="기타 명령어들 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="기타 명령어들 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Bindable-Readline-Commands.html" rel="up" title="바인딩 가능한 Readline 명령어">
+<link href="Keyboard-Macros.html" rel="prev" title="키보드 매크로">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Miscellaneous-Commands">
+<div class="nav-panel">
+<p>
+이전: <a href="Keyboard-Macros.html" accesskey="p" rel="prev">키보드 매크로</a>, 상위: <a href="Bindable-Readline-Commands.html" accesskey="u" rel="up">바인딩 가능한 Readline 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Some-Miscellaneous-Commands"><span>8.4.8 기타 명령어들<a class="copiable-link" href="#Some-Miscellaneous-Commands"> &para;</a></span></h4>
+<dl class="ftable">
+<dt><a id="index-re_002dread_002dinit_002dfile-_0028C_002dx-C_002dr_0029"></a><span><code class="code">re-read-init-file (C-x C-r)</code><a class="copiable-link" href="#index-re_002dread_002dinit_002dfile-_0028C_002dx-C_002dr_0029"> &para;</a></span></dt>
+<dd><p><var class="var">inputrc</var> 파일의 내용을 읽어들이고, 그 안에 정의된 모든 바인딩과 변수 할당을 적용합니다.
+</p>
+</dd>
+<dt><a id="index-abort-_0028C_002dg_0029"></a><span><code class="code">abort (C-g)</code><a class="copiable-link" href="#index-abort-_0028C_002dg_0029"> &para;</a></span></dt>
+<dd><p>현재 편집 중인 명령어를 중단하고 터미널 벨을 울립니다(<code class="code">bell-style</code> 설정에 따름).
+</p>
+</dd>
+<dt><a id="index-do_002dlowercase_002dversion-_0028M_002dA_002c-M_002dB_002c-M_002dx_002c-_002e_002e_002e_0029"></a><span><code class="code">do-lowercase-version (M-A, M-B, M-<var class="var">x</var>, &hellip;)</code><a class="copiable-link" href="#index-do_002dlowercase_002dversion-_0028M_002dA_002c-M_002dB_002c-M_002dx_002c-_002e_002e_002e_0029"> &para;</a></span></dt>
+<dd><p>메타화된 문자 <var class="var">x</var>가 대문자인 경우, 그에 대응하는 소문자 메타 문자에 바인딩된 명령어를 실행합니다. <var class="var">x</var>가 이미 소문자인 경우의 동작은 정의되어 있지 않습니다.
+</p>
+</dd>
+<dt><a id="index-prefix_002dmeta-_0028ESC_0029"></a><span><code class="code">prefix-meta (<kbd class="key">ESC</kbd>)</code><a class="copiable-link" href="#index-prefix_002dmeta-_0028ESC_0029"> &para;</a></span></dt>
+<dd><p>다음에 입력되는 문자를 메타화합니다. &lsquo;<samp class="samp"><kbd class="key">ESC</kbd> f</samp>&rsquo;를 입력하는 것은 <kbd class="kbd">M-f</kbd>를 입력하는 것과 동일합니다.
+</p>
+</dd>
+<dt><a id="index-undo-_0028C_002d_005f-or-C_002dx-C_002du_0029"></a><span><code class="code">undo (C-_ 또는 C-x C-u)</code><a class="copiable-link" href="#index-undo-_0028C_002d_005f-or-C_002dx-C_002du_0029"> &para;</a></span></dt>
+<dd><p>점진적 취소(incremental undo) 기능으로, 각 줄에 대해 개별적으로 기억됩니다.
+</p>
+</dd>
+<dt><a id="index-revert_002dline-_0028M_002dr_0029"></a><span><code class="code">revert-line (M-r)</code><a class="copiable-link" href="#index-revert_002dline-_0028M_002dr_0029"> &para;</a></span></dt>
+<dd><p>현재 줄에 가해진 모든 변경 사항을 취소합니다. 이는 <code class="code">undo</code> 명령어를 초기 상태로 돌아갈 때까지 반복해서 실행하는 것과 같습니다.
+</p>
+</dd>
+<dt><a id="index-tilde_002dexpand-_0028M_002d_0026_0029"></a><span><code class="code">tilde-expand (M-&amp;)</code><a class="copiable-link" href="#index-tilde_002dexpand-_0028M_002d_0026_0029"> &para;</a></span></dt>
+<dd><p>현재 단어에 대해 물결표 확장(tilde expansion)을 수행합니다.
+</p>
+</dd>
+<dt><a id="index-set_002dmark-_0028C_002d_0040_0029"></a><span><code class="code">set-mark (C-@)</code><a class="copiable-link" href="#index-set_002dmark-_0028C_002d_0040_0029"> &para;</a></span></dt>
+<dd><p>현재 포인트 위치에 마크(mark)를 설정합니다. 숫자 인자가 제공되면 해당 위치에 마크를 설정합니다.
+</p>
+</dd>
+<dt><a id="index-exchange_002dpoint_002dand_002dmark-_0028C_002dx-C_002dx_0029"></a><span><code class="code">exchange-point-and-mark (C-x C-x)</code><a class="copiable-link" href="#index-exchange_002dpoint_002dand_002dmark-_0028C_002dx-C_002dx_0029"> &para;</a></span></dt>
+<dd><p>포인트와 마크의 위치를 서로 바꿉니다. 현재 커서 위치를 저장된 마크 위치로 옮기고, 마크를 이전 커서 위치로 설정합니다.
+</p>
+</dd>
+<dt><a id="index-character_002dsearch-_0028C_002d_005d_0029"></a><span><code class="code">character-search (C-])</code><a class="copiable-link" href="#index-character_002dsearch-_0028C_002d_005d_0029"> &para;</a></span></dt>
+<dd><p>문자 하나를 읽어 들여, 그 문자가 다음에 나타나는 위치로 포인트를 이동시킵니다. 음수 인자는 이전 위치를 검색합니다.
+</p>
+</dd>
+<dt><a id="index-character_002dsearch_002dbackward-_0028M_002dC_002d_005d_0029"></a><span><code class="code">character-search-backward (M-C-])</code><a class="copiable-link" href="#index-character_002dsearch_002dbackward-_0028M_002dC_002d_005d_0029"> &para;</a></span></dt>
+<dd><p>문자 하나를 읽어 들여, 그 문자가 이전에 나타났던 위치로 포인트를 이동시킵니다. 음수 인자는 이후 위치를 검색합니다.
+</p>
+</dd>
+<dt><a id="index-skip_002dcsi_002dsequence-_0028_0029"></a><span><code class="code">skip-csi-sequence ()</code><a class="copiable-link" href="#index-skip_002dcsi_002dsequence-_0028_0029"> &para;</a></span></dt>
+<dd><p>Home 및 End 키와 같은 키들에 정의된 멀티 키 시퀀스를 소모하기 위해 충분한 문자들을 읽어 들입니다. CSI 시퀀스는 보통 <kbd class="kbd">ESC [</kbd>인 제어 시퀀스 도입부(CSI)로 시작합니다. 만약 이 시퀀스가 &quot;\e[&quot;에 바인딩되어 있다면, CSI 시퀀스를 생성하는 키들은 명시적으로 Readline 명령어에 바인딩되어 있지 않는 한 편집 버퍼에 엉뚱한 문자들을 삽입하지 않고 아무런 효과도 내지 않습니다. 기본적으로 바인딩되어 있지 않지만, 보통 <kbd class="kbd">ESC [</kbd>에 바인딩되어 있습니다.
+</p>
+</dd>
+<dt><a id="index-insert_002dcomment-_0028M_002d_0023_0029"></a><span><code class="code">insert-comment (M-#)</code><a class="copiable-link" href="#index-insert_002dcomment-_0028M_002d_0023_0029"> &para;</a></span></dt>
+<dd><p>숫자 인자가 없으면 현재 줄의 시작 부분에 <code class="code">comment-begin</code> 변수의 값을 삽입합니다. 숫자 인자가 제공되면 이 명령어는 토글(toggle)로 동작합니다: 줄의 시작 부분 문자들이 <code class="code">comment-begin</code> 값과 일치하지 않으면 해당 값을 삽입하고, 일치하면 줄의 시작 부분에서 <code class="code">comment-begin</code> 문자들을 삭제합니다. 어느 경우든 마치 줄바꿈이 입력된 것처럼 줄을 수용합니다. <code class="code">comment-begin</code>의 기본값은 이 명령어가 현재 줄을 쉘 주석으로 만들게 합니다. 숫자 인자로 인해 주석 문자가 제거된 경우 해당 줄은 쉘에 의해 실행됩니다.
+</p>
+</dd>
+<dt><a id="index-dump_002dfunctions-_0028_0029"></a><span><code class="code">dump-functions ()</code><a class="copiable-link" href="#index-dump_002dfunctions-_0028_0029"> &para;</a></span></dt>
+<dd><p>모든 함수와 그 키 바인딩을 Readline 출력 스트림으로 출력합니다. 숫자 인자가 제공되면 출력 형식은 <var class="var">inputrc</var> 파일의 일부로 사용될 수 있는 형식이 됩니다. 기본적으로 바인딩되어 있지 않습니다.
+</p>
+</dd>
+<dt><a id="index-dump_002dvariables-_0028_0029"></a><span><code class="code">dump-variables ()</code><a class="copiable-link" href="#index-dump_002dvariables-_0028_0029"> &para;</a></span></dt>
+<dd><p>설정 가능한 모든 변수와 그 값을 Readline 출력 스트림으로 출력합니다. 숫자 인자가 제공되면 출력 형식은 <var class="var">inputrc</var> 파일의 일부로 사용될 수 있는 형식이 됩니다. 기본적으로 바인딩되어 있지 않습니다.
+</p>
+</dd>
+<dt><a id="index-dump_002dmacros-_0028_0029"></a><span><code class="code">dump-macros ()</code><a class="copiable-link" href="#index-dump_002dmacros-_0028_0029"> &para;</a></span></dt>
+<dd><p>매크로에 바인딩된 모든 Readline 키 시퀀스와 그 출력 문자열을 Readline 출력 스트림으로 출력합니다. 숫자 인자가 제공되면 출력 형식은 <var class="var">inputrc</var> 파일의 일부로 사용될 수 있는 형식이 됩니다. 기본적으로 바인딩되어 있지 않습니다.
+</p>
+</dd>
+<dt><a id="index-execute_002dnamed_002dcommand-_0028M_002dx_0029"></a><span><code class="code">execute-named-command (M-x)</code><a class="copiable-link" href="#index-execute_002dnamed_002dcommand-_0028M_002dx_0029"> &para;</a></span></dt>
+<dd><p>입력으로부터 바인딩 가능한 Readline 명령어 이름을 읽어 들여, 마치 해당 명령어가 바인딩된 키 시퀀스가 입력된 것처럼 실행합니다. 이 함수에 숫자 인자가 제공되면 실행하는 함수로 해당 인자를 전달합니다.
+</p>
+</dd>
+<dt><a id="index-spell_002dcorrect_002dword-_0028C_002dx-s_0029"></a><span><code class="code">spell-correct-word (C-x s)</code><a class="copiable-link" href="#index-spell_002dcorrect_002dword-_0028C_002dx-s_0029"> &para;</a></span></dt>
+<dd><p>현재 단어를 디렉토리나 파일 이름으로 간주하여 <code class="code">cdspell</code> 쉘 옵션과 동일한 방식으로 철자 수정을 수행합니다. 단어 경계는 <code class="code">shell-forward-word</code>에서 사용하는 것과 동일합니다.
+</p>
+</dd>
+<dt><a id="index-glob_002dcomplete_002dword-_0028M_002dg_0029"></a><span><code class="code">glob-complete-word (M-g)</code><a class="copiable-link" href="#index-glob_002dcomplete_002dword-_0028M_002dg_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 단어를 경로명 확장을 위한 패턴으로 간주하고(별표를 암시적으로 끝에 붙임), 해당 패턴을 사용하여 가능한 완성 후보들을 위한 일치하는 파일 이름 목록을 생성합니다.
+</p>
+</dd>
+<dt><a id="index-glob_002dexpand_002dword-_0028C_002dx-_002a_0029"></a><span><code class="code">glob-expand-word (C-x *)</code><a class="copiable-link" href="#index-glob_002dexpand_002dword-_0028C_002dx-_002a_0029"> &para;</a></span></dt>
+<dd><p>포인트 앞의 단어를 경로명 확장을 위한 패턴으로 간주하여, 단어를 일치하는 파일 이름 목록으로 대체하여 삽입합니다. 숫자 인자가 제공되면 경로명 확장 전에 &lsquo;*&rsquo;를 덧붙입니다.
+</p>
+</dd>
+<dt><a id="index-glob_002dlist_002dexpansions-_0028C_002dx-g_0029"></a><span><code class="code">glob-list-expansions (C-x g)</code><a class="copiable-link" href="#index-glob_002dlist_002dexpansions-_0028C_002dx-g_0029"> &para;</a></span></dt>
+<dd><p><code class="code">glob-expand-word</code>에 의해 생성되었을 확장 목록을 표시하고 줄을 다시 그립니다. 숫자 인자가 제공되면 경로명 확장 전에 &lsquo;*&rsquo;를 덧붙입니다.
+</p>
+</dd>
+<dt><a id="index-shell_002dexpand_002dline-_0028M_002dC_002de_0029"></a><span><code class="code">shell-expand-line (M-C-e)</code><a class="copiable-link" href="#index-shell_002dexpand_002dline-_0028M_002dC_002de_0029"> &para;</a></span></dt>
+<dd><p>쉘 단어 확장들을 수행하여 현재 줄을 확장합니다. 여기에는 별칭(alias) 및 히스토리 확장, $'<var class="var">string</var>' 및 $&quot;<var class="var">string</var>&quot; 인용 처리, 물결표 확장, 파라미터 및 변수 확장, 산술 확장, 명령어 및 프로세스 치환, 단어 분할, 그리고 따옴표 제거가 포함됩니다. 명시적인 인자는 명령어 및 프로세스 치환을 억제합니다.
+</p>
+</dd>
+<dt><a id="index-history_002dexpand_002dline-_0028M_002d_005e_0029"></a><span><code class="code">history-expand-line (M-^)</code><a class="copiable-link" href="#index-history_002dexpand_002dline-_0028M_002d_005e_0029"> &para;</a></span></dt>
+<dd><p>현재 줄에 대해 히스토리 확장을 수행합니다.
+</p>
+</dd>
+<dt><a id="index-magic_002dspace-_0028_0029"></a><span><code class="code">magic-space ()</code><a class="copiable-link" href="#index-magic_002dspace-_0028_0029"> &para;</a></span></dt>
+<dd><p>현재 줄에 대해 히스토리 확장을 수행하고 공백을 하나 삽입합니다(<a class="pxref" href="History-Interaction.html">히스토리 확장</a> 참조).
+</p>
+</dd>
+<dt><a id="index-alias_002dexpand_002dline-_0028_0029"></a><span><code class="code">alias-expand-line ()</code><a class="copiable-link" href="#index-alias_002dexpand_002dline-_0028_0029"> &para;</a></span></dt>
+<dd><p>현재 줄에 대해 별칭 확장을 수행합니다(<a class="pxref" href="Aliases.html">별칭</a> 참조).
+</p>
+</dd>
+<dt><a id="index-history_002dand_002dalias_002dexpand_002dline-_0028_0029"></a><span><code class="code">history-and-alias-expand-line ()</code><a class="copiable-link" href="#index-history_002dand_002dalias_002dexpand_002dline-_0028_0029"> &para;</a></span></dt>
+<dd><p>현재 줄에 대해 히스토리 및 별칭 확장을 수행합니다.
+</p>
+</dd>
+<dt><a id="index-insert_002dlast_002dargument-_0028M_002d_002e-or-M_002d_005f_0029"></a><span><code class="code">insert-last-argument (M-. 또는 M-_)</code><a class="copiable-link" href="#index-insert_002dlast_002dargument-_0028M_002d_002e-or-M_002d_005f_0029"> &para;</a></span></dt>
+<dd><p><code class="code">yank-last-arg</code>의 동의어입니다.
+</p>
+</dd>
+<dt><a id="index-edit_002dand_002dexecute_002dcommand-_0028C_002dx-C_002de_0029"></a><span><code class="code">edit-and-execute-command (C-x C-e)</code><a class="copiable-link" href="#index-edit_002dand_002dexecute_002dcommand-_0028C_002dx-C_002de_0029"> &para;</a></span></dt>
+<dd><p>현재 명령줄에 대해 에디터를 호출하고, 그 결과물을 쉘 명령어로 실행합니다. Bash는 <code class="code">$VISUAL</code>, <code class="code">$EDITOR</code>, 그리고 <code class="code">emacs</code> 순서대로 에디터 호출을 시도합니다.
+</p>
+</dd>
+<dt><a id="index-display_002dshell_002dversion-_0028C_002dx-C_002dv_0029"></a><span><code class="code">display-shell-version (C-x C-v)</code><a class="copiable-link" href="#index-display_002dshell_002dversion-_0028C_002dx-C_002dv_0029"> &para;</a></span></dt>
+<dd><p>현재 실행 중인 Bash 인스턴스의 버전 정보를 표시합니다.
+</p>
+
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+이전: <a href="Keyboard-Macros.html">키보드 매크로</a>, 상위: <a href="Bindable-Readline-Commands.html">바인딩 가능한 Readline 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

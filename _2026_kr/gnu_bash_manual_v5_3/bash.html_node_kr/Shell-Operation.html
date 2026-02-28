@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>쉘 동작 방식 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="쉘 동작 방식 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="쉘 동작 방식 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Shell-Syntax.html" rel="up" title="쉘 문법">
+<link href="Quoting.html" rel="next" title="인용(Quoting)">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Shell-Operation">
+<div class="nav-panel">
+<p>
+다음: <a href="Quoting.html" accesskey="n" rel="next">인용(Quoting)</a>, 상위: <a href="Shell-Syntax.html" accesskey="u" rel="up">쉘 문법</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Shell-Operation-1"><span>3.1.1 쉘 동작 방식<a class="copiable-link" href="#Shell-Operation-1"> &para;</a></span></h4>
+
+<p>다음은 쉘이 명령어를 읽고 실행할 때의 동작 방식에 대한 간략한 설명입니다.
+기본적으로 쉘은 다음 작업을 수행합니다:
+</p>
+<ol class="enumerate">
+<li> 파일(<a class="pxref" href="Shell-Scripts.html">쉘 스크립트</a> 참조), <samp class="option">-c</samp> 호출 옵션의 인자로 제공된 문자열(<a class="pxref" href="Invoking-Bash.html">Bash 호출하기</a> 참조), 또는 사용자의 터미널에서 입력을 읽습니다.
+
+</li><li> <a class="ref" href="Quoting.html">인용(Quoting)</a>에 설명된 인용 규칙을 준수하며 입력을 단어(word)와 연산자(operator)로 나눕니다.
+이러한 토큰들은 <code class="code">metacharacters</code>(메타 문자)에 의해 구분됩니다.
+이 단계에서 별칭 확장(alias expansion, <a class="pxref" href="Aliases.html">별칭</a> 참조)이 수행됩니다.
+
+</li><li> 토큰들을 단순 및 복합 명령어(<a class="pxref" href="Shell-Commands.html">쉘 명령어</a> 참조)로 파싱합니다.
+
+</li><li> 다양한 쉘 확장(<a class="pxref" href="Shell-Expansions.html">쉘 확장</a> 참조)을 수행하고, 확장된 토큰들을 파일 이름 목록(<a class="pxref" href="Filename-Expansion.html">파일 이름 확장</a> 참조), 명령어 및 인자들로 나눕니다.
+
+</li><li> 필요한 리다이렉션(<a class="pxref" href="Redirections.html">리다이렉션</a> 참조)을 수행하고, 인자 목록에서 리다이렉션 연산자와 해당 피연산자들을 제거합니다.
+
+</li><li> 명령어를 실행합니다(<a class="pxref" href="Executing-Commands.html">명령어 실행</a> 참조).
+
+</li><li> 선택적으로 명령어가 완료될 때까지 기다렸다가 종료 상태(<a class="pxref" href="Exit-Status.html">종료 상태</a> 참조)를 수집합니다.
+
+</li></ol>
+
+</div>
+
+
+
+</body>
+</html>

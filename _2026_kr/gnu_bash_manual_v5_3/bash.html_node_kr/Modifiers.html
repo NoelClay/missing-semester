@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>수정자 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="수정자 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="수정자 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="History-Interaction.html" rel="up" title="히스토리 확장">
+<link href="Word-Designators.html" rel="prev" title="단어 지시자">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Modifiers">
+<div class="nav-panel">
+<p>
+이전: <a href="Word-Designators.html" accesskey="p" rel="prev">단어 지시자</a>, 상위: <a href="History-Interaction.html" accesskey="u" rel="up">히스토리 확장</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Modifiers-1"><span>9.3.3 수정자 (Modifiers)<a class="copiable-link" href="#Modifiers-1"> &para;</a></span></h4>
+
+<p>선택적인 단어 지시자 뒤에, &lsquo;<samp class="samp">:</samp>&rsquo; 문자가 앞에 붙은 하나 이상의 다음 수정자들을 추가할 수 있습니다. 이들은 히스토리 이벤트에서 선택된 단어나 단어들을 수정하거나 편집합니다.
+</p>
+<dl class="table">
+<dt><code class="code">h</code></dt>
+<dd><p>파일 경로의 끝부분(tail)을 제거하고 머리 부분(head)만 남깁니다.
+</p>
+</dd>
+<dt><code class="code">t</code></dt>
+<dd><p>파일 경로의 앞부분(head)을 모두 제거하고 끝부분(tail)만 남깁니다.
+</p>
+</dd>
+<dt><code class="code">r</code></dt>
+<dd><p>&lsquo;<samp class="samp">.<var class="var">suffix</var></samp>&rsquo; 형식의 마지막 확장자를 제거하고 기본 이름(basename)만 남깁니다.
+</p>
+</dd>
+<dt><code class="code">e</code></dt>
+<dd><p>마지막 확장자를 제외한 모든 부분을 제거합니다.
+</p>
+</dd>
+<dt><code class="code">p</code></dt>
+<dd><p>새로운 명령어를 출력하되 실행하지는 않습니다.
+</p>
+</dd>
+<dt><code class="code">q</code></dt>
+<dd><p>치환된 단어들을 인용 처리하여 이후의 치환이 일어나지 않게 합니다.
+</p>
+</dd>
+<dt><code class="code">x</code></dt>
+<dd><p>&lsquo;<samp class="samp">q</samp>&rsquo;처럼 치환된 단어들을 인용 처리하지만, 공백, 탭, 줄바꿈에서 단어를 분리합니다. &lsquo;<samp class="samp">q</samp>&rsquo;와 &lsquo;<samp class="samp">x</samp>&rsquo; 수정자는 상호 배타적입니다; 마지막으로 제공된 것이 사용됩니다.
+</p>
+</dd>
+<dt><code class="code">s/<var class="var">old</var>/<var class="var">new</var>/</code></dt>
+<dd><p>이벤트 줄에서 처음 나타나는 <var class="var">old</var>를 <var class="var">new</var>로 치환합니다. &lsquo;<samp class="samp">/</samp>&rsquo; 대신 어떤 문자든 구분자로 사용할 수 있습니다. 구분자는 <var class="var">old</var>와 <var class="var">new</var> 내에서 단일 백슬래시로 이스케이프될 수 있습니다. <var class="var">new</var> 내에 &lsquo;<samp class="samp">&amp;</samp>&rsquo; 문자가 나타나면 <var class="var">old</var>로 교체됩니다. <var class="var">old</var> 및 <var class="var">new</var> 내의 &lsquo;<samp class="samp">&amp;</samp>&rsquo;는 백슬래시로 이스케이프할 수 있습니다. <var class="var">old</var>가 null인 경우, 마지막으로 치환되었던 <var class="var">old</var> 값을 사용하거나, 이전에 히스토리 치환이 없었다면 !?<var class="var">string</var><code class="code">[?]</code> 검색에서 사용된 마지막 <var class="var">string</var>을 사용합니다. <var class="var">new</var>가 null인 경우 일치하는 모든 <var class="var">old</var>가 삭제됩니다. 마지막 구분자가 입력 줄의 마지막 문자인 경우 생략할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">&amp;</code></dt>
+<dd><p>이전 치환을 반복합니다.
+</p>
+</dd>
+<dt><code class="code">g</code></dt>
+<dt><code class="code">a</code></dt>
+<dd><p>변경 사항이 이벤트 줄 전체에 적용되도록 합니다. <code class="code">gs/<var class="var">old</var>/<var class="var">new</var>/</code> 처럼 &lsquo;<samp class="samp">s</samp>&rsquo;와 함께 쓰이거나 &lsquo;<samp class="samp">&amp;</samp>&rsquo;와 함께 사용됩니다.
+</p>
+</dd>
+<dt><code class="code">G</code></dt>
+<dd><p>다음에 오는 &lsquo;<samp class="samp">s</samp>&rsquo; 또는 &lsquo;<samp class="samp">&amp;</samp>&rsquo; 수정자를 이벤트의 각 단어에 대해 한 번씩 적용합니다.
+</p>
+</dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+이전: <a href="Word-Designators.html">단어 지시자</a>, 상위: <a href="History-Interaction.html">히스토리 확장</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

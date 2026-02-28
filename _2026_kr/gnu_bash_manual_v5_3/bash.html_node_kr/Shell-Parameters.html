@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>쉘 파라미터 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="쉘 파라미터 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="쉘 파라미터 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Basic-Shell-Features.html" rel="up" title="기본 쉘 기능">
+<link href="Shell-Expansions.html" rel="next" title="쉘 확장">
+<link href="Shell-Functions.html" rel="prev" title="쉘 함수">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Shell-Parameters">
+<div class="nav-panel">
+<p>
+다음: <a href="Shell-Expansions.html" accesskey="n" rel="next">쉘 확장</a>, 이전: <a href="Shell-Functions.html" accesskey="p" rel="prev">쉘 함수</a>, 상위: <a href="Basic-Shell-Features.html" accesskey="u" rel="up">기본 쉘 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Shell-Parameters-1"><span>3.4 쉘 파라미터<a class="copiable-link" href="#Shell-Parameters-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-parameters"></a>
+<a class="index-entry-id" id="index-variable_002c-shell"></a>
+<a class="index-entry-id" id="index-shell-variable"></a>
+
+
+<p><em class="dfn">파라미터(parameter)</em>는 값을 저장하는 엔티티입니다.
+이는 <code class="code">이름(name)</code>, 숫자, 또는 아래 나열된 특수 문자 중 하나일 수 있습니다.
+<em class="dfn">변수(variable)</em>는 <code class="code">이름</code>으로 지칭되는 파라미터입니다.
+변수는 <code class="code">값(value)</code>과 0개 이상의 <code class="code">속성(attributes)</code>을 가집니다.
+속성은 <code class="code">declare</code> 빌트인 명령어를 사용하여 할당합니다(<a class="ref" href="Bash-Builtins.html">Bash 빌트인 명령어</a>의 <code class="code">declare</code> 빌트인 설명 참조).
+<code class="code">export</code> 및 <code class="code">readonly</code> 빌트인도 특정 속성들을 할당합니다.
+</p>
+<p>파라미터에 값이 할당되어 있으면 해당 파라미터는 설정된(set) 상태입니다.
+빈 문자열(null string)도 유효한 값입니다.
+한번 설정된 변수는 <code class="code">unset</code> 빌트인 명령어를 사용해야만 해제(unset)할 수 있습니다.
+</p>
+<p>변수는 다음과 같은 형식의 문장을 사용하여 값을 할당합니다:
+</p><div class="example">
+<pre class="example-preformatted"><var class="var">name</var>=[<var class="var">value</var>]
+</pre></div>
+<p>만약 <var class="var">value</var>가 주어지지 않으면 변수에는 빈 문자열이 할당됩니다.
+모든 <var class="var">값</var>들은 물결표 확장, 파라미터 및 변수 확장, 명령어 치환, 산술 확장 및 따옴표 제거 과정을 거칩니다(<a class="pxref" href="Shell-Parameter-Expansion.html">쉘 파라미터 확장</a> 참조).
+만약 변수에 <code class="code">integer</code>(정수) 속성이 설정되어 있다면, <code class="code">$((&hellip;))</code> 확장을 사용하지 않더라도 <var class="var">value</var>는 산술식으로 평가됩니다(<a class="pxref" href="Arithmetic-Expansion.html">산술 확장</a> 참조).
+단어 분할과 파일 이름 확장은 수행되지 않습니다.
+할당문은 <code class="code">alias</code>, <code class="code">declare</code>, <code class="code">typeset</code>, <code class="code">export</code>, <code class="code">readonly</code>, 그리고 <code class="code">local</code> 빌트인 명령어(<em class="dfn">선언 명령어</em>)의 인자로 나타날 수도 있습니다.
+<small class="sc">POSIX</small> 모드(<a class="pxref" href="Bash-POSIX-Mode.html">Bash와 POSIX</a> 참조)일 때, 이들 빌트인은 <code class="code">command</code> 빌트인 뒤에 하나 이상 나타날 수 있으며 이러한 할당문 속성을 유지합니다.
+예를 들어:
+</p><div class="example">
+<pre class="example-preformatted">command export var=value
+</pre></div>
+
+<p>쉘 변수나 배열 인덱스(<a class="pxref" href="Arrays.html">배열</a> 참조)에 값을 할당하는 할당문 컨텍스트에서, &lsquo;<samp class="samp">+=</samp>&rsquo; 연산자는 변수의 이전 값에 덧붙이거나(append) 더합니다(add).
+여기에는 할당문을 허용하는 <code class="code">declare</code>와 같은 선언 명령어의 인자들도 포함됩니다.
+<code class="code">integer</code> 속성이 설정된 변수에 &lsquo;<samp class="samp">+=</samp>&rsquo;를 적용하면, 변수의 현재 값과 <var class="var">value</var>가 각각 산술식으로 평가되고 그 결과의 합이 변수의 값으로 할당됩니다.
+현재 값은 보통 정수 상수이지만 산술식일 수도 있습니다.
+배열 변수에 복합 할당(<a class="pxref" href="Arrays.html">배열</a> 참조)을 사용하여 &lsquo;<samp class="samp">+=</samp>&rsquo;를 적용하면, 변수의 값은 (&lsquo;<samp class="samp">=</samp>&rsquo;를 사용할 때처럼) 해제되지 않으며, 새로운 값들은 배열의 최대 인덱스보다 1 큰 위치부터 추가되거나(인덱스 배열의 경우), 연관 배열(associative array)에서는 추가적인 키-값 쌍으로 더해집니다.
+문자열 값을 가진 변수에 적용하면, <var class="var">value</var>가 확장되어 변수의 값 뒤에 덧붙여집니다.
+</p>
+<p><code class="code">declare</code> 또는 <code class="code">local</code> 빌트인 명령어의 <samp class="option">-n</samp> 옵션을 사용하여 변수에 <code class="code">nameref</code> 속성을 할당하면, <em class="dfn">네임레프(nameref)</em>, 즉 다른 변수에 대한 참조를 생성할 수 있습니다.
+이를 통해 변수를 간접적으로 조작할 수 있습니다.
+네임레프 변수를 참조하거나, 할당하거나, 해제하거나, 혹은 속성을 수정할 때마다(네임레프 속성 자체를 사용하거나 변경하는 경우는 제외), 해당 작업은 실제로는 네임레프 변수의 값이 가리키는 변수에 대해 수행됩니다.
+네임레프는 쉘 함수 내에서 함수 인자로 전달된 이름을 가진 변수를 참조하는 데 흔히 사용됩니다.
+예를 들어, 변수 이름이 함수의 첫 번째 인자로 전달된 경우, 함수 내부에서
+</p><div class="example">
+<pre class="example-preformatted">declare -n ref=$1
+</pre></div>
+<p>을 실행하면 값이 첫 번째 인자로 전달된 변수 이름인 지역 네임레프 변수 <code class="env">ref</code>가 생성됩니다.
+<code class="env">ref</code>에 대한 참조 및 할당, 그리고 속성 변경은 <code class="code">$1</code>로 이름이 전달된 변수에 대한 참조, 할당 및 속성 수정으로 취급됩니다.
+</p>
+<p><code class="code">for</code> 루프의 제어 변수에 네임레프 속성이 있는 경우, 단어 목록은 쉘 변수들의 목록이 될 수 있으며, 루프가 실행될 때 목록의 각 단어에 대해 차례대로 이름 참조가 수립됩니다.
+배열 변수에는 네임레프 속성을 부여할 수 없습니다.
+하지만 네임레프 변수는 배열 변수와 서브스크립트가 붙은 배열 변수를 참조할 수 있습니다.
+네임레프는 <code class="code">unset</code> 빌트인의 <samp class="option">-n</samp> 옵션을 사용하여 해제할 수 있습니다(<a class="pxref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a> 참조).
+그렇지 않고 네임레프 변수의 이름을 인자로 하여 <code class="code">unset</code>을 실행하면, 네임레프 변수가 참조하는 변수가 해제됩니다.
+</p>
+<p>쉘이 시작될 때 환경(environment)을 읽어 들이고, 아래에 설명된 대로 유효한 이름을 가진 각 환경 변수로부터 쉘 변수를 생성합니다(<a class="pxref" href="Environment.html">환경</a> 참조).
+</p>
+<ul class="mini-toc">
+<li><a href="Positional-Parameters.html" accesskey="1">위치 파라미터</a></li>
+<li><a href="Special-Parameters.html" accesskey="2">특수 파라미터</a></li>
+</ul>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Shell-Expansions.html">쉘 확장</a>, 이전: <a href="Shell-Functions.html">쉘 함수</a>, 상위: <a href="Basic-Shell-Features.html">기본 쉘 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

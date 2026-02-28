@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Readline 인자 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Readline 인자 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Readline 인자 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Readline-Interaction.html" rel="up" title="Readline 상호작용">
+<link href="Searching.html" rel="next" title="검색">
+<link href="Readline-Killing-Commands.html" rel="prev" title="Readline 삭제 명령어">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Readline-Arguments">
+<div class="nav-panel">
+<p>
+다음: <a href="Searching.html" accesskey="n" rel="next">히스토리에서 명령어 검색</a>, 이전: <a href="Readline-Killing-Commands.html" accesskey="p" rel="prev">Readline 삭제 명령어</a>, 상위: <a href="Readline-Interaction.html" accesskey="u" rel="up">Readline 상호작용</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Readline-Arguments-1"><span>8.2.4 Readline 인자 (Readline Arguments)<a class="copiable-link" href="#Readline-Arguments-1"> &para;</a></span></h4>
+
+<p>Readline 명령어에 숫자 인자(numeric arguments)를 전달할 수 있습니다. 때로는 인자가 반복 횟수(repeat count)로 작동하고, 다른 때는 인자의 <i class="i">부호(sign)</i>가 중요한 의미를 갖습니다. 보통 앞으로(순방향) 작용하는 명령어에 음수 인자를 전달하면, 해당 명령어는 뒤로(역방향) 작용하게 됩니다. 예를 들어, 현재 위치에서 줄의 시작 부분까지 텍스트를 삭제하려면 &lsquo;<samp class="samp">M-- C-k</samp>&rsquo;를 입력하면 됩니다.
+</p>
+<p>명령어에 숫자 인자를 전달하는 일반적인 방법은 명령어 앞에 Meta 숫자를 입력하는 것입니다. 처음 입력한 &lsquo;숫자&rsquo;가 마이너스 기호(&lsquo;<samp class="samp">-</samp>&rsquo;)라면 인자의 부호는 음수가 됩니다. 인자를 시작하기 위해 하나의 Meta 숫자를 입력한 후에는 나머지 숫자들을 입력하고 마지막으로 명령어를 입력하면 됩니다. 예를 들어, <kbd class="kbd">C-d</kbd> 명령어에 인자 10을 주려면 &lsquo;<samp class="samp">M-1 0 C-d</samp>&rsquo;라고 입력하면 되며, 이는 입력줄에서 다음 10개의 문자를 삭제합니다.
+</p>
+</div>
+
+
+
+</body>
+</html>

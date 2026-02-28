@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>위치 파라미터 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="위치 파라미터 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="위치 파라미터 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Shell-Parameters.html" rel="up" title="쉘 파라미터">
+<link href="Special-Parameters.html" rel="next" title="특수 파라미터">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Positional-Parameters">
+<div class="nav-panel">
+<p>
+다음: <a href="Special-Parameters.html" accesskey="n" rel="next">특수 파라미터</a>, 상위: <a href="Shell-Parameters.html" accesskey="u" rel="up">쉘 파라미터</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Positional-Parameters-1"><span>3.4.1 위치 파라미터<a class="copiable-link" href="#Positional-Parameters-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-parameters_002c-positional"></a>
+
+<p><em class="dfn">위치 파라미터(positional parameter)</em>는 한 자리 숫자 <code class="code">0</code>을 제외하고 하나 이상의 숫자로 나타내는 파라미터입니다.
+위치 파라미터는 쉘이 호출될 때의 인자들로부터 할당되며, <code class="code">set</code> 빌트인 명령어를 사용하여 다시 할당할 수 있습니다.
+위치 파라미터 <code class="code">N</code>은 <code class="code">${N}</code>으로 참조할 수 있으며, <code class="code">N</code>이 한 자리 숫자인 경우 <code class="code">$N</code>으로도 참조할 수 있습니다.
+위치 파라미터에는 할당문을 사용하여 값을 할당할 수 없습니다.
+이들을 설정하거나 해제하려면 <code class="code">set</code>과 <code class="code">shift</code> 빌트인을 사용합니다(<a class="pxref" href="Shell-Builtin-Commands.html">쉘 빌트인 명령어</a> 참조).
+위치 파라미터는 쉘 함수가 실행되는 동안 일시적으로 교체됩니다(<a class="pxref" href="Shell-Functions.html">쉘 함수</a> 참조).
+</p>
+<p>두 자리 이상의 숫자로 구성된 위치 파라미터를 확장할 때는 반드시 중괄호로 감싸야 합니다.
+중괄호가 없으면 &lsquo;<samp class="samp">$</samp>&rsquo; 뒤에 오는 숫자는 오직 첫 아홉 개의 위치 파라미터($1-$9) 또는 특수 파라미터 $0(아래 참조) 중 하나만을 가리킬 수 있습니다.
+</p>
+</div>
+
+
+
+</body>
+</html>

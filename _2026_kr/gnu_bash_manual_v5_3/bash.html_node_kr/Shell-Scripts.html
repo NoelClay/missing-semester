@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>쉘 스크립트 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="쉘 스크립트 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="쉘 스크립트 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Basic-Shell-Features.html" rel="up" title="기본 쉘 기능">
+<link href="Executing-Commands.html" rel="prev" title="명령어 실행">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Shell-Scripts">
+<div class="nav-panel">
+<p>
+이전: <a href="Executing-Commands.html" accesskey="p" rel="prev">명령어 실행</a>, 상위: <a href="Basic-Shell-Features.html" accesskey="u" rel="up">기본 쉘 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Shell-Scripts-1"><span>3.8 쉘 스크립트<a class="copiable-link" href="#Shell-Scripts-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-shell-script"></a>
+
+<p>쉘 스크립트(shell script)는 쉘 명령어들을 포함하고 있는 텍스트 파일입니다.
+Bash를 호출할 때 이러한 파일을 첫 번째 비-옵션 인자로 사용하고, <samp class="option">-c</samp> 나 <samp class="option">-s</samp> 옵션이 제공되지 않았다면(<a class="pxref" href="Invoking-Bash.html">Bash 호출하기</a> 참조), Bash는 파일로부터 명령어들을 읽어 실행한 뒤 종료합니다.
+이러한 운영 모드는 비대화형(non-interactive) 쉘을 생성합니다.
+만약 파일 이름에 슬래시(/)가 포함되어 있지 않다면, 쉘은 먼저 현재 디렉토리에서 파일을 찾고, 거기서 찾지 못하면 <code class="env">$PATH</code>에 지정된 디렉토리들을 검색합니다.
+</p>
+<p>Bash는 해당 파일이 텍스트 파일인지 바이너리 파일인지 확인하려고 시도하며, 바이너리로 판명된 파일은 실행하지 않습니다.
+</p>
+<p>Bash가 쉘 스크립트를 실행할 때, 특수 파라미터 <code class="code">0</code>을 쉘의 이름이 아닌 파일의 이름으로 설정하며, 위치 파라미터들은 나머지 인자들(있는 경우)로 설정됩니다.
+추가 인자가 제공되지 않으면 위치 파라미터들은 해제(unset)됩니다.
+</p>
+<p>쉘 스크립트는 <code class="code">chmod</code> 명령어를 사용하여 실행 비트(execute bit)를 활성화함으로써 실행 가능하게 만들 수 있습니다.
+Bash가 명령어를 찾기 위해 <code class="env">$PATH</code>를 검색하던 중 그러한 파일을 발견하면, 이를 실행하기 위해 자신의 새로운 인스턴스를 생성합니다.
+다시 말해, <code class="code">filename</code>이 실행 가능한 쉘 스크립트라면
+</p><div class="example">
+<pre class="example-preformatted">filename <var class="var">arguments</var>
+</pre></div>
+<p>를 실행하는 것은
+</p><div class="example">
+<pre class="example-preformatted">bash filename <var class="var">arguments</var>
+</pre></div>
+<p>를 실행하는 것과 동일합니다.
+이 서브쉘은 자기 자신을 재초기화하므로, 부모가 기억하고 있는 명령어들의 위치(<a class="ref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a>의 <code class="code">hash</code> 설명 참조)를 자식이 그대로 유지한다는 점을 제외하면, 마치 스크립트 해석을 위해 새로운 쉘이 호출된 것과 같은 효과를 냅니다.
+</p>
+<p><small class="sc">GNU</small> 운영체제와 대부분의 유닉스 버전은 이를 운영체제의 명령어 실행 메커니즘의 일부로 만듭니다.
+스크립트의 첫 번째 줄이 &lsquo;<samp class="samp">#!</samp>&rsquo; 두 문자로 시작하면, 해당 줄의 나머지 부분은 프로그램을 실행할 인터프리터와 (운영체제에 따라) 해당 인터프리터에 전달할 하나 이상의 선택적 인자들을 지정합니다.
+따라서 Bash, <code class="code">awk</code>, Perl, 또는 다른 인터프리터를 지정하고 스크립트 파일의 나머지 부분을 해당 언어로 작성할 수 있습니다.
+</p>
+<p>인터프리터에 전달되는 인자들은 스크립트 파일 첫 번째 줄의 인터프리터 이름 뒤에 오는 하나 이상의 선택적 인자들, 그 뒤에 오는 스크립트 파일의 이름, 그리고 스크립트에 공급된 나머지 인자들로 구성됩니다.
+인터프리터 라인이 인터프리터 이름과 인자 세트로 분리되는 세부 방식은 시스템마다 다릅니다.
+Bash는 이를 직접 처리하지 않는 운영체제에서 이 작업을 수행합니다.
+일부 오래된 유닉스 버전은 인터프리터 이름과 단일 인자의 길이를 최대 32자로 제한하므로, 하나 이상의 인자를 사용하는 것이 항상 작동할 것이라고 가정하는 것은 이식성 측면에서 좋지 않습니다.
+</p>
+<p>Bash 스크립트는 종종 <code class="code">#! /bin/bash</code>로 시작합니다(Bash가 <samp class="file">/bin</samp>에 설치되었다고 가정할 때). 이는 다른 쉘 아래에서 실행되더라도 Bash가 스크립트 해석에 사용되도록 보장하기 위함입니다.
+Bash가 다른 디렉토리에 설치되었을 수도 있는 상황에서 <code class="code">bash</code>를 찾기 위해 <code class="code">env</code>를 사용하는 것이 일반적인 관례입니다: <code class="code">#!/usr/bin/env bash</code>는 <code class="env">$PATH</code>에서 가장 먼저 발견되는 <code class="code">bash</code>를 사용합니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+이전: <a href="Executing-Commands.html">명령어 실행</a>, 상위: <a href="Basic-Shell-Features.html">기본 쉘 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>프로그래밍 가능한 자동 완성 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="프로그래밍 가능한 자동 완성 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="프로그래밍 가능한 자동 완성 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Command-Line-Editing.html" rel="up" title="명령줄 편집">
+<link href="Programmable-Completion-Builtins.html" rel="next" title="프로그래밍 가능한 자동 완성 빌트인">
+<link href="Readline-vi-Mode.html" rel="prev" title="Readline vi 모드">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+div.example {margin-left: 3.2em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Programmable-Completion">
+<div class="nav-panel">
+<p>
+다음: <a href="Programmable-Completion-Builtins.html" accesskey="n" rel="next">프로그래밍 가능한 자동 완성 빌트인</a>, 이전: <a href="Readline-vi-Mode.html" accesskey="p" rel="prev">Readline vi 모드</a>, 상위: <a href="Command-Line-Editing.html" accesskey="u" rel="up">명령줄 편집</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Programmable-Completion-1"><span>8.6 프로그래밍 가능한 자동 완성 (Programmable Completion)<a class="copiable-link" href="#Programmable-Completion-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-programmable-completion"></a>
+
+<p>사용자가 <code class="code">complete</code> 빌트인을 사용하여 자동 완성 사양(<em class="dfn">compspec</em>)이 정의된 명령어 또는 해당 명령어의 인자에 대해 단어 완성을 시도할 때(<a class="pxref" href="Programmable-Completion-Builtins.html">프로그래밍 가능한 자동 완성 빌트인</a> 참조), Readline은 프로그래밍 가능한 자동 완성 시설을 호출합니다.
+</p>
+<p>먼저 Bash는 명령어 이름을 식별합니다. 해당 명령어에 대해 compspec이 정의되어 있다면, 해당 compspec을 사용하여 단어에 대해 가능한 자동 완성 후보 목록을 생성합니다. 명령어 단어가 빈 문자열인 경우(빈 줄의 시작 부분에서 자동 완성을 시도하는 경우), Bash는 <code class="code">complete</code>의 <samp class="option">-E</samp> 옵션으로 정의된 compspec을 사용합니다. <code class="code">complete</code>의 <samp class="option">-I</samp> 옵션은 명령어 단어가 줄의 첫 번째 할당문이 아닌 단어이거나, &lsquo;<samp class="samp">;</samp>&rsquo; 또는 &lsquo;<samp class="samp">|</samp>&rsquo;와 같은 명령어 구분자 뒤에 오는 첫 단어임을 나타냅니다. 이는 대개 명령어 이름 완성을 의미합니다.
+</p>
+<p>명령어 단어가 전체 경로명(full pathname)인 경우, Bash는 먼저 전체 경로명에 대한 compspec을 찾습니다. 전체 경로명에 대한 compspec이 없다면, Bash는 마지막 슬래시 뒤의 부분에 대한 compspec을 찾으려고 시도합니다. 이러한 검색 결과로 compspec을 찾지 못하거나 명령어 단어에 대한 compspec이 없는 경우, Bash는 <code class="code">complete</code>의 <samp class="option">-D</samp> 옵션으로 정의된 임의의 compspec을 기본값으로 사용합니다. 기본 compspec도 없는 경우, Bash는 최후의 수단으로 명령어 단어에 대해 별칭 확장(alias expansion)을 수행하고, 확장에 성공한 경우 그 결과물인 명령어 단어에 대한 compspec을 찾으려고 시도합니다.
+</p>
+<p>compspec이 발견되지 않으면, Bash는 위에서 설명한 기본 자동 완성을 수행합니다(<a class="pxref" href="Commands-For-Completion.html">자동 완성 명령어</a> 참조). compspec이 발견되면, Bash는 이를 사용하여 일치하는 단어 목록을 생성합니다.
+</p>
+<p>먼저 Bash는 compspec에 지정된 <var class="var">액션(actions)</var>을 수행합니다. 이는 완성 중인 단어의 접두사와 일치하는 항목들만 반환합니다. 파일 이름이나 디렉토리 이름 완성을 위해 <samp class="option">-f</samp> 또는 <samp class="option">-d</samp> 옵션이 사용될 때, Bash는 <code class="env">FIGNORE</code> 쉘 변수를 사용하여 일치 항목들을 필터링합니다. <code class="env">FIGNORE</code>에 대한 설명은 <a class="xref" href="Bash-Variables.html">Bash 변수</a>를 참조하십시오.
+</p>
+<p>다음으로, 프로그래밍 가능한 자동 완성은 <samp class="option">-G</samp> 옵션의 인자로 제공된 경로명 확장 패턴에 의해 지정된 일치 항목들을 생성합니다. 패턴에 의해 생성된 단어들은 반드시 완성 중인 단어와 매치될 필요는 없습니다. Bash는 일치 항목을 필터링하기 위해 <code class="env">FIGNORE</code> 변수를 사용하지만, <code class="env">GLOBIGNORE</code> 쉘 변수는 사용하지 않습니다.
+</p>
+<p>그다음으로, 자동 완성은 <samp class="option">-W</samp> 옵션의 인자로 지정된 문자열을 고려합니다. 문자열은 먼저 <code class="env">IFS</code> 특수 변수의 문자들을 구분자로 사용하여 분할됩니다. 이때 문자열 내의 쉘 인용(quoting) 규칙을 준수하므로, 단어들이 쉘 메타 문자나 <code class="env">IFS</code>의 값에 포함된 문자들을 포함할 수 있는 메커니즘을 제공합니다. 각 단어는 위에서 설명한 대로 중괄호 확장, 물결표 확장, 파라미터 및 변수 확장, 명령어 치환, 그리고 산술 확장 과정을 거칩니다(<a class="pxref" href="Shell-Expansions.html">쉘 확장</a> 참조). 결과물은 위에서 설명한 규칙에 따라 분할됩니다(<a class="pxref" href="Word-Splitting.html">단어 분할</a> 참조). 확장 결과물들은 완성 중인 단어와 접두사 매칭(prefix-matched)을 수행하며, 일치하는 단어들이 가능한 자동 완성 후보가 됩니다.
+</p>
+<p>이러한 일치 항목들이 생성된 후, Bash는 <samp class="option">-F</samp> 및 <samp class="option">-C</samp> 옵션으로 지정된 임의의 쉘 함수나 명령어를 실행합니다. 명령어 또는 함수가 호출될 때, Bash는 위에서 설명한 대로 <code class="env">COMP_LINE</code>, <code class="env">COMP_POINT</code>, <code class="env">COMP_KEY</code>, 그리고 <code class="env">COMP_TYPE</code> 변수에 값을 할당합니다(<a class="pxref" href="Bash-Variables.html">Bash 변수</a> 참조). 쉘 함수가 호출되는 경우, Bash는 <code class="env">COMP_WORDS</code> 및 <code class="env">COMP_CWORD</code> 변수 또한 설정합니다. 함수나 명령어가 호출될 때, 첫 번째 인자($1)는 인자가 완성 중인 명령어의 이름이고, 두 번째 인자($2)는 완성 중인 단어이며, 세 번째 인자($3)는 현재 명령줄에서 완성 중인 단어의 바로 앞 단어입니다. 생성된 완성 후보들에 대해 완성 중인 단어와의 대조 필터링은 수행되지 않습니다; 함수나 명령어는 일치 항목을 생성하는 데 완전한 자유를 가지며, 후보들이 완성 중인 단어의 접두사와 일치할 필요도 없습니다.
+</p>
+<p><samp class="option">-F</samp>로 지정된 모든 함수가 먼저 호출됩니다. 함수는 아래 설명된 <code class="code">compgen</code> 및 <code class="code">compopt</code> 빌트인을 포함하여 모든 쉘 시설을 사용하여 일치 항목을 생성할 수 있습니다(<a class="pxref" href="Programmable-Completion-Builtins.html">프로그래밍 가능한 자동 완성 빌트인</a> 참조). 함수는 가능한 완성 후보들을 <code class="env">COMPREPLY</code> 배열 변수에 배열 요소당 하나씩 넣어야 합니다.
+</p>
+<p>다음으로, <samp class="option">-C</samp> 옵션으로 지정된 모든 명령어가 명령어 치환과 동일한 환경에서 호출됩니다. 해당 명령어는 자동 완성 후보 목록을 한 줄에 하나씩 표준 출력으로 출력해야 합니다. 필요한 경우 백슬래시를 사용하여 줄바꿈을 이스케이프할 수 있습니다. 이들은 가능한 완성 후보 세트에 추가됩니다.
+</p>
+<p>가능한 모든 완성 후보를 생성한 후, Bash는 <samp class="option">-X</samp> 옵션으로 지정된 모든 필터를 목록의 후보들에 적용합니다. 필터는 경로명 확장에서 사용되는 것과 같은 패턴입니다; 패턴 내의 &lsquo;<samp class="samp">&amp;</samp>&rsquo; 문자는 완성 중인 단어의 텍스트로 대체됩니다. 리터럴 &lsquo;<samp class="samp">&amp;</samp>&rsquo;는 백슬래시로 이스케이프할 수 있으며, 매칭 시도 전에 백슬래시는 제거됩니다. 패턴과 일치하는 모든 완성 후보는 목록에서 제거됩니다. 패턴 시작 부분의 &lsquo;<samp class="samp">!</samp>&rsquo;는 패턴을 부정합니다; 이 경우 Bash는 패턴과 일치하지 않는 모든 완성 후보를 제거합니다. <code class="code">nocasematch</code> 쉘 옵션이 활성화되어 있다면(<a class="ref" href="The-Shopt-Builtin.html">Shopt 빌트인</a>의 <code class="code">shopt</code> 설명 참조), Bash는 알파벳 문자의 대소문자를 구분하지 않고 매칭을 수행합니다.
+</p>
+<p>마지막으로, 프로그래밍 가능한 자동 완성은 각각 <samp class="option">-P</samp> 및 <samp class="option">-S</samp> 옵션으로 지정된 임의의 접두사(prefix)와 접미사(suffix)를 각 자동 완성 후보에 추가하고, 그 결과를 가능한 자동 완성 후보 목록으로서 Readline에 반환합니다.
+</p>
+<p>이전에 적용된 액션들이 일치 항목을 생성하지 못했고, compspec 정의 시 <code class="code">complete</code>에 <samp class="option">-o dirnames</samp> 옵션이 제공되었다면, Bash는 디렉토리 이름 완성을 시도합니다.
+</p>
+<p>compspec 정의 시 <code class="code">complete</code>에 <samp class="option">-o plusdirs</samp> 옵션이 제공되었다면, Bash는 디렉토리 이름 완성을 시도하고 발견된 모든 일치 항목을 가능한 자동 완성 후보 세트에 추가합니다.
+</p>
+<p>기본적으로 compspec이 발견되면, 그것이 무엇을 생성하든 전체 가능한 자동 완성 후보 세트로서 자동 완성 코드에 반환됩니다. 기본 Bash 자동 완성 및 Readline의 기본 파일 이름 완성은 비활성화됩니다. 만약 compspec 정의 시 <code class="code">complete</code>에 <samp class="option">-o bashdefault</samp> 옵션이 제공되었고 compspec이 일치 항목을 생성하지 못했다면, Bash는 자신의 기본 자동 완성을 시도합니다. 만약 compspec과 (시도된 경우) 기본 Bash 자동 완성이 모두 일치 항목을 생성하지 못했고, compspec 정의 시 <code class="code">complete</code>에 <samp class="option">-o default</samp> 옵션이 제공되었다면, 프로그래밍 가능한 자동 완성은 Readline의 기본 자동 완성을 수행합니다.
+</p>
+<p><code class="code">complete</code> 및 <code class="code">compopt</code>에 제공되는 옵션들은 Readline이 자동 완성 후보들을 처리하는 방식을 제어할 수 있습니다. 예를 들어, <samp class="option">-o fullquote</samp> 옵션은 Readline이 일치 항목들을 마치 파일 이름인 것처럼 인용 처리하도록 지시합니다. 자세한 내용은 <code class="code">complete</code> 설명을 참조하십시오(<a class="pxref" href="Programmable-Completion-Builtins.html">프로그래밍 가능한 자동 완성 빌트인</a> 참조).
+</p>
+<p>compspec이 디렉토리 이름 완성을 원한다고 표시하면, 프로그래밍 가능한 자동 완성 함수들은 <var class="var">mark-symlinked-directories</var> Readline 변수 설정과 관계없이, <var class="var">mark-directories</var> Readline 변수 값에 따라 디렉토리에 대한 심볼릭 링크인 완성된 이름 뒤에 슬래시를 붙이도록 Readline에 강제합니다.
+</p>
+<p>자동 완성을 동적으로 수정하는 기능도 일부 지원됩니다. 이는 <samp class="option">-D</samp>로 지정된 기본 자동 완성과 함께 사용할 때 가장 유용합니다. 자동 완성 함수로 실행되는 쉘 함수는 종료 상태 124를 반환함으로써 자동 완성을 다시 시도해야 함을 알릴 수 있습니다. 만약 쉘 함수가 124를 반환하고, 자동 완성이 시도 중인 명령어(함수 실행 시 첫 번째 인자로 제공됨)와 연관된 compspec을 변경한다면, 프로그래밍 가능한 자동 완성은 해당 명령어에 대한 새로운 compspec을 찾는 시도부터 다시 시작합니다. 이를 통해 한꺼번에 모든 자동 완성 규칙을 로드하는 대신, 자동 완성이 시도될 때 동적으로 자동 완성 세트를 구축할 수 있습니다.
+</p>
+<p>예를 들어, 명령어 이름에 대응하는 파일들로 구성된 compspec 라이브러리가 있다고 가정할 때, 다음의 기본 자동 완성 함수는 자동 완성 규칙들을 동적으로 로드할 것입니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">_completion_loader()
+{
+    . &quot;/etc/bash_completion.d/$1.sh&quot; &gt;/dev/null 2&gt;&amp;1 &amp;&amp; return 124
+}
+complete -D -F _completion_loader -o bashdefault -o default
+</pre></div>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Programmable-Completion-Builtins.html">프로그래밍 가능한 자동 완성 빌트인</a>, 이전: <a href="Readline-vi-Mode.html">Readline vi 모드</a>, 상위: <a href="Command-Line-Editing.html">명령줄 편집</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

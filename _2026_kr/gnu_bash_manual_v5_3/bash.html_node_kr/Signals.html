@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>시그널 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="시그널 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="시그널 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Executing-Commands.html" rel="up" title="명령어 실행">
+<link href="Exit-Status.html" rel="prev" title="종료 상태">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Signals">
+<div class="nav-panel">
+<p>
+이전: <a href="Exit-Status.html" accesskey="p" rel="prev">종료 상태</a>, 상위: <a href="Executing-Commands.html" accesskey="u" rel="up">명령어 실행</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Signals-1"><span>3.7.6 시그널 (Signals)<a class="copiable-link" href="#Signals-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-signal-handling"></a>
+
+<p>Bash가 대화형(interactive)일 때, 트랩(trap)이 설정되어 있지 않다면 <code class="code">SIGTERM</code>을 무시하며(&lsquo;<samp class="samp">kill 0</samp>&rsquo;이 대화형 쉘을 죽이지 않도록 함), <code class="code">SIGINT</code>를 포착하고 처리합니다(<code class="code">wait</code> 빌트인이 중단 가능하도록 함).
+Bash가 <code class="code">SIGINT</code>를 받으면 실행 중인 모든 루프에서 빠져나옵니다.
+모든 경우에 Bash는 <code class="code">SIGQUIT</code>을 무시합니다.
+작업 제어(<a class="pxref" href="Job-Control.html">작업 제어</a> 참조)가 활성 상태이면, Bash는 <code class="code">SIGTTIN</code>, <code class="code">SIGTTOU</code>, 그리고 <code class="code">SIGTSTP</code>를 무시합니다.
+</p>
+<p><code class="code">trap</code> 빌트인은 아래 설명된 대로 쉘의 시그널 처리를 수정합니다(<a class="pxref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a> 참조).
+</p>
+<p>Bash가 실행하는 빌트인이 아닌 명령어들은 부모 쉘로부터 상속받은 시그널 핸들러 값을 갖습니다. 단, <code class="code">trap</code>에 의해 무시하도록 설정된 시그널은 자식 프로세스에서도 동일하게 무시됩니다.
+작업 제어가 활성 상태가 아닐 때, 비동기 명령어들은 상속받은 핸들러 외에도 <code class="code">SIGINT</code>와 <code class="code">SIGQUIT</code>을 무시합니다.
+명령어 치환으로 실행된 명령어들은 키보드로부터 생성된 작업 제어 시그널인 <code class="code">SIGTTIN</code>, <code class="code">SIGTTOU</code>, 그리고 <code class="code">SIGTSTP</code>를 무시합니다.
+</p>
+<p>쉘은 기본적으로 <code class="code">SIGHUP</code>을 받으면 종료됩니다.
+종료하기 전, 대화형 쉘은 실행 중이거나 중단된 모든 작업(jobs)에게 <code class="code">SIGHUP</code>을 재전송합니다.
+쉘은 중단된 작업들이 <code class="code">SIGHUP</code>을 받을 수 있도록 <code class="code">SIGCONT</code>를 보냅니다(<a class="xref" href="Job-Control.html">작업 제어</a>에서 실행 중인 작업과 중단된 작업에 관한 상세 정보를 확인하십시오).
+쉘이 특정 작업에 <code class="code">SIGHUP</code> 시그널을 보내지 못하게 하려면, <code class="code">disown</code> 빌트인(<a class="pxref" href="Job-Control-Builtins.html">작업 제어 빌트인</a> 참조)을 사용하여 작업 테이블에서 제거하거나 <code class="code">disown -h</code>를 사용하여 <code class="code">SIGHUP</code>을 받지 않도록 표시하십시오.
+</p>
+<p><code class="code">shopt</code>를 통해 <code class="code">huponexit</code> 쉘 옵션이 설정되어 있다면(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조), 대화형 로그인 쉘이 종료될 때 Bash는 모든 작업에게 <code class="code">SIGHUP</code>을 보냅니다.
+</p>
+<p>Bash가 명령어 완료를 기다리는 중에 트랩이 설정된 시그널을 받으면, 명령어가 완료될 때까지 트랩을 실행하지 않습니다.
+Bash가 <code class="code">wait</code> 빌트인을 통해 비동기 명령어를 기다리는 중에 트랩이 설정된 시그널을 받으면, <code class="code">wait</code> 빌트인은 즉시 128보다 큰 종료 상태를 반환하며, 그 직후에 쉘은 트랩을 실행합니다.
+</p>
+<p>작업 제어가 활성화되어 있지 않고 Bash가 포그라운드 명령어의 완료를 기다리는 중일 때, 쉘은 사용자가 보통 해당 명령어에 보내고자 하는 <code class="code">SIGINT</code>(보통 &lsquo;<samp class="samp">^C</samp>&rsquo;로 생성됨)와 같은 키보드 생성 시그널을 받습니다.
+이는 쉘과 명령어가 터미널과 동일한 프로세스 그룹에 있고, &lsquo;<samp class="samp">^C</samp>&rsquo;가 해당 프로세스 그룹의 모든 프로세스에게 <code class="code">SIGINT</code>를 보내기 때문입니다.
+쉘이 대화형이 아닐 때 Bash는 기본적으로 작업 제어를 활성화하지 않으므로, 이 시나리오는 비대화형 쉘에서 가장 흔히 발생합니다.
+</p>
+<p>작업 제어가 활성화되어 있고 Bash가 포그라운드 명령어의 완료를 기다리는 중일 때, 쉘은 키보드 생성 시그널을 받지 않습니다. 쉘이 터미널과 동일한 프로세스 그룹에 있지 않기 때문입니다.
+이 시나리오는 Bash가 기본적으로 작업 제어를 활성화하려고 시도하는 대화형 쉘에서 가장 흔합니다. 프로세스 그룹에 대한 더 심도 있는 논의는 <a class="ref" href="Job-Control.html">작업 제어</a>를 참조하십시오.
+</p>
+<p>작업 제어가 활성화되어 있지 않고 Bash가 포그라운드 명령어를 기다리는 동안 <code class="code">SIGINT</code>를 받으면, 해당 명령어가 종료될 때까지 기다린 후 <code class="code">SIGINT</code>에 대해 어떻게 할지 결정합니다:
+</p>
+<ol class="enumerate">
+<li> 명령어가 <code class="code">SIGINT</code>에 의해 종료된 경우, Bash는 사용자가 쉘에도 <code class="code">SIGINT</code>를 보내려 했다고 결론짓고 그에 따라 행동합니다(예: <code class="code">SIGINT</code> 트랩 실행, 비대화형 쉘 종료, 또는 새로운 명령어를 읽기 위해 최상위 레벨로 복귀).
+
+</li><li> 명령어가 <code class="code">SIGINT</code>에 의해 종료되지 않은 경우, 해당 프로그램이 <code class="code">SIGINT</code>를 직접 처리했으며 이를 치명적인 시그널로 취급하지 않은 것입니다. 이 경우 Bash 또한 <code class="code">SIGINT</code>를 치명적인 것으로 취급하지 않으며, 대신 <code class="code">SIGINT</code>가 프로그램의 정상적인 동작의 일부로 사용되었거나(예: <code class="command">emacs</code>는 편집 명령어 취소에 사용함) 의도적으로 무시되었다고 가정합니다. 하지만 호환성을 위해 Bash는 포그라운드 명령어 완료를 기다리는 동안 받은 다른 트랩된 시그널과 마찬가지로 <code class="code">SIGINT</code>에 설정된 모든 트랩을 실행합니다.
+</li></ol>
+
+<p>작업 제어가 활성화되어 있을 때 Bash는 포그라운드 명령어를 기다리는 동안 <code class="code">SIGINT</code>와 같은 키보드 생성 시그널을 받지 않습니다.
+대화형 쉘은 포그라운드 명령어가 결과적으로 종료되더라도 종료 상태를 기록하는 것 외에는 <code class="code">SIGINT</code>에 주의를 기울이지 않습니다.
+쉘이 대화형이 아니고 포그라운드 명령어가 <code class="code">SIGINT</code>로 인해 종료된 경우, Bash는 호환성을 위해 자신이 직접 <code class="code">SIGINT</code>를 받은 것처럼 행동합니다(위의 시나리오 1).
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+이전: <a href="Exit-Status.html">종료 상태</a>, 상위: <a href="Executing-Commands.html">명령어 실행</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

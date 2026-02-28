@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>디렉토리 스택 빌트인 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="디렉토리 스택 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="디렉토리 스택 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="The-Directory-Stack.html" rel="up" title="디렉토리 스택">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Directory-Stack-Builtins">
+<div class="nav-panel">
+<p>
+상위: <a href="The-Directory-Stack.html" accesskey="u" rel="up">디렉토리 스택</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Directory-Stack-Builtins-1"><span>6.8.1 디렉토리 스택 빌트인<a class="copiable-link" href="#Directory-Stack-Builtins-1"> &para;</a></span></h4>
+
+<dl class="table">
+<dt><a id="index-dirs"></a><span><code class="code">dirs</code><a class="copiable-link" href="#index-dirs"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">dirs [-clpv] [+<var class="var">N</var> | -<var class="var">N</var>]
+</pre></div>
+
+<p>옵션이 없으면, 현재 기억된 디렉토리 목록을 표시합니다. 디렉토리는 <code class="code">pushd</code> 명령어로 목록에 추가되고, <code class="code">popd</code> 명령어로 목록에서 제거됩니다. 현재 디렉토리는 항상 스택의 첫 번째 디렉토리입니다.
+</p>
+<p>제공되는 옵션들의 의미는 다음과 같습니다:
+</p>
+<dl class="table">
+<dt><code class="code">-c</code></dt>
+<dd><p>모든 요소를 삭제하여 디렉토리 스택을 비웁니다.
+</p></dd>
+<dt><code class="code">-l</code></dt>
+<dd><p>전체 경로명을 사용하여 목록을 생성합니다. 기본 목록 형식은 홈 디렉토리를 나타내기 위해 물결표(tilde)를 사용합니다.
+</p></dd>
+<dt><code class="code">-p</code></dt>
+<dd><p><code class="code">dirs</code>가 한 줄에 하나의 항목씩 디렉토리 스택을 출력하도록 합니다.
+</p></dd>
+<dt><code class="code">-v</code></dt>
+<dd><p><code class="code">dirs</code>가 한 줄에 하나의 항목씩 디렉토리 스택을 출력하며, 각 항목 앞에 스택 내 인덱스를 붙입니다.
+</p></dd>
+<dt><code class="code">+<var class="var">N</var></code></dt>
+<dd><p>(옵션 없이 실행했을 때 출력되는 목록의 왼쪽부터 0부터 세어) <var class="var">N</var>번째 디렉토리를 표시합니다.
+</p></dd>
+<dt><code class="code">-<var class="var">N</var></code></dt>
+<dd><p>(옵션 없이 실행했을 때 출력되는 목록의 오른쪽부터 0부터 세어) <var class="var">N</var>번째 디렉토리를 표시합니다.
+</p></dd>
+</dl>
+
+</dd>
+<dt><a id="index-popd"></a><span><code class="code">popd</code><a class="copiable-link" href="#index-popd"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">popd [-n] [+<var class="var">N</var> | -<var class="var">N</var>]
+</pre></div>
+
+<p>디렉토리 스택에서 요소를 제거합니다. 요소 번호는 <code class="code">dirs</code>로 나열된 첫 번째 디렉토리부터 0으로 시작합니다. 즉, <code class="code">popd</code>는 <code class="code">popd +0</code>과 동일합니다.
+</p>
+<p>인자가 주어지지 않으면, <code class="code">popd</code>는 스택의 최상단 디렉토리를 제거하고 새로운 최상단 디렉토리로 이동합니다.
+</p>
+<p>제공되는 인자들의 의미는 다음과 같습니다:
+</p>
+<dl class="table">
+<dt><code class="code">-n</code></dt>
+<dd><p>스택에서 디렉토리를 제거할 때 일반적인 디렉토리 변경을 억제하고 스택만 조작합니다.
+</p></dd>
+<dt><code class="code">+<var class="var">N</var></code></dt>
+<dd><p>(<code class="code">dirs</code>로 나열된 목록의 왼쪽부터 0부터 세어) <var class="var">N</var>번째 디렉토리를 스택에서 제거합니다.
+</p></dd>
+<dt><code class="code">-<var class="var">N</var></code></dt>
+<dd><p>(<code class="code">dirs</code>로 나열된 목록의 오른쪽부터 0부터 세어) <var class="var">N</var>번째 디렉토리를 스택에서 제거합니다.
+</p></dd>
+</dl>
+
+<p>디렉토리 스택의 최상단 요소가 수정되었고 <samp class="option">-n</samp> 옵션이 제공되지 않았다면, <code class="code">popd</code>는 <code class="code">cd</code> 빌트인을 사용하여 스택 최상단에 있는 디렉토리로 이동합니다. 만약 <code class="code">cd</code>가 실패하면 <code class="code">popd</code>는 0이 아닌 값을 반환합니다.
+</p>
+<p>그 외의 경우, 잘못된 옵션이 지정되었거나, 디렉토리 스택이 비어 있거나, <var class="var">N</var>이 존재하지 않는 스택 항목을 지정하면 <code class="code">popd</code>는 실패 상태를 반환합니다.
+</p>
+<p><code class="code">popd</code> 명령어가 성공하면, Bash는 <code class="code">dirs</code>를 실행하여 최종적인 디렉토리 스택 내용을 보여주며 반환 상태는 0입니다.
+</p>
+</dd>
+<dt><a id="index-pushd"></a><span><code class="code">pushd</code><a class="copiable-link" href="#index-pushd"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">pushd [-n] [<var class="var">+N</var> | <var class="var">-N</var> | <var class="var">dir</var>]
+</pre></div>
+
+<p>디렉토리를 스택 최상단에 추가하거나 스택을 회전(rotate)시켜 새로운 최상단 디렉토리를 현재 작업 디렉토리로 만듭니다. 인자가 없으면 <code class="code">pushd</code>는 스택 최상단의 두 요소를 서로 교체합니다.
+</p>
+<p>제공되는 인자들의 의미는 다음과 같습니다:
+</p>
+<dl class="table">
+<dt><code class="code">-n</code></dt>
+<dd><p>스택에 디렉토리를 추가하거나 회전시킬 때 일반적인 디렉토리 변경을 억제하고 스택만 조작합니다.
+</p></dd>
+<dt><code class="code">+<var class="var">N</var></code></dt>
+<dd><p>(<code class="code">dirs</code>로 나열된 목록의 왼쪽부터 0부터 세어) <var class="var">N</var>번째 디렉토리가 최상단에 오도록 스택을 회전시킵니다.
+</p></dd>
+<dt><code class="code">-<var class="var">N</var></code></dt>
+<dd><p>(<code class="code">dirs</code>로 나열된 목록의 오른쪽부터 0부터 세어) <var class="var">N</var>번째 디렉토리가 최상단에 오도록 스택을 회전시킵니다.
+</p></dd>
+<dt><code class="code"><var class="var">dir</var></code></dt>
+<dd><p><var class="var">dir</var>을 스택 최상단에 추가합니다.
+</p></dd>
+</dl>
+
+<p>스택이 수정된 후, <samp class="option">-n</samp> 옵션이 제공되지 않았다면 <code class="code">pushd</code>는 <code class="code">cd</code> 빌트인을 사용하여 스택 최상단에 있는 디렉토리로 이동합니다. 만약 <code class="code">cd</code>가 실패하면 <code class="code">pushd</code>는 0이 아닌 값을 반환합니다.
+</p>
+<p>그 외의 경우, 인자가 주어지지 않았을 때 디렉토리 스택이 비어 있지 않다면 <code class="code">pushd</code>는 0을 반환합니다. 스택을 회전시킬 때 스택이 비어 있지 않고 <var class="var">N</var>이 유효한 스택 요소를 지정하면 <code class="code">pushd</code>는 0을 반환합니다.
+</p>
+<p><code class="code">pushd</code> 명령어가 성공하면, Bash는 <code class="code">dirs</code>를 실행하여 최종적인 디렉토리 스택 내용을 보여줍니다.
+</p>
+</dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+상위: <a href="The-Directory-Stack.html">디렉토리 스택</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

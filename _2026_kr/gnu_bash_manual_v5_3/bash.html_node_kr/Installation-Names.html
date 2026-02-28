@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>설치 이름 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="설치 이름 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="설치 이름 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Installing-Bash.html" rel="up" title="Bash 설치">
+<link href="Specifying-the-System-Type.html" rel="next" title="시스템 유형 지정">
+<link href="Compiling-For-Multiple-Architectures.html" rel="prev" title="다중 아키텍처를 위한 컴파일">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Installation-Names">
+<div class="nav-panel">
+<p>
+다음: <a href="Specifying-the-System-Type.html" accesskey="n" rel="next">시스템 유형 지정</a>, 이전: <a href="Compiling-For-Multiple-Architectures.html" accesskey="p" rel="prev">다중 아키텍처를 위한 컴파일</a>, 상위: <a href="Installing-Bash.html" accesskey="u" rel="up">Bash 설치</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Installation-Names-1"><span>10.4 설치 이름 (Installation Names)<a class="copiable-link" href="#Installation-Names-1"> &para;</a></span></h3>
+
+<p>기본적으로 &lsquo;<samp class="samp">make install</samp>&rsquo;은 <samp class="file">/usr/local/bin</samp>, <samp class="file">/usr/local/man</samp> 등에 설치합니다; 즉, <em class="dfn">설치 접두사(installation prefix)</em>의 기본값은 <samp class="file">/usr/local</samp>입니다. <code class="code">configure</code>에 <samp class="option">--prefix=<var class="var">PATH</var></samp> 옵션을 주거나, &lsquo;<samp class="samp">make install</samp>&rsquo;을 실행할 때 <code class="env">prefix</code> &lsquo;<samp class="samp">make</samp>&rsquo; 변수 값을 지정함으로써(예: &lsquo;<samp class="samp">make install prefix=<var class="var">PATH</var></samp>&rsquo;) <samp class="file">/usr/local</samp> 이외의 설치 접두사를 지정할 수 있습니다. <code class="env">prefix</code> 변수는 <code class="env">exec_prefix</code> 및 Bash 설치 시 사용되는 다른 변수들의 기본값을 제공합니다.
+</p>
+<p>아키텍처 의존적인 파일들과 아키텍처 독립적인 파일들에 대해 별도의 설치 접두사를 지정할 수 있습니다. <code class="code">configure</code>에 <samp class="option">--exec-prefix=<var class="var">PATH</var></samp> 옵션을 주면, &lsquo;<samp class="samp">make install</samp>&rsquo;은 프로그램과 라이브러리를 설치하기 위한 접두사로 <var class="var">PATH</var>를 사용할 것입니다. 문서 및 다른 데이터 파일들은 여전히 일반 접두사를 사용합니다.
+</p>
+<p>단 한 번의 실행에 대해서만 설치 위치를 변경하고 싶다면, 이 변수들을 <code class="code">make</code>의 인자로 지정할 수 있습니다: &lsquo;<samp class="samp">make install exec_prefix=/</samp>&rsquo;는 <code class="code">bash</code>와 <code class="code">bashbug</code>를 기본 위치인 <samp class="file">/usr/local/bin</samp> 대신 <samp class="file">/bin</samp>에 설치할 것입니다.
+</p>
+<p>시스템의 어떤 것도 변경하지 않고 Bash가 어떤 파일들을 어디에 설치할지 확인하고 싶다면, <code class="env">DESTDIR</code> 변수를 <code class="code">make</code>의 인자로 지정하십시오. 그 값은 샘플 설치 트리의 루트로 사용하고자 하는 절대 디렉토리 경로여야 합니다. 예를 들어,
+</p>
+<div class="example">
+<pre class="example-preformatted">mkdir /fs1/bash-install
+make install DESTDIR=/fs1/bash-install
+</pre></div>
+
+<p>위 명령어는 <code class="code">bash</code>를 <samp class="file">/fs1/bash-install/usr/local/bin/bash</samp>에 설치하고, 문서를 <samp class="file">/fs1/bash-install/usr/local/share</samp> 내의 디렉토리들에 설치하며, 예시 로드 가능한 빌트인들을 <samp class="file">/fs1/bash-install/usr/local/lib/bash</samp>에 설치하는 등의 작업을 수행할 것입니다. <code class="env">DESTDIR</code> 값 아래의 디렉토리 경로를 변경하기 위해 평소와 같이 <code class="env">exec_prefix</code> 및 <code class="env">prefix</code> 변수들을 사용할 수 있습니다.
+</p>
+<p>GNU Makefile 표준은 이러한 변수들과 그 효과에 대해 더 완전한 설명을 제공합니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Specifying-the-System-Type.html">시스템 유형 지정</a>, 이전: <a href="Compiling-For-Multiple-Architectures.html">다중 아키텍처를 위한 컴파일</a>, 상위: <a href="Installing-Bash.html">Bash 설치</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

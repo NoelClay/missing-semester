@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>쉘 함수 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="쉘 함수 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="쉘 함수 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Basic-Shell-Features.html" rel="up" title="기본 쉘 기능">
+<link href="Shell-Parameters.html" rel="next" title="쉘 파라미터">
+<link href="Shell-Commands.html" rel="prev" title="쉘 명령어">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Shell-Functions">
+<div class="nav-panel">
+<p>
+다음: <a href="Shell-Parameters.html" accesskey="n" rel="next">쉘 파라미터</a>, 이전: <a href="Shell-Commands.html" accesskey="p" rel="prev">쉘 명령어</a>, 상위: <a href="Basic-Shell-Features.html" accesskey="u" rel="up">기본 쉘 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Shell-Functions-1"><span>3.3 쉘 함수<a class="copiable-link" href="#Shell-Functions-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-shell-function"></a>
+<a class="index-entry-id" id="index-functions_002c-shell"></a>
+
+<p>쉘 함수는 나중에 실행하기 위해 명령어들을 하나의 이름으로 그룹화하는 방법입니다.
+이들은 &quot;일반적인&quot; 단순 명령어와 똑같이 실행됩니다.
+쉘 함수의 이름이 단순 명령어 이름으로 사용되면, 쉘은 해당 함수 이름과 연관된 명령어 목록을 실행합니다.
+쉘 함수는 현재 쉘 컨텍스트에서 실행됩니다. 이를 해석하기 위해 새로운 프로세스가 생성되지 않습니다.
+</p>
+<p>함수는 다음 문법을 사용하여 선언됩니다:
+<a class="index-entry-id" id="index-function"></a>
+</p><div class="example">
+<pre class="example-preformatted"><var class="var">fname</var> () <var class="var">compound-command</var> [ <var class="var">redirections</var> ]
+</pre></div>
+
+<p>또는
+</p>
+<div class="example">
+<pre class="example-preformatted">function <var class="var">fname</var> [()] <var class="var">compound-command</var> [ <var class="var">redirections</var> ]
+</pre></div>
+
+<p>이는 <var class="var">fname</var>이라는 이름의 쉘 함수를 정의합니다.
+예약어 <code class="code">function</code>은 선택 사항입니다.
+만약 <code class="code">function</code> 예약어가 제공되면 소괄호는 생략할 수 있습니다.
+함수의 <em class="dfn">본체(body)</em>는 복합 명령어 <var class="var">compound-command</var>(<a class="pxref" href="Compound-Commands.html">복합 명령어</a> 참조)입니다.
+해당 명령어는 보통 {와 } 사이의 <var class="var">list</var>(목록)이지만, 위에 나열된 그 어떤 복합 명령어도 될 수 있습니다.
+만약 <code class="code">function</code> 예약어를 사용했지만 소괄호를 제공하지 않는 경우에는 중괄호 사용을 권장합니다.
+쉘이 <small class="sc">POSIX</small> 모드(<a class="pxref" href="Bash-POSIX-Mode.html">Bash와 POSIX</a> 참조)일 때, <var class="var">fname</var>은 유효한 쉘 이름이어야 하며 특수 빌트인 명령어(<a class="pxref" href="Special-Builtins.html">특수 빌트인</a> 참조) 중 하나와 이름이 같아서는 안 됩니다.
+<small class="sc">POSIX</small> 모드가 아닐 때 함수 이름은 &lsquo;<samp class="samp">$</samp>&rsquo;를 포함하지 않는 인용되지 않은 그 어떤 쉘 단어도 가능합니다.
+</p>
+<p>쉘 함수와 연관된 리다이렉션(<a class="pxref" href="Redirections.html">리다이렉션</a> 참조)은 함수가 실행될 때 수행됩니다.
+함수 정의는 <code class="code">unset</code> 빌트인 명령어의 <samp class="option">-f</samp> 옵션을 사용하여 삭제합니다(<a class="pxref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a> 참조).
+</p>
+<p>함수 정의의 종료 상태는 문법 오류가 발생하거나 같은 이름의 읽기 전용 함수가 이미 존재하지 않는 한 0입니다.
+실행 시 함수의 종료 상태는 본체에서 마지막으로 실행된 명령어의 종료 상태입니다.
+</p>
+<p>역사적인 이유로 인해, 가장 일반적인 사용법에서 함수의 본체를 감싸는 중괄호는 본체와 <code class="code">blank</code>(공백) 또는 줄바꿈으로 구분되어야 합니다.
+이는 중괄호가 예약어이며, 명령어 목록과 공백이나 다른 쉘 메타 문자로 구분될 때만 예약어로 인식되기 때문입니다.
+중괄호를 사용할 때 <var class="var">list</var>는 세미콜론, &lsquo;<samp class="samp">&amp;</samp>&rsquo;, 또는 줄바꿈으로 종료되어야 합니다.
+</p>
+<p><var class="var">fname</var>이 단순 명령어의 이름으로 지정될 때마다 <var class="var">compound-command</var>가 실행됩니다.
+함수는 호출한 쉘의 컨텍스트에서 실행됩니다. 이를 해석하기 위해 새로운 프로세스가 생성되지 않습니다 (이는 쉘 스크립트의 실행과 대조되는 부분입니다).
+</p>
+<p>함수가 실행될 때, 함수에 전달된 인자들은 실행되는 동안 위치 파라미터(positional parameters)가 됩니다(<a class="pxref" href="Positional-Parameters.html">위치 파라미터</a> 참조).
+위치 파라미터의 개수로 확장되는 특수 파라미터 &lsquo;<samp class="samp">#</samp>&rsquo;은 새로운 위치 파라미터 세트를 반영하여 업데이트됩니다.
+특수 파라미터 <code class="code">0</code>은 변경되지 않습니다.
+함수가 실행되는 동안 <code class="env">FUNCNAME</code> 변수의 첫 번째 요소는 함수의 이름으로 설정됩니다.
+</p>
+<p>다음 예외 사항들을 제외하고, 쉘 실행 환경의 모든 다른 측면은 함수와 그 호출자 사이에서 동일합니다:
+<code class="code">declare</code> 빌트인을 사용하여 함수에 <code class="code">trace</code> 속성을 부여하거나 <code class="code">set</code> 빌트인으로 <code class="code">-o functrace</code> 옵션을 활성화하지 않는 한(이 경우 모든 함수가 <code class="env">DEBUG</code> 및 <code class="env">RETURN</code> 트랩을 상속함) <code class="env">DEBUG</code> 및 <code class="env">RETURN</code> 트랩은 상속되지 않습니다. 또한 <code class="code">-o errtrace</code> 쉘 옵션이 활성화되지 않는 한 <code class="env">ERR</code> 트랩은 상속되지 않습니다.
+<code class="code">trap</code> 빌트인 명령어에 대한 설명은 <a class="xref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a>을 참조하십시오.
+</p>
+<p><code class="env">FUNCNEST</code> 변수가 0보다 큰 숫자로 설정되면 함수의 최대 중첩 레벨을 정의합니다.
+이 제한을 초과하는 함수 호출은 전체 명령어의 중단을 초래합니다.
+</p>
+<p>함수 내에서 <code class="code">return</code> 빌트인 명령어가 실행되면 함수가 완료되고 함수 호출 뒤의 다음 명령어부터 실행이 재개됩니다.
+<code class="code">RETURN</code> 트랩과 연관된 모든 명령어가 실행 재개 전에 실행됩니다.
+함수가 완료되면 위치 파라미터들과 특수 파라미터 &lsquo;<samp class="samp">#</samp>&rsquo;의 값은 함수 실행 전의 값으로 복구됩니다.
+만약 <code class="code">return</code>에 숫자 인자가 제공되면 그것이 함수의 반환 상태가 되며, 그렇지 않으면 함수의 반환 상태는 <code class="code">return</code> 전 마지막으로 실행된 명령어의 종료 상태가 됩니다.
+</p>
+<p>함수 내부의 지역 변수는 <code class="code">local</code> 빌트인을 사용하여 선언합니다(<em class="dfn">지역 변수</em>).
+일반적으로 변수와 그 값은 함수와 그 호출자 사이에서 공유됩니다.
+지역 변수는 오직 해당 함수와 그 함수가 호출하는 명령어들에만 보입니다.
+이는 특히 쉘 함수가 다른 함수를 호출할 때 중요합니다.
+</p>
+<p>다음 설명에서 <em class="dfn">현재 스코프(current scope)</em>는 현재 실행 중인 함수를 의미합니다.
+이전 스코프들은 해당 함수의 호출자 등으로 구성되며, 쉘이 그 어떤 쉘 함수도 실행하고 있지 않은 &quot;전역&quot; 스코프까지 거슬러 올라갑니다.
+현재 로컬 스코프에서의 지역 변수는 현재 실행 중인 함수 내에서 <code class="code">local</code> 또는 <code class="code">declare</code> 빌트인을 사용하여 선언된 변수입니다.
+</p>
+<p>지역 변수는 이전 스코프에서 선언된 동일한 이름의 변수를 &quot;가립니다(shadow)&quot;.
+예를 들어, 함수 내에서 선언된 지역 변수는 전역 변수를 포함하여 이전 스코프에서 선언된 동일한 이름의 변수를 숨깁니다. 참조 및 할당은 지역 변수를 가리키며 이전 스코프의 변수는 수정되지 않은 상태로 남습니다.
+함수가 반환되면 전역 변수가 다시 보이게 됩니다.
+</p>
+<p>쉘은 함수 내에서 변수의 가시성을 제어하기 위해 <em class="dfn">동적 스코핑(dynamic scoping)</em>을 사용합니다.
+동적 스코핑 환경에서는 보이는 변수와 그 값은 현재 함수에 도달하기까지의 함수 호출 시퀀스의 결과입니다.
+함수가 보게 되는 변수의 값은 그 호출자(그것이 전역 스코프이든 다른 쉘 함수이든) 내에서의 해당 변수 값에 달려 있습니다.
+이 값은 또한 지역 변수 선언 시 가려지는 값이며, 함수가 반환될 때 복구되는 값입니다.
+</p>
+<p>예를 들어, 변수 <code class="env">var</code>가 <code class="code">func1</code> 함수에서 지역 변수로 선언되고 <code class="code">func1</code>이 다른 함수 <code class="code">func2</code>를 호출하면, <code class="code">func2</code> 내부에서 행해진 <code class="env">var</code>에 대한 참조는 <code class="code">func1</code>의 지역 변수 <code class="env">var</code>로 해석되며, <code class="env">var</code>라는 이름의 모든 전역 변수를 가립니다.
+</p>
+<p>다음 스크립트는 이러한 동작을 보여줍니다.
+실행 시 스크립트는 다음을 표시합니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">In func2, var = func1 local
+</pre></div>
+
+<div class="example">
+<pre class="example-preformatted">func1()
+{
+    local var='func1 local'
+    func2
+}
+
+func2()
+{
+    echo &quot;In func2, var = $var&quot;
+}
+
+var=global
+func1
+</pre></div>
+
+<p><code class="code">unset</code> 빌트인 또한 동일한 동적 스코프를 사용하여 작동합니다: 변수가 현재 스코프에서 지역 변수라면 <code class="code">unset</code>은 그것을 해제합니다. 그렇지 않으면 위에 설명된 대로 그 어떤 호출 스코프에서 발견된 변수를 해제하게 됩니다.
+현재 로컬 스코프의 변수가 해제되면, 해당 스코프에서 다시 설정되거나 함수가 반환될 때까지 해제된 상태(unset으로 나타남)로 남습니다.
+함수가 반환되면 이전 스코프의 그 어떤 변수 인스턴스가 다시 보이게 됩니다.
+만약 <code class="code">unset</code>이 이전 스코프의 변수에 작용한다면 가려졌던 해당 이름의 모든 변수 인스턴스가 보이게 됩니다 (아래 <code class="code">localvar_unset</code> 쉘 옵션이 이 동작을 어떻게 바꾸는지 참조하십시오).
+</p>
+<p><code class="code">declare</code> (<code class="code">typeset</code>) 빌트인 명령어(<a class="pxref" href="Bash-Builtins.html">Bash 빌트인 명령어</a> 참조)의 <samp class="option">-f</samp> 옵션은 함수의 이름과 정의를 나열합니다.
+<code class="code">declare</code> 또는 <code class="code">typeset</code>의 <samp class="option">-F</samp> 옵션은 함수 이름만 나열합니다 (또한 <code class="code">extdebug</code> 쉘 옵션이 활성화된 경우 소스 파일과 라인 번호를 옵션으로 포함할 수 있습니다).
+함수는 <code class="code">export</code> 빌트인의 <samp class="option">-f</samp> 옵션(<a class="pxref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a> 참조)을 사용하여 내보낼(export) 수 있으며, 이를 통해 자식 쉘 프로세스(별도의 쉘 호출 시 생성되는 프로세스들)가 자동으로 해당 함수를 정의된 상태로 가질 수 있게 됩니다.
+<code class="code">unset</code> 빌트인의 <samp class="option">-f</samp> 옵션(<a class="pxref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a> 참조)은 함수 정의를 삭제합니다.
+</p>
+<p>함수는 재귀적일 수 있습니다.
+<code class="code">FUNCNEST</code> 변수는 함수 호출 스택의 깊이를 제한하고 함수 호출 횟수를 제한하는 데 사용될 수 있습니다.
+기본적으로 Bash는 재귀 호출 횟수에 제한을 두지 않습니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Shell-Parameters.html">쉘 파라미터</a>, 이전: <a href="Shell-Commands.html">쉘 명령어</a>, 상위: <a href="Basic-Shell-Features.html">기본 쉘 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

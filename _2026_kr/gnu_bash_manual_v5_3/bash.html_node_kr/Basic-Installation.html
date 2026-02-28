@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>기본 설치 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="기본 설치 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="기본 설치 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Installing-Bash.html" rel="up" title="Bash 설치">
+<link href="Compilers-and-Options.html" rel="next" title="컴파일러 및 옵션">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Basic-Installation">
+<div class="nav-panel">
+<p>
+다음: <a href="Compilers-and-Options.html" accesskey="n" rel="next">컴파일러 및 옵션</a>, 상위: <a href="Installing-Bash.html" accesskey="u" rel="up">Bash 설치</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Basic-Installation-1"><span>10.1 기본 설치<a class="copiable-link" href="#Basic-Installation-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-installation"></a>
+<a class="index-entry-id" id="index-configuration"></a>
+<a class="index-entry-id" id="index-Bash-installation"></a>
+<a class="index-entry-id" id="index-Bash-configuration"></a>
+
+<p>다음은 Bash를 설치하기 위한 지침입니다.
+</p>
+<p>Bash를 컴파일하는 가장 간단한 방법은 다음과 같습니다:
+</p>
+<ol class="enumerate">
+<li> 소스 코드가 포함된 디렉토리로 <code class="code">cd</code> 명령어를 사용하여 이동한 뒤, &lsquo;<samp class="samp">./configure</samp>&rsquo;를 입력하여 시스템에 맞게 Bash를 구성(configure)합니다.
+오래된 버전의 System V에서 <code class="code">csh</code>를 사용 중이라면, <code class="code">csh</code>가 <code class="code">configure</code>를 직접 실행하려 시도하는 것을 방지하기 위해 대신 &lsquo;<samp class="samp">sh ./configure</samp>&rsquo;라고 입력해야 할 수도 있습니다.
+
+<p><code class="code">configure</code>를 실행하는 데는 시간이 어느 정도 걸립니다. 실행되는 동안 어떤 기능들을 확인하고 있는지 알려주는 메시지들을 출력합니다.
+</p>
+</li><li> &lsquo;<samp class="samp">make</samp>&rsquo;를 입력하여 Bash를 컴파일하고 <code class="code">bashbug</code> 버그 보고 스크립트를 빌드합니다.
+
+</li><li> 선택 사항으로, &lsquo;<samp class="samp">make tests</samp>&rsquo;를 입력하여 Bash 테스트 스위트를 실행할 수 있습니다.
+
+</li><li> &lsquo;<samp class="samp">make install</samp>&rsquo;을 입력하여 <code class="code">bash</code>와 <code class="code">bashbug</code>를 설치합니다.
+이 명령어는 매뉴얼 페이지(manual pages)와 Info 파일, 메시지 번역 파일들, 일부 보충 문서들, 여러 예시 로드 가능한(loadable) 빌트인 명령어들, 그리고 로드 가능한 빌트인 개발을 위한 헤더 파일 세트 또한 설치합니다.
+원하는 위치에 <code class="code">bash</code>를 설치하기 위해 추가적인 권한이 필요할 수 있으며, 이 경우 &lsquo;<samp class="samp">sudo make install</samp>&rsquo;이 필요할 수 있습니다.
+<code class="code">bash</code> 및 다른 파일들이 설치되는 위치를 제어하는 방법에 대한 더 자세한 정보는 아래에 있습니다(<a class="pxref" href="Installation-Names.html">설치 이름</a> 참조).
+
+</li></ol>
+
+<p><code class="code">configure</code> 쉘 스크립트는 컴파일 중에 사용되는 다양한 시스템 의존적 변수들에 대한 올바른 값들을 추측하려고 시도합니다. 스크립트는 이 값들을 사용하여 패키지의 각 디렉토리(최상위 디렉토리, <samp class="file">builtins</samp>, <samp class="file">doc</samp>, <samp class="file">po</samp>, <samp class="file">support</samp> 디렉토리, <samp class="file">lib</samp> 아래의 각 디렉토리 및 여러 기타 디렉토리)에 <samp class="file">Makefile</samp>을 생성합니다. 또한 시스템 의존적인 정의들을 포함하는 <samp class="file">config.h</samp> 파일을 생성합니다. 마지막으로 나중에 현재 구성을 재현하기 위해 실행할 수 있는 <code class="code">config.status</code>라는 이름의 쉘 스크립트와, 재구성을 빠르게 하기 위해 테스트 결과들을 저장하는 <samp class="file">config.cache</samp> 파일, 그리고 컴파일러 출력을 포함하는 <samp class="file">config.log</samp> 파일(<code class="code">configure</code> 디버깅에 주로 유용함)을 생성합니다. 어느 시점에 <samp class="file">config.cache</samp>에 유지하고 싶지 않은 결과가 포함되어 있다면, 해당 파일을 삭제하거나 수정할 수 있습니다.
+</p>
+<p><code class="code">configure</code> 스크립트가 이해하는 옵션과 인자들에 대해 더 자세히 알아보려면, Bash 소스 디렉토리의 Bash 프롬프트에서 다음과 같이 입력하십시오:
+</p>
+<div class="example">
+<pre class="example-preformatted">bash-4.2$ ./configure --help
+</pre></div>
+
+<p>소스 디렉토리와 별개의 디렉토리에서 Bash를 빌드하고 싶다면 &ndash; 예를 들어 다중 아키텍처를 위해 빌드하는 경우 &ndash; configure 스크립트의 전체 경로를 사용하기만 하면 됩니다. 다음 명령어들은 <samp class="file">/usr/local/src/bash-4.4</samp>에 있는 소스 코드를 사용하여 <samp class="file">/usr/local/build/bash-4.4</samp> 아래의 디렉토리에서 Bash를 빌드할 것입니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">mkdir /usr/local/build/bash-4.4
+cd /usr/local/build/bash-4.4
+bash /usr/local/src/bash-4.4/configure
+make
+</pre></div>
+
+<p>소스와 별개의 디렉토리에서 빌드하는 것에 대한 더 자세한 정보는 <a class="ref" href="Compiling-For-Multiple-Architectures.html">다중 아키텍처를 위한 컴파일</a>을 참조하십시오.
+</p>
+<p>Bash를 컴파일하기 위해 이례적인 작업이 필요하다면, <code class="code">configure</code>가 그 작업의 필요 여부를 어떻게 확인할 수 있을지 고민해 보시고, 차이점(diffs)이나 지침을 <a class="email" href="mailto:bash-maintainers@gnu.org">bash-maintainers@gnu.org</a>로 보내주시면 다음 릴리스에서 고려될 수 있습니다.
+</p>
+<p><samp class="file">configure.ac</samp> 파일은 Autoconf라는 프로그램에 의해 <code class="code">configure</code>를 생성하는 데 사용됩니다. <samp class="file">configure.ac</samp>를 변경하거나 최신 버전의 Autoconf를 사용하여 <code class="code">configure</code>를 다시 생성하고 싶은 경우에만 이 파일이 필요합니다. 이 작업을 수행하는 경우, Autoconf 버전 2.69 이상을 사용하고 있는지 확인하십시오.
+</p>
+<p>&lsquo;<samp class="samp">make clean</samp>&rsquo;을 입력하여 소스 코드 디렉토리에서 프로그램 바이너리와 오브젝트 파일들을 제거할 수 있습니다. 다른 종류의 컴퓨터를 위해 Bash를 컴파일할 수 있도록 <code class="code">configure</code>가 생성한 파일들까지 제거하려면 &lsquo;<samp class="samp">make distclean</samp>&rsquo;을 입력하십시오.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Compilers-and-Options.html">컴파일러 및 옵션</a>, 상위: <a href="Installing-Bash.html">Bash 설치</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

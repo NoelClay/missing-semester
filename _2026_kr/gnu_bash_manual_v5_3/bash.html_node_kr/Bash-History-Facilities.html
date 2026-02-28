@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bash 히스토리 기능 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Bash 히스토리 기능 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Bash 히스토리 기능 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Using-History-Interactively.html" rel="up" title="히스토리 대화형 사용">
+<link href="Bash-History-Builtins.html" rel="next" title="Bash 히스토리 빌트인">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Bash-History-Facilities">
+<div class="nav-panel">
+<p>
+다음: <a href="Bash-History-Builtins.html" accesskey="n" rel="next">Bash 히스토리 빌트인</a>, 상위: <a href="Using-History-Interactively.html" accesskey="u" rel="up">히스토리 대화형 사용</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Bash-History-Facilities-1"><span>9.1 Bash 히스토리 기능<a class="copiable-link" href="#Bash-History-Facilities-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-command-history"></a>
+<a class="index-entry-id" id="index-history-list"></a>
+
+<p><code class="code">set</code> 빌트인의 <samp class="option">-o history</samp> 옵션이 활성화되어 있으면(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조), 쉘은 이전에 입력된 명령어 목록인 <em class="dfn">명령어 히스토리(command history)</em>에 대한 접근을 제공합니다. <code class="env">HISTSIZE</code> 쉘 변수의 값은 히스토리 목록에 저장할 명령어의 개수로 사용됩니다: 쉘은 마지막 <code class="env">$HISTSIZE</code> 개의 명령어 텍스트를 저장합니다 (기본값은 500). 쉘은 각 명령어를 파라미터 및 변수 확장 이전, 그러나 히스토리 확장이 수행된 이후에 <code class="env">HISTIGNORE</code> 및 <code class="env">HISTCONTROL</code> 쉘 변수 값에 따라 히스토리 목록에 저장합니다.
+</p>
+<p>쉘이 시작될 때, Bash는 <code class="env">HISTFILE</code> 변수로 지정된 파일(기본값 <samp class="file">~/.bash_history</samp>)로부터 히스토리 항목들을 읽어 들여 히스토리 목록을 초기화합니다. 이 파일을 <em class="dfn">히스토리 파일(history file)</em>이라고 부릅니다. 히스토리 파일은 필요한 경우 <code class="env">HISTFILESIZE</code> 변수 값으로 지정된 개수보다 많지 않도록 축소됩니다. 만약 <code class="env">HISTFILESIZE</code>가 해제되어 있거나, null, 숫자가 아닌 값, 또는 0보다 작은 숫자 값으로 설정되어 있다면 히스토리 파일은 축소되지 않습니다.
+</p>
+<p>히스토리 파일을 읽을 때, 히스토리 주석 문자로 시작하고 바로 뒤에 숫자가 오는 줄은 그 뒤에 오는 히스토리 항목의 타임스탬프(timestamp)로 해석됩니다. 이러한 타임스탬프들은 <code class="env">HISTTIMEFORMAT</code> 변수 값에 따라 선택적으로 표시될 수 있습니다(<a class="pxref" href="Bash-Variables.html">Bash 변수</a> 참조). 타임스탬프가 존재하면 히스토리 항목들을 구분하는 역할을 하여 여러 줄로 구성된 항목(multi-line entries)이 가능해집니다.
+</p>
+<p>히스토리가 활성화된 쉘이 종료될 때, Bash는 히스토리 목록의 마지막 <code class="env">$HISTSIZE</code> 개의 항목을 <code class="env">$HISTFILE</code>로 명명된 파일에 복사합니다. <code class="code">histappend</code> 쉘 옵션이 설정되어 있다면(<a class="pxref" href="Bash-Builtins.html">Bash 빌트인 명령어</a> 참조), Bash는 항목들을 히스토리 파일 끝에 덧붙이고, 그렇지 않으면 히스토리 파일을 덮어씁니다. <code class="env">HISTFILE</code>이 해제되어 있거나 null인 경우, 또는 히스토리 파일에 쓰기 권한이 없는 경우 히스토리는 저장되지 않습니다. 히스토리를 저장한 후, Bash는 위에서 설명한 대로 히스토리 파일이 <code class="env">$HISTFILESIZE</code> 줄을 넘지 않도록 축소합니다.
+</p>
+<p>만약 <code class="env">HISTTIMEFORMAT</code> 변수가 설정되어 있다면, 쉘은 각 히스토리 항목과 연관된 타임스탬프 정보를 히스토리 주석 문자와 함께 히스토리 파일에 기록하여, 쉘 세션 간에 타임스탬프가 보존되도록 합니다. 히스토리 파일을 읽을 때, 히스토리 주석 문자로 시작하고 바로 뒤에 숫자가 오는 줄은 그 뒤에 오는 히스토리 항목의 타임스탬프로 해석됩니다. 위에서 언급했듯이 <code class="env">HISTTIMEFORMAT</code>을 사용할 때 타임스탬프는 여러 줄 히스토리 항목을 구분하는 기준이 됩니다.
+</p>
+<p><code class="code">fc</code> 빌트인 명령어는 히스토리 목록의 일부를 나열하거나 편집 후 다시 실행합니다. <code class="code">history</code> 빌트인은 히스토리 목록을 표시하거나 수정하고 히스토리 파일을 조작할 수 있습니다. 명령줄 편집 기능을 사용할 때, 각 편집 모드에서 히스토리 목록에 접근할 수 있는 검색 명령어들을 사용할 수 있습니다(<a class="pxref" href="Commands-For-History.html">히스토리 조작 명령어</a> 참조).
+</p>
+<p>쉘은 어떤 명령어가 히스토리 목록에 저장될지 제어할 수 있게 해줍니다. <code class="env">HISTCONTROL</code> 및 <code class="env">HISTIGNORE</code> 변수는 입력된 명령어 중 일부만 저장하는 데 사용됩니다. 만약 <code class="code">cmdhist</code> 쉘 옵션이 활성화되어 있으면, 쉘은 여러 줄 명령어의 각 줄을 동일한 히스토리 항목에 저장하려고 시도하며, 구문적 정확성을 유지하기 위해 필요한 곳에 세미콜론을 추가합니다. <code class="code">lithist</code> 쉘 옵션은 세미콜론 대신 줄바꿈을 그대로 포함하여 명령어를 저장함으로써 <code class="code">cmdhist</code>의 동작을 수정합니다. 이러한 옵션들을 설정하기 위해 <code class="code">shopt</code> 빌트인이 사용됩니다. <code class="code">shopt</code>에 대한 설명은 <a class="xref" href="The-Shopt-Builtin.html">Shopt 빌트인</a>을 참조하십시오.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Bash-History-Builtins.html">Bash 히스토리 빌트인</a>, 상위: <a href="Using-History-Interactively.html">히스토리 대화형 사용</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

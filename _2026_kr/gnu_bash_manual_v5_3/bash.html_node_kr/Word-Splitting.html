@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>단어 분할 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="단어 분할 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="단어 분할 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Shell-Expansions.html" rel="up" title="쉘 확장">
+<link href="Filename-Expansion.html" rel="next" title="파일 이름 확장">
+<link href="Process-Substitution.html" rel="prev" title="프로세스 치환">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Word-Splitting">
+<div class="nav-panel">
+<p>
+다음: <a href="Filename-Expansion.html" accesskey="n" rel="next">파일 이름 확장</a>, 이전: <a href="Process-Substitution.html" accesskey="p" rel="prev">프로세스 치환</a>, 상위: <a href="Shell-Expansions.html" accesskey="u" rel="up">쉘 확장</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Word-Splitting-1"><span>3.5.7 단어 분할<a class="copiable-link" href="#Word-Splitting-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-word-splitting"></a>
+
+<p>쉘은 큰따옴표 내에서 발생하지 않은 파라미터 확장, 명령어 치환, 그리고 산술 확장의 결과물에 대해 단어 분할(word splitting)을 수행하기 위해 스캔합니다.
+확장되지 않은 단어들은 분할되지 않습니다.
+</p>
+<p>쉘은 <code class="env">$IFS</code>의 각 문자를 구분자(delimiter)로 취급하며, 이 문자들을 필드 종료자로 사용하여 다른 확장들의 결과를 여러 필드로 분할합니다.
+</p>
+<p><em class="dfn">IFS 공백(IFS whitespace)</em> 문자란 위에서 정의된 공백 문자(<a class="pxref" href="Definitions.html">용어 정의</a> 참조) 중 <code class="env">IFS</code>의 값에 포함된 문자를 의미합니다.
+스페이스, 탭, 줄바꿈은 로케일의 <code class="code">space</code> 범주에 포함되지 않더라도 항상 IFS 공백으로 간주됩니다.
+</p>
+<p>만약 <code class="env">IFS</code>가 설정되어 있지 않으면, 단어 분할은 마치 그 값이 <code class="code">&lt;space&gt;&lt;tab&gt;&lt;newline&gt;</code>인 것처럼 동작하며, 이 문자들을 IFS 공백으로 취급합니다.
+만약 <code class="env">IFS</code>의 값이 null(빈 값)이면 단어 분할은 일어나지 않지만, 암시적인 null 인자(아래 참조)는 여전히 제거됩니다.
+</p>
+<p>단어 분할은 이전 확장 결과의 시작과 끝에서 IFS 공백 문자 시퀀스를 제거하는 것으로 시작하며, 그 후에 남은 단어들을 분할합니다.
+</p>
+<p>만약 <code class="env">IFS</code>의 값이 오직 IFS 공백으로만 구성되어 있다면, 임의의 IFS 공백 문자 시퀀스가 필드를 구분합니다. 따라서 필드는 인용되지 않은 IFS 공백이 아닌 문자들로 구성되며, null 필드는 오직 인용을 통해서만 생길 수 있습니다.
+</p>
+<p>만약 <code class="env">IFS</code>에 공백이 아닌 문자가 포함되어 있다면, IFS 공백이 아닌 <code class="env">IFS</code> 내의 모든 문자와 그에 인접한 모든 IFS 공백 문자들이 필드를 구분합니다. 이는 인접한 'IFS 공백이 아닌 구분자'들이 null 필드를 생성함을 의미합니다. IFS 공백 문자들의 시퀀스 또한 필드를 구분합니다.
+</p>
+<p>명시적인 null 인자(<code class="code">&quot;&quot;</code> 또는 <code class="code">''</code>)는 보존되어 명령어에 빈 문자열로 전달됩니다.
+값이 없는 파라미터의 확장으로 인해 발생하는 인용되지 않은 암시적인 null 인자들은 제거됩니다.
+값이 없는 파라미터를 큰따옴표 내에서 확장하면 null 필드가 생성되며, 이는 보존되어 명령어에 빈 문자열로 전달됩니다.
+</p>
+<p>인용된 null 인자가 확장의 결과가 null이 아닌 단어의 일부로 나타나는 경우, 단어 분할 시 null 인자 부분은 제거되고 null이 아닌 확장 결과만 남습니다.
+즉, 단어 <code class="code">-d''</code>는 단어 분할과 null 인자 제거 후에 <code class="code">-d</code>가 됩니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Filename-Expansion.html">파일 이름 확장</a>, 이전: <a href="Process-Substitution.html">프로세스 치환</a>, 상위: <a href="Shell-Expansions.html">쉘 확장</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

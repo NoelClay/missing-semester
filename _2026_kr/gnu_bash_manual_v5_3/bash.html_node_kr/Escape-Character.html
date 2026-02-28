@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>이스케이프 문자 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="이스케이프 문자 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="이스케이프 문자 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Quoting.html" rel="up" title="인용(Quoting)">
+<link href="Single-Quotes.html" rel="next" title="작은따옴표">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsubsection-level-extent" id="Escape-Character">
+<div class="nav-panel">
+<p>
+다음: <a href="Single-Quotes.html" accesskey="n" rel="next">작은따옴표</a>, 상위: <a href="Quoting.html" accesskey="u" rel="up">인용(Quoting)</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsubsection" id="Escape-Character-1"><span>3.1.2.1 이스케이프 문자<a class="copiable-link" href="#Escape-Character-1"> &para;</a></span></h4>
+<p>인용되지 않은 백슬래시 &lsquo;<samp class="samp">\</samp>&rsquo;는 Bash의 이스케이프 문자입니다.
+이는 <code class="code">newline</code>(줄바꿈)을 제외하고, 바로 다음에 오는 문자가 가진 특별한 의미를 제거하여 그 문자의 리터럴 값을 보존합니다.
+만약 <code class="code">&#92;newline</code> 쌍이 나타나고 백슬래시 자체가 인용되지 않았다면, <code class="code">&#92;newline</code>은 줄 이어짐(line continuation)으로 취급됩니다(즉, 입력 스트림에서 제거되어 사실상 무시됩니다).
+</p>
+</div>
+
+
+
+</body>
+</html>

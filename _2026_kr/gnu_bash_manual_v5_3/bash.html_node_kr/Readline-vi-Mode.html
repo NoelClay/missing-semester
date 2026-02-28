@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Readline vi 모드 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Readline vi 모드 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Readline vi 모드 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Command-Line-Editing.html" rel="up" title="명령줄 편집">
+<link href="Programmable-Completion.html" rel="next" title="프로그래밍 가능한 자동 완성">
+<link href="Bindable-Readline-Commands.html" rel="prev" title="바인딩 가능한 Readline 명령어">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Readline-vi-Mode">
+<div class="nav-panel">
+<p>
+다음: <a href="Programmable-Completion.html" accesskey="n" rel="next">프로그래밍 가능한 자동 완성</a>, 이전: <a href="Bindable-Readline-Commands.html" accesskey="p" rel="prev">바인딩 가능한 Readline 명령어</a>, 상위: <a href="Command-Line-Editing.html" accesskey="u" rel="up">명령줄 편집</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Readline-vi-Mode-1"><span>8.5 Readline vi 모드<a class="copiable-link" href="#Readline-vi-Mode-1"> &para;</a></span></h3>
+
+<p>Readline 라이브러리가 <code class="code">vi</code>의 모든 편집 기능 세트를 가지고 있는 것은 아니지만, 줄에 대한 간단한 편집을 수행하기에는 충분한 기능들을 포함하고 있습니다. Readline <code class="code">vi</code> 모드는 <small class="sc">POSIX</small> 표준의 <code class="code">sh</code> 설명에 명시된 대로 동작합니다.
+</p>
+<p>&lsquo;<samp class="samp">set -o emacs</samp>&rsquo; 및 &lsquo;<samp class="samp">set -o vi</samp>&rsquo; 명령어를 사용하여(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조) <code class="code">emacs</code>와 <code class="code">vi</code> 편집 모드 사이를 대화형으로 전환할 수 있습니다. Readline의 기본값은 <code class="code">emacs</code> 모드입니다.
+</p>
+<p><code class="code">vi</code> 모드에서 줄을 입력하기 시작할 때, 사용자는 마치 &lsquo;<samp class="samp">i</samp>&rsquo;를 입력한 것처럼 이미 &lsquo;삽입(insertion)&rsquo; 모드에 놓여 있습니다. <kbd class="key">ESC</kbd> 키를 누르면 &lsquo;명령어(command)&rsquo; 모드로 전환되며, 여기서 표준 <code class="code">vi</code> 이동 키들을 사용하여 줄의 텍스트를 편집하거나, &lsquo;<samp class="samp">k</samp>&rsquo;를 사용하여 이전 히스토리 줄로, &lsquo;<samp class="samp">j</samp>&rsquo;를 사용하여 이후 줄로 이동하는 등의 작업을 수행할 수 있습니다.
+</p>
+</div>
+
+
+
+</body>
+</html>

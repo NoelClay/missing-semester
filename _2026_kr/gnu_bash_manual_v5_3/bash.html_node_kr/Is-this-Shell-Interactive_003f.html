@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>이 쉘은 대화형인가? (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="이 쉘은 대화형인가? (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="이 쉘은 대화형인가? (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Interactive-Shells.html" rel="up" title="대화형 쉘">
+<link href="Interactive-Shell-Behavior.html" rel="next" title="대화형 쉘의 동작">
+<link href="What-is-an-Interactive-Shell_003f.html" rel="prev" title="대화형 쉘이란 무엇인가?">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Is-this-Shell-Interactive_003f">
+<div class="nav-panel">
+<p>
+다음: <a href="Interactive-Shell-Behavior.html" accesskey="n" rel="next">대화형 쉘의 동작</a>, 이전: <a href="What-is-an-Interactive-Shell_003f.html" accesskey="p" rel="prev">대화형 쉘이란 무엇인가?</a>, 상위: <a href="Interactive-Shells.html" accesskey="u" rel="up">대화형 쉘</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Is-this-Shell-Interactive_003f-1"><span>6.3.2 이 쉘은 대화형인가?<a class="copiable-link" href="#Is-this-Shell-Interactive_003f-1"> &para;</a></span></h4>
+
+<p>시작 스크립트 내에서 Bash가 대화형으로 실행 중인지 확인하려면 &lsquo;<samp class="samp">-</samp>&rsquo; 특수 파라미터의 값을 테스트하십시오. 쉘이 대화형일 때 이 값은 <code class="code">i</code>를 포함합니다.
+예를 들어:
+</p>
+<div class="example">
+<pre class="example-preformatted">case &quot;$-&quot; in
+*i*)	echo 이 쉘은 대화형입니다 ;;
+*)	echo 이 쉘은 대화형이 아닙니다 ;;
+esac
+</pre></div>
+
+<p>대안적으로, 시작 스크립트에서 <code class="env">PS1</code> 변수를 조사할 수도 있습니다; 이 변수는 비대화형 쉘에서는 해제(unset)되어 있고, 대화형 쉘에서는 설정되어 있습니다.
+따라서:
+</p>
+<div class="example">
+<pre class="example-preformatted">if [ -z &quot;$PS1&quot; ]; then
+        echo 이 쉘은 대화형이 아닙니다
+else
+        echo 이 쉘은 대화형입니다
+fi
+</pre></div>
+
+</div>
+
+
+
+</body>
+</html>

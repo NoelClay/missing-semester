@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>작업 제어 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="작업 제어 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="작업 제어 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Installing-Bash.html" rel="up" title="Bash 설치">
+<link href="Optional-Features.html" rel="next" title="선택적 기능">
+<link href="Sharing-Defaults.html" rel="prev" title="기본값 공유">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Operation-Controls">
+<div class="nav-panel">
+<p>
+다음: <a href="Optional-Features.html" accesskey="n" rel="next">선택적 기능</a>, 이전: <a href="Sharing-Defaults.html" accesskey="p" rel="prev">기본값 공유</a>, 상위: <a href="Installing-Bash.html" accesskey="u" rel="up">Bash 설치</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Operation-Controls-1"><span>10.7 작업 제어 (Operation Controls)<a class="copiable-link" href="#Operation-Controls-1"> &para;</a></span></h3>
+
+<p><code class="code">configure</code>는 동작 방식을 제어하기 위해 다음 옵션들을 인식합니다.
+</p>
+<dl class="table">
+<dt><code class="code">--cache-file=<var class="var">file</var></code></dt>
+<dd><p>테스트 결과를 <samp class="file">./config.cache</samp> 대신 <var class="var">file</var>에 사용하고 저장합니다. <code class="code">configure</code>를 디버깅할 때 캐싱을 비활성화하려면 <var class="var">file</var>을 <samp class="file">/dev/null</samp>로 설정하십시오.
+</p>
+</dd>
+<dt><code class="code">--help</code></dt>
+<dd><p><code class="code">configure</code> 옵션들에 대한 요약을 출력하고 종료합니다.
+</p>
+</dd>
+<dt><code class="code">--quiet</code></dt>
+<dt><code class="code">--silent</code></dt>
+<dt><code class="code">-q</code></dt>
+<dd><p>어떤 확인(checks)들이 수행되고 있는지 알려주는 메시지들을 출력하지 않습니다.
+</p>
+</dd>
+<dt><code class="code">--srcdir=<var class="var">dir</var></code></dt>
+<dd><p>Bash 소스 코드를 <var class="var">dir</var> 디렉토리에서 찾습니다. 보통 <code class="code">configure</code>는 해당 디렉토리를 자동으로 결정할 수 있습니다.
+</p>
+</dd>
+<dt><code class="code">--version</code></dt>
+<dd><p><code class="code">configure</code> 스크립트를 생성하는 데 사용된 Autoconf의 버전을 출력하고 종료합니다.
+</p></dd>
+</dl>
+
+<p><code class="code">configure</code>는 널리 사용되지 않는 몇 가지 다른 표준 옵션들도 받아들입니다. &lsquo;<samp class="samp">configure --help</samp>&rsquo;는 전체 목록을 출력합니다.
+</p>
+</div>
+
+
+
+</body>
+</html>

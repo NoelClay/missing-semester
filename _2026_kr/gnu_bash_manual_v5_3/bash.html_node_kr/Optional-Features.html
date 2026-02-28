@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>선택적 기능 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="선택적 기능 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="선택적 기능 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Installing-Bash.html" rel="up" title="Bash 설치">
+<link href="Operation-Controls.html" rel="prev" title="작업 제어">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Optional-Features">
+<div class="nav-panel">
+<p>
+이전: <a href="Operation-Controls.html" accesskey="p" rel="prev">작업 제어</a>, 상위: <a href="Installing-Bash.html" accesskey="u" rel="up">Bash 설치</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Optional-Features-1"><span>10.8 선택적 기능 (Optional Features)<a class="copiable-link" href="#Optional-Features-1"> &para;</a></span></h3>
+
+<p>Bash <code class="code">configure</code>는 많은 <samp class="option">--enable-<var class="var">feature</var></samp> 옵션들을 가지고 있으며, 여기서 <var class="var">feature</var>는 Bash의 선택적 부분을 나타냅니다. 또한 여러 <samp class="option">--with-<var class="var">package</var></samp> 옵션들이 있으며, <var class="var">package</var>는 &lsquo;<samp class="samp">bash-malloc</samp>&rsquo; 또는 &lsquo;<samp class="samp">afs</samp>&rsquo;와 같은 것들입니다. 패키지의 기본 사용을 끄려면 <samp class="option">--without-<var class="var">package</var></samp>를 사용하십시오. 기본적으로 활성화된 기능을 제외하고 Bash를 구성하려면 <samp class="option">--disable-<var class="var">feature</var></samp>를 사용하십시오.
+</p>
+<p>다음은 Bash <code class="code">configure</code>가 인식하는 <samp class="option">--enable-</samp> 및 <samp class="option">--with-</samp> 옵션들의 전체 목록입니다.
+</p>
+<dl class="table">
+<dt><code class="code">--with-afs</code></dt>
+<dd><p>Transarc의 Andrew File System을 사용 중인 경우 정의하십시오.
+</p>
+</dd>
+<dt><code class="code">--with-bash-malloc</code></dt>
+<dd><p><samp class="file">lib/malloc</samp> 디렉토리에 있는 Bash 버전의 <code class="code">malloc</code>을 사용합니다. 이는 <small class="sc">GNU</small> libc에 포함된 <code class="code">malloc</code>과는 다르며, 원래 4.2 <small class="sc">BSD</small> <code class="code">malloc</code>으로부터 파생된 커스텀 버전입니다. 이 <code class="code">malloc</code>은 매우 빠르지만 할당 시마다 약간의 공간을 낭비합니다. 물론 낭비를 최소화하기 위해 여러 기술을 사용합니다. 이 옵션은 기본적으로 활성화되어 있습니다. <samp class="file">NOTES</samp> 파일에는 이 옵션을 꺼야 하는 시스템 목록이 포함되어 있으며, <code class="code">configure</code>는 여러 시스템에서 이 옵션을 자동으로 비활성화합니다.
+</p>
+</dd>
+<dt><code class="code">--with-curses</code></dt>
+<dd><p>termcap 라이브러리 대신 curses 라이브러리를 사용합니다. 대부분의 시스템이 curses 라이브러리에 termcap 함수들을 포함하고 있으므로, <code class="code">configure</code>는 대개 이를 자동으로 선택합니다.
+</p>
+</dd>
+<dt><code class="code">--with-gnu-malloc</code></dt>
+<dd><p><code class="code">--with-bash-malloc</code>의 동의어입니다.
+</p>
+</dd>
+<dt><code class="code">--with-installed-readline[=<var class="var">PREFIX</var>]</code></dt>
+<dd><p>Bash가 <samp class="file">lib/readline</samp>에 있는 버전 대신 로컬에 설치된 Readline 버전을 링크하도록 정의합니다. 이는 Readline 5.0 및 이후 버전에서만 작동합니다. 만약 <var class="var">PREFIX</var>가 <code class="code">yes</code>이거나 주어지지 않은 경우, <code class="code">configure</code>는 설치된 Readline 버전이 표준 시스템 인클루드 및 라이브러리 디렉토리에 없다면 이를 찾기 위해 <code class="code">includedir</code> 및 <code class="code">libdir</code>(기본적으로 <code class="code">prefix</code>의 하위 디렉토리임)의 값을 사용합니다. 만약 <var class="var">PREFIX</var>가 <code class="code">no</code>이면, Bash는 <samp class="file">lib/readline</samp>에 있는 버전과 링크합니다. 만약 <var class="var">PREFIX</var>가 그 외의 값으로 설정되면, <code class="code">configure</code>는 이를 디렉토리 경로로 간주하고 해당 디렉토리의 하위 디렉토리(헤더 파일은 <var class="var">PREFIX</var>/<code class="code">include</code>, 라이브러리는 <var class="var">PREFIX</var>/<code class="code">lib</code>)에서 설치된 Readline 버전을 찾습니다. Bash의 기본값은 빌드 디렉토리의 <samp class="file">lib/readline</samp> 하위 디렉토리에 빌드된 정적 라이브러리와 링크하는 것입니다.
+</p>
+</dd>
+<dt><code class="code">--with-libintl-prefix[=<var class="var">PREFIX</var>]</code></dt>
+<dd><p>Bash가 <samp class="file">lib/intl</samp>에 있는 버전 대신 로컬에 설치된 libintl 라이브러리 버전과 링크하도록 정의합니다.
+</p>
+</dd>
+<dt><code class="code">--with-libiconv-prefix[=<var class="var">PREFIX</var>]</code></dt>
+<dd><p>Bash가 표준 시스템 위치 대신 <var class="var">PREFIX</var>에서 libiconv를 찾도록 정의합니다. Bash 배포판은 이 라이브러리를 포함하지 않습니다.
+</p>
+</dd>
+<dt><code class="code">--enable-minimal-config</code></dt>
+<dd><p>역사적인 Bourne 쉘에 더 가까운, 최소한의 기능을 가진 쉘을 생성합니다.
+</p></dd>
+</dl>
+
+<p>런타임 기능을 변경하기보다 Bash가 컴파일, 링크, 그리고 설치되는 방식을 변경하는 여러 <samp class="option">--enable-</samp> 옵션들이 있습니다.
+</p>
+<dl class="table">
+<dt><code class="code">--enable-largefile</code></dt>
+<dd><p>대용량 파일에 접근할 수 있는 프로그램을 빌드하기 위해 운영체제가 특별한 컴파일러 옵션을 요구하는 경우, <a class="url" href="http://www.unix.org/version2/whatsnew/lfs20mar.html">대용량 파일(large files)</a> 지원을 활성화합니다. 운영체제가 대용량 파일 지원을 제공한다면 이 옵션은 기본적으로 활성화됩니다.
+</p>
+</dd>
+<dt><code class="code">--enable-profiling</code></dt>
+<dd><p>실행될 때마다 <code class="code">gprof</code>에 의해 처리될 프로파일링 정보를 생성하는 Bash 바이너리를 빌드합니다.
+</p>
+</dd>
+<dt><code class="code">--enable-separate-helpfiles</code></dt>
+<dd><p><code class="code">help</code> 빌트인에 의해 표시되는 문서를 내부에 저장하는 대신 외부 파일을 사용합니다.
+</p>
+</dd>
+<dt><code class="code">--enable-static-link</code></dt>
+<dd><p><code class="code">gcc</code>를 사용 중인 경우 Bash를 정적으로 링크(statically link)하게 합니다. 이는 루트(root)의 쉘로 사용할 버전을 빌드할 때 쓰일 수 있습니다.
+</p>
+</dd>
+</dl>
+
+<p>&lsquo;<samp class="samp">minimal-config</samp>&rsquo; 옵션은 아래의 모든 옵션들을 비활성화하는 데 사용될 수 있지만, 가장 먼저 처리되므로 개별 옵션들을 &lsquo;<samp class="samp">enable-<var class="var">feature</var></samp>&rsquo;를 사용하여 다시 활성화할 수 있습니다.
+</p>
+<p>&lsquo;<samp class="samp">alt-array-implementation</samp>&rsquo;, &lsquo;<samp class="samp">disabled-builtins</samp>&rsquo;, &lsquo;<samp class="samp">direxpand-default</samp>&rsquo;, &lsquo;<samp class="samp">strict-posix-default</samp>&rsquo;, 그리고 &lsquo;<samp class="samp">xpg-echo-default</samp>&rsquo;를 제외한 다음의 모든 옵션들은 운영체제가 필요한 지원을 제공하지 않는 경우를 제외하고 기본적으로 활성화되어 있습니다.
+</p>
+<dl class="table">
+<dt><code class="code">--enable-alias</code></dt>
+<dd><p>별칭 확장(alias expansion)을 허용하고 <code class="code">alias</code> 및 <code class="code">unalias</code> 빌트인을 포함합니다(<a class="pxref" href="Aliases.html">별칭</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-alt-array-implementation</code></dt>
+<dd><p>더 많은 메모리를 사용하는 대신(배열이 얼마나 희소한지에 따라 때로는 몇 배 더 많이 사용함) 더 빠른 접근을 제공하는 배열의 대체 구현을 사용하여 Bash를 빌드합니다(<a class="pxref" href="Arrays.html">배열</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-arith-for-command</code></dt>
+<dd><p>C 언어의 <code class="code">for</code> 문처럼 동작하는 <code class="code">for</code> 명령어의 대체 형식을 포함합니다(<a class="pxref" href="Looping-Constructs.html">루프 구조</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-array-variables</code></dt>
+<dd><p>1차원 배열 쉘 변수 지원을 포함합니다(<a class="pxref" href="Arrays.html">배열</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-bang-history</code></dt>
+<dd><p><code class="code">csh</code> 스타일의 히스토리 치환 지원을 포함합니다(<a class="pxref" href="History-Interaction.html">히스토리 확장</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-bash-source-fullpath-default</code></dt>
+<dd><p>위의 <a class="ref" href="The-Shopt-Builtin.html">Shopt 빌트인</a>에서 설명한 <code class="code">bash_source_fullpath</code> 쉘 옵션의 기본값을 활성화 상태로 설정합니다. 이는 파일 이름이 <code class="code">BASH_SOURCE</code> 배열 변수에 어떻게 할당되는지를 제어합니다.
+</p>
+</dd>
+<dt><code class="code">--enable-brace-expansion</code></dt>
+<dd><p><code class="code">csh</code> 스타일의 중괄호 확장을 포함합니다(<code class="code">b{a,b}c</code> &rarr; <code class="code">bac bbc</code>). 전체 설명은 <a class="ref" href="Brace-Expansion.html">중괄호 확장</a>을 참조하십시오.
+</p>
+</dd>
+<dt><code class="code">--enable-casemod-attributes</code></dt>
+<dd><p><code class="code">declare</code> 빌트인 및 할당문에서 대소문자 수정 속성(case-modifying attributes) 지원을 포함합니다. 예를 들어 <code class="code">uppercase</code> 속성을 가진 변수는 할당 시 값이 대문자로 변환됩니다.
+</p>
+</dd>
+<dt><code class="code">--enable-casemod-expansion</code></dt>
+<dd><p>대소문자 수정 단어 확장(case-modifying word expansions) 지원을 포함합니다.
+</p>
+</dd>
+<dt><code class="code">--enable-command-timing</code></dt>
+<dd><p><code class="code">time</code>을 예약어로 인식하고 <code class="code">time</code> 뒤에 오는 파이프라인에 대한 타이밍 통계를 표시하는 기능을 포함합니다(<a class="pxref" href="Pipelines.html">파이프라인</a> 참조). 이는 외부 명령어가 쉽게 할 수 없는 파이프라인, 쉘 복합 명령어, 쉘 빌트인, 그리고 쉘 함수의 시간을 측정할 수 있게 해줍니다.
+</p>
+</dd>
+<dt><code class="code">--enable-cond-command</code></dt>
+<dd><p><code class="code">[[</code> 조건부 명령어 지원을 포함합니다(<a class="pxref" href="Conditional-Constructs.html">조건부 구조</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-cond-regexp</code></dt>
+<dd><p><code class="code">[[</code> 조건부 명령어에서 &lsquo;<samp class="samp">=~</samp>&rsquo; 이항 연산자를 사용한 <small class="sc">POSIX</small> 정규 표현식 매칭 지원을 포함합니다(<a class="pxref" href="Conditional-Constructs.html">조건부 구조</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-coprocesses</code></dt>
+<dd><p>코프로세스(coprocesses)와 <code class="code">coproc</code> 예약어 지원을 포함합니다(<a class="pxref" href="Pipelines.html">파이프라인</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-debugger</code></dt>
+<dd><p>Bash 디버거(별도로 배포됨) 지원을 포함합니다.
+</p>
+</dd>
+<dt><code class="code">--enable-dev-fd-stat-broken</code></dt>
+<dd><p>/dev/fd/<var class="var">N</var>에 대해 <code class="code">stat</code>을 호출한 결과가 파일 디스크립터 <var class="var">N</var>에 대해 <code class="code">fstat</code>을 호출한 결과와 다르다면, 이 옵션을 사용하여 우회책을 활성화하십시오. 이는 파일 속성을 테스트하는 조건부 명령어들에 영향을 미칩니다.
+</p>
+</dd>
+<dt><code class="code">--enable-direxpand-default</code></dt>
+<dd><p>쉘이 시작될 때 <code class="code">direxpand</code> 쉘 옵션(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조)이 기본적으로 활성화되도록 합니다. 평소에는 기본적으로 비활성화되어 있습니다.
+</p>
+</dd>
+<dt><code class="code">--enable-directory-stack</code></dt>
+<dd><p><code class="code">csh</code> 스타일의 디렉토리 스택과 <code class="code">pushd</code>, <code class="code">popd</code>, 그리고 <code class="code">dirs</code> 빌트인 지원을 포함합니다(<a class="pxref" href="The-Directory-Stack.html">디렉토리 스택</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-disabled-builtins</code></dt>
+<dd><p>&lsquo;<samp class="samp">enable -n xxx</samp>&rsquo;를 사용하여 <code class="code">xxx</code>가 비활성화된 후에도 &lsquo;<samp class="samp">builtin xxx</samp>&rsquo;를 통해 빌트인 명령어를 호출할 수 있게 허용합니다. <code class="code">builtin</code> 및 <code class="code">enable</code> 빌트인 명령어에 대한 자세한 내용은 <a class="ref" href="Bash-Builtins.html">Bash 빌트인 명령어</a>를 참조하십시오.
+</p>
+</dd>
+<dt><code class="code">--enable-dparen-arithmetic</code></dt>
+<dd><p><code class="code">((&hellip;))</code> 명령어 지원을 포함합니다(<a class="pxref" href="Conditional-Constructs.html">조건부 구조</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-extended-glob</code></dt>
+<dd><p>위의 <a class="ref" href="Pattern-Matching.html">패턴 매칭</a>에서 설명한 확장된 패턴 매칭 기능들에 대한 지원을 포함합니다.
+</p>
+</dd>
+<dt><code class="code">--enable-extended-glob-default</code></dt>
+<dd><p>위의 <a class="ref" href="The-Shopt-Builtin.html">Shopt 빌트인</a>에서 설명한 <code class="code">extglob</code> 쉘 옵션의 기본값을 활성화 상태로 설정합니다.
+</p>
+</dd>
+<dt><code class="code">--enable-function-import</code></dt>
+<dd><p>환경으로부터 쉘의 다른 인스턴스에 의해 내보내기(export)된 함수 정의를 가져오는(import) 기능을 포함합니다. 이 옵션은 기본적으로 활성화되어 있습니다.
+</p>
+</dd>
+<dt><code class="code">--enable-glob-asciiranges-default</code></dt>
+<dd><p>위의 <a class="ref" href="The-Shopt-Builtin.html">Shopt 빌트인</a>에서 설명한 <code class="code">globasciiranges</code> 쉘 옵션의 기본값을 활성화 상태로 설정합니다. 이는 패턴 매칭 브래킷 표현식에서 사용되는 문자 범위(character ranges)의 동작을 제어합니다.
+</p>
+</dd>
+<dt><code class="code">--enable-help-builtin</code></dt>
+<dd><p>쉘 빌트인 및 변수들에 대한 도움말을 표시하는 <code class="code">help</code> 빌트인을 포함합니다(<a class="pxref" href="Bash-Builtins.html">Bash 빌트인 명령어</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-history</code></dt>
+<dd><p>명령어 히스토리와 <code class="code">fc</code> 및 <code class="code">history</code> 빌트인 명령어를 포함합니다(<a class="pxref" href="Bash-History-Facilities.html">Bash 히스토리 기능</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-job-control</code></dt>
+<dd><p>운영체제가 지원하는 경우 작업 제어(job control) 기능들을 활성화합니다(<a class="pxref" href="Job-Control.html">작업 제어</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-multibyte</code></dt>
+<dd><p>운영체제가 필요한 지원을 제공하는 경우 다중 바이트 문자(multibyte characters) 지원을 활성화합니다.
+</p>
+</dd>
+<dt><code class="code">--enable-net-redirections</code></dt>
+<dd><p>리다이렉션에서 사용되는 <code class="code">/dev/tcp/<var class="var">host</var>/<var class="var">port</var></code> 및 <code class="code">/dev/udp/<var class="var">host</var>/<var class="var">port</var></code> 형식의 파일 이름들에 대한 특별한 처리를 활성화합니다(<a class="pxref" href="Redirections.html">리다이렉션</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-process-substitution</code></dt>
+<dd><p>운영체제가 필요한 지원을 제공하는 경우 프로세스 치환(process substitution)을 활성화합니다(<a class="pxref" href="Process-Substitution.html">프로세스 치환</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-progcomp</code></dt>
+<dd><p>프로그래밍 가능한 자동 완성(programmable completion) 시설을 활성화합니다(<a class="pxref" href="Programmable-Completion.html">프로그래밍 가능한 자동 완성</a> 참조). Readline이 활성화되어 있지 않으면 이 옵션은 효과가 없습니다.
+</p>
+</dd>
+<dt><code class="code">--enable-prompt-string-decoding</code></dt>
+<dd><p><code class="env">$PS0</code>, <code class="env">$PS1</code>, <code class="env">$PS2</code>, 그리고 <code class="env">$PS4</code> 프롬프트 문자열에서 여러 백슬래시 이스케이프 문자들에 대한 해석을 켭니다. 프롬프트 문자열 이스케이프 시퀀스의 전체 목록은 <a class="ref" href="Controlling-the-Prompt.html">프롬프트 제어하기</a>를 참조하십시오.
+</p>
+</dd>
+<dt><code class="code">--enable-readline</code></dt>
+<dd><p>Bash 버전의 Readline 라이브러리를 사용하여 명령줄 편집 및 히스토리 지원을 포함합니다(<a class="pxref" href="Command-Line-Editing.html">명령줄 편집</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-restricted</code></dt>
+<dd><p><em class="dfn">제한된 쉘(restricted shell)</em> 지원을 포함합니다. 이 기능이 활성화되면 Bash가 <code class="code">rbash</code>로 호출되었을 때 제한 모드로 진입합니다. 제한 모드에 대한 설명은 <a class="ref" href="The-Restricted-Shell.html">제한된 쉘</a>을 참조하십시오.
+</p>
+</dd>
+<dt><code class="code">--enable-select</code></dt>
+<dd><p>간단한 메뉴 생성을 가능하게 하는 <code class="code">select</code> 복합 명령어를 포함합니다(<a class="pxref" href="Conditional-Constructs.html">조건부 구조</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-single-help-strings</code></dt>
+<dd><p><code class="code">help</code> 빌트인에 의해 표시되는 텍스트를 각 도움말 주제마다 단일 문자열로 저장합니다. 이는 텍스트를 다른 언어로 번역하는 데 도움을 줍니다. 컴파일러가 매우 긴 문자열 리터럴을 처리하지 못하는 경우 이 옵션을 비활성화해야 할 수도 있습니다.
+</p>
+</dd>
+<dt><code class="code">--enable-strict-posix-default</code></dt>
+<dd><p>Bash가 기본적으로 <small class="sc">POSIX</small>를 준수하도록 만듭니다(<a class="pxref" href="Bash-POSIX-Mode.html">Bash와 POSIX</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-translatable-strings</code></dt>
+<dd><p><code class="code">$&quot;<var class="var">string</var>&quot;</code> 번역 가능한 문자열 지원을 활성화합니다(<a class="pxref" href="Locale-Translation.html">로케일 특정 번역</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--enable-usg-echo-default</code></dt>
+<dd><p><code class="code">--enable-xpg-echo-default</code>의 동의어입니다.
+</p>
+</dd>
+<dt><code class="code">--enable-xpg-echo-default</code></dt>
+<dd><p><code class="code">echo</code> 빌트인이 <samp class="option">-e</samp> 옵션 없이도 기본적으로 백슬래시 이스케이프 문자들을 확장하게 만듭니다. 이는 <code class="code">xpg_echo</code> 쉘 옵션의 기본값을 <code class="code">on</code>으로 설정하며, 이는 Bash <code class="code">echo</code>가 Single Unix Specification, 버전 3에 명시된 버전과 더 유사하게 동작하도록 만듭니다. <code class="code">echo</code>가 인식하는 이스케이프 시퀀스에 대한 설명은 <a class="xref" href="Bash-Builtins.html">Bash 빌트인 명령어</a>를 참조하십시오.
+</p></dd>
+</dl>
+
+<p><samp class="file">config-top.h</samp> 파일에는 <code class="code">configure</code>에서 설정할 수 없는 옵션들을 위한 C 전처리기 &lsquo;<samp class="samp">#define</samp>&rsquo; 문들이 포함되어 있습니다. 이들 중 일부는 변경해서는 안 됩니다; 변경하는 경우 그 결과에 주의하십시오. 각 정의의 효과에 대한 더 자세한 정보는 각 정의와 연관된 주석을 읽어보십시오.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+이전: <a href="Operation-Controls.html">작업 제어</a>, 상위: <a href="Installing-Bash.html">Bash 설치</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

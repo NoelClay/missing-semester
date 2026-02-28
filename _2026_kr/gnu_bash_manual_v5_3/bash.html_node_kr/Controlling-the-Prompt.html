@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>프롬프트 제어하기 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="프롬프트 제어하기 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="프롬프트 제어하기 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Bash-Features.html" rel="up" title="Bash 기능">
+<link href="The-Restricted-Shell.html" rel="next" title="제한된 쉘">
+<link href="The-Directory-Stack.html" rel="prev" title="디렉토리 스택">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Controlling-the-Prompt">
+<div class="nav-panel">
+<p>
+다음: <a href="The-Restricted-Shell.html" accesskey="n" rel="next">제한된 쉘</a>, 이전: <a href="The-Directory-Stack.html" accesskey="p" rel="prev">디렉토리 스택</a>, 상위: <a href="Bash-Features.html" accesskey="u" rel="up">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Controlling-the-Prompt-1"><span>6.9 프롬프트 제어하기<a class="copiable-link" href="#Controlling-the-Prompt-1"> &para;</a></span></h3>
+<a class="index-entry-id" id="index-prompting"></a>
+
+<p>추가적으로, 다음 표는 프롬프트 변수인 <code class="env">PS0</code>, <code class="env">PS1</code>, <code class="env">PS2</code>, 그리고 <code class="env">PS4</code>에 나타날 수 있는 특수 문자들을 설명합니다:
+</p>
+<dl class="table">
+<dt><code class="code">&#92;a</code></dt>
+<dd><p>경고 (벨 소리).
+</p></dd>
+<dt><code class="code">&#92;d</code></dt>
+<dd><p>"요일 월 일" 형식의 날짜 (예: "Tue May 26").
+</p></dd>
+<dt><code class="code">&#92;D{<var class="var">format</var>}</code></dt>
+<dd><p><var class="var">format</var>은 <code class="code">strftime</code>(3)으로 전달되며 그 결과가 프롬프트 문자열에 삽입됩니다; <var class="var">format</var>이 비어 있으면 로케일 특정 시간 표현이 사용됩니다. 중괄호는 필수입니다.
+</p></dd>
+<dt><code class="code">&#92;e</code></dt>
+<dd><p>이스케이프 문자.
+</p></dd>
+<dt><code class="code">&#92;h</code></dt>
+<dd><p>첫 번째 &lsquo;.&rsquo;까지의 호스트 이름.
+</p></dd>
+<dt><code class="code">&#92;H</code></dt>
+<dd><p>전체 호스트 이름.
+</p></dd>
+<dt><code class="code">&#92;j</code></dt>
+<dd><p>쉘이 현재 관리 중인 작업(jobs)의 개수.
+</p></dd>
+<dt><code class="code">&#92;l</code></dt>
+<dd><p>쉘의 터미널 장치 이름의 베이스네임 (예: "ttys0").
+</p></dd>
+<dt><code class="code">&#92;n</code></dt>
+<dd><p>줄바꿈 (newline).
+</p></dd>
+<dt><code class="code">&#92;r</code></dt>
+<dd><p>캐리지 리턴 (carriage return).
+</p></dd>
+<dt><code class="code">&#92;s</code></dt>
+<dd><p>쉘의 이름: <code class="code">$0</code>의 베이스네임 (마지막 슬래시 이후 부분).
+</p></dd>
+<dt><code class="code">&#92;t</code></dt>
+<dd><p>24시간 형식의 시간 (HH:MM:SS).
+</p></dd>
+<dt><code class="code">&#92;T</code></dt>
+<dd><p>12시간 형식의 시간 (HH:MM:SS).
+</p></dd>
+<dt><code class="code">&#92;@</code></dt>
+<dd><p>12시간 am/pm 형식의 시간.
+</p></dd>
+<dt><code class="code">&#92;A</code></dt>
+<dd><p>24시간 형식의 시간 (HH:MM).
+</p></dd>
+<dt><code class="code">&#92;u</code></dt>
+<dd><p>현재 사용자의 이름.
+</p></dd>
+<dt><code class="code">&#92;v</code></dt>
+<dd><p>Bash 버전 (예: 2.00).
+</p></dd>
+<dt><code class="code">&#92;V</code></dt>
+<dd><p>Bash 릴리스 (버전 + 패치레벨, 예: 2.00.0).
+</p></dd>
+<dt><code class="code">&#92;w</code></dt>
+<dd><p><code class="env">$HOME</code>이 물결표로 축약된 <code class="code">PWD</code> 쉘 변수의 값 (<code class="env">$PWD</code>) (<code class="env">$PROMPT_DIRTRIM</code> 변수를 사용함).
+</p></dd>
+<dt><code class="code">&#92;W</code></dt>
+<dd><p><code class="env">$HOME</code>이 물결표로 축약된 <code class="env">$PWD</code>의 베이스네임.
+</p></dd>
+<dt><code class="code">&#92;!</code></dt>
+<dd><p>이 명령어의 히스토리 번호.
+</p></dd>
+<dt><code class="code">&#92;#</code></dt>
+<dd><p>이 명령어의 시퀀스 번호.
+</p></dd>
+<dt><code class="code">&#92;$</code></dt>
+<dd><p>유효 UID가 0이면 <code class="code">#</code>, 그렇지 않으면 <code class="code">$</code>.
+</p></dd>
+<dt><code class="code">&#92;<var class="var">nnn</var></code></dt>
+<dd><p>8진수 값 <var class="var">nnn</var>에 해당하는 ASCII 문자.
+</p></dd>
+<dt><code class="code">&#92;&#92;</code></dt>
+<dd><p>백슬래시.
+</p></dd>
+<dt><code class="code">&#92;[</code></dt>
+<dd><p>출력되지 않는 문자 시퀀스의 시작. 터미널 제어 시퀀스를 프롬프트에 포함할 때 사용될 수 있습니다.
+</p></dd>
+<dt><code class="code">&#92;]</code></dt>
+<dd><p>출력되지 않는 문자 시퀀스의 끝.
+</p></dd>
+</dl>
+
+<p>명령어 시퀀스 번호와 히스토리 번호는 보통 다릅니다: 명령어의 히스토리 번호는 히스토리 목록 내의 위치이며, 여기에는 히스토리 파일로부터 복구된 명령어들이 포함될 수 있습니다(<a class="pxref" href="Bash-History-Facilities.html">Bash 히스토리 기능</a> 참조). 반면 명령어 시퀀스 번호는 현재 쉘 세션 동안 실행된 명령어 시퀀스 내의 위치를 나타냅니다.
+</p>
+<p>문자열이 디코딩된 후에는 <code class="code">promptvars</code> 쉘 옵션 값에 따라 파라미터 확장, 명령어 치환, 산술 확장, 그리고 따옴표 제거가 수행됩니다(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조). 문자열의 이스케이프된 부분이 명령어 치환 내에 나타나거나 단어 확장에 특별한 의미를 갖는 문자를 포함하고 있다면 원치 않는 부작용이 발생할 수 있습니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="The-Restricted-Shell.html">제한된 쉘</a>, 이전: <a href="The-Directory-Stack.html">디렉토리 스택</a>, 상위: <a href="Bash-Features.html">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

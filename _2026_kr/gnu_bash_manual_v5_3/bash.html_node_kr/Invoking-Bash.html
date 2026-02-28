@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Bash 호출하기 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Bash 호출하기 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Bash 호출하기 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Bash-Features.html" rel="up" title="Bash 기능">
+<link href="Bash-Startup-Files.html" rel="next" title="Bash 시작 파일">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Invoking-Bash">
+<div class="nav-panel">
+<p>
+다음: <a href="Bash-Startup-Files.html" accesskey="n" rel="next">Bash 시작 파일</a>, 상위: <a href="Bash-Features.html" accesskey="u" rel="up">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Invoking-Bash-1"><span>6.1 Bash 호출하기<a class="copiable-link" href="#Invoking-Bash-1"> &para;</a></span></h3>
+
+<div class="example">
+<pre class="example-preformatted">bash [long-opt] [-ir] [-abefhkmnptuvxdBCDHP] [-o <var class="var">option</var>]
+    [-O <var class="var">shopt_option</var>] [<var class="var">argument</var> ...]
+bash [long-opt] [-abefhkmnptuvxdBCDHP] [-o <var class="var">option</var>]
+    [-O <var class="var">shopt_option</var>] -c <var class="var">string</var> [<var class="var">argument</var> ...]
+bash [long-opt] -s [-abefhkmnptuvxdBCDHP] [-o <var class="var">option</var>]
+    [-O <var class="var">shopt_option</var>] [<var class="var">argument</var> ...]
+</pre></div>
+
+<p><code class="code">set</code> 빌트인에서 사용되는 모든 단일 문자 옵션들은(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조) 쉘 호출 시 옵션으로 사용될 수 있습니다. 또한, 사용할 수 있는 여러 다중 문자(multi-character) 옵션들이 있습니다. 이러한 옵션들은 인식되려면 반드시 명령줄에서 단일 문자 옵션들보다 먼저 나타나야 합니다.
+</p>
+<dl class="table">
+<dt><code class="code">--debugger</code></dt>
+<dd><p>쉘이 시작되기 전에 디버거 프로파일을 실행하도록 준비합니다. 확장 디버깅 모드를 켭니다(<code class="code">shopt</code> 빌트인의 <code class="code">extdebug</code> 옵션 설명은 <a class="ref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--dump-po-strings</code></dt>
+<dd><p>앞에 &lsquo;<samp class="samp">$</samp>&rsquo;가 붙은 모든 큰따옴표 문자열 목록을 <small class="sc">GNU</small> <code class="code">gettext</code> PO (portable object) 파일 형식으로 표준 출력에 출력합니다. 출력 형식을 제외하고는 <samp class="option">-D</samp> 옵션과 동일합니다.
+</p>
+</dd>
+<dt><code class="code">--dump-strings</code></dt>
+<dd><p><samp class="option">-D</samp>와 동일합니다.
+</p>
+</dd>
+<dt><code class="code">--help</code></dt>
+<dd><p>표준 출력에 사용법 메시지를 표시하고 성공적으로 종료합니다.
+</p>
+</dd>
+<dt><code class="code">--init-file <var class="var">filename</var></code></dt>
+<dt><code class="code">--rcfile <var class="var">filename</var></code></dt>
+<dd><p>대화형 쉘에서 (<samp class="file">~/.bashrc</samp> 대신) <var class="var">filename</var>으로부터 명령어들을 실행합니다.
+</p>
+</dd>
+<dt><code class="code">--login</code></dt>
+<dd><p><samp class="option">-l</samp>과 동일합니다.
+</p>
+</dd>
+<dt><code class="code">--noediting</code></dt>
+<dd><p>대화형 쉘일 때 명령줄을 읽기 위해 <small class="sc">GNU</small> Readline 라이브러리(<a class="pxref" href="Command-Line-Editing.html">명령줄 편집</a> 참조)를 사용하지 않습니다.
+</p>
+</dd>
+<dt><code class="code">--noprofile</code></dt>
+<dd><p>Bash가 로그인 쉘로 호출될 때 시스템 전체 시작 파일인 <samp class="file">/etc/profile</samp>이나 개인 초기화 파일들인 <samp class="file">~/.bash_profile</samp>, <samp class="file">~/.bash_login</samp>, 또는 <samp class="file">~/.profile</samp>을 로드하지 않습니다.
+</p>
+</dd>
+<dt><code class="code">--norc</code></dt>
+<dd><p>대화형 쉘에서 <samp class="file">~/.bashrc</samp> 초기화 파일을 읽지 않습니다. 쉘이 <code class="code">sh</code>로 호출된 경우에는 이 옵션이 기본적으로 켜집니다.
+</p>
+</dd>
+<dt><code class="code">--posix</code></dt>
+<dd><p><small class="sc">POSIX</small> 모드를 활성화합니다. 기본 동작이 <small class="sc">POSIX</small> 표준과 다른 부분에서 표준에 맞게 Bash의 동작을 변경합니다. 이는 Bash가 해당 표준의 엄격한 슈퍼셋(superset)으로 동작하도록 하기 위함입니다. Bash <small class="sc">POSIX</small> 모드에 대한 설명은 <a class="xref" href="Bash-POSIX-Mode.html">Bash와 POSIX</a>를 참조하십시오.
+</p>
+</dd>
+<dt><code class="code">--restricted</code></dt>
+<dd><p><samp class="option">-r</samp>과 동일합니다. 쉘을 제한된 쉘(restricted shell)로 만듭니다(<a class="pxref" href="The-Restricted-Shell.html">제한된 쉘</a> 참조).
+</p>
+</dd>
+<dt><code class="code">--verbose</code></dt>
+<dd><p><samp class="option">-v</samp>와 동일합니다. 쉘 입력 줄을 읽어들이는 대로 출력합니다.
+</p>
+</dd>
+<dt><code class="code">--version</code></dt>
+<dd><p>표준 출력에 이 Bash 인스턴스의 버전 정보를 표시하고 성공적으로 종료합니다.
+</p></dd>
+</dl>
+
+<p>호출 시 제공할 수 있는 몇 가지 단일 문자 옵션들이 있는데, 이들은 <code class="code">set</code> 빌트인에서는 사용할 수 없는 것들입니다.
+</p>
+<dl class="table">
+<dt><code class="code">-c</code></dt>
+<dd><p>첫 번째 비-옵션 인자인 <var class="var">command_string</var>으로부터 명령어들을 읽어 실행한 뒤 종료합니다. <var class="var">command_string</var> 뒤에 인자들이 있다면, 첫 번째 인자는 <code class="code">$0</code>에 할당되고 나머지 인자들은 위치 파라미터들에 할당됩니다. <code class="code">$0</code>에 할당된 값은 경고 및 에러 메시지에서 사용될 쉘의 이름이 됩니다.
+</p>
+</dd>
+<dt><code class="code">-i</code></dt>
+<dd><p>쉘이 대화형(interactively)으로 실행되도록 강제합니다. 대화형 쉘에 대한 설명은 <a class="ref" href="Interactive-Shells.html">대화형 쉘</a>을 참조하십시오.
+</p>
+</dd>
+<dt><code class="code">-l</code></dt>
+<dd><p>이 쉘이 로그인에 의해 직접 호출된 것처럼 동작하게 합니다. 대화형 쉘인 경우, 이는 &lsquo;<samp class="samp">exec -l bash</samp>&rsquo;로 로그인 쉘을 시작하는 것과 동일합니다. 비대화형 쉘인 경우, 로그인 쉘 시작 파일들을 읽어 실행합니다. &lsquo;<samp class="samp">exec bash -l</samp>&rsquo; 또는 &lsquo;<samp class="samp">exec bash --login</samp>&rsquo;은 현재 쉘을 Bash 로그인 쉘로 대체합니다. 로그인 쉘의 특별한 동작에 대한 설명은 <a class="xref" href="Bash-Startup-Files.html">Bash 시작 파일</a>을 참조하십시오.
+</p>
+</dd>
+<dt><code class="code">-r</code></dt>
+<dd><p>쉘을 제한된 쉘(restricted shell)로 만듭니다(<a class="pxref" href="The-Restricted-Shell.html">제한된 쉘</a> 참조).
+</p>
+</dd>
+<dt><code class="code">-s</code></dt>
+<dd><p>이 옵션이 있거나 옵션 처리 후 인자가 남아있지 않다면, Bash는 표준 입력으로부터 명령어들을 읽습니다. 이 옵션은 대화형 쉘을 호출할 때나 파이프를 통해 입력을 읽을 때 위치 파라미터를 설정할 수 있게 해줍니다.
+</p>
+</dd>
+<dt><code class="code">-D</code></dt>
+<dd><p>앞에 &lsquo;<samp class="samp">$</samp>&rsquo;가 붙은 모든 큰따옴표 문자열 목록을 표준 출력에 출력합니다. 이 문자열들은 현재 로케일이 <code class="code">C</code>나 <code class="code">POSIX</code>가 아닐 때 언어 번역의 대상이 되는 문자열들입니다(<a class="pxref" href="Locale-Translation.html">로케일 특정 번역</a> 참조). 이 옵션은 <samp class="option">-n</samp> 옵션을 내포하며, 명령어는 실행되지 않습니다.
+</p>
+</dd>
+<dt><code class="code">[-+]O [<var class="var">shopt_option</var>]</code></dt>
+<dd><p><var class="var">shopt_option</var>은 <code class="code">shopt</code> 빌트인에서 허용되는 쉘 옵션 중 하나입니다(<a class="pxref" href="The-Shopt-Builtin.html">Shopt 빌트인</a> 참조). <var class="var">shopt_option</var>이 있으면, <samp class="option">-O</samp>는 해당 옵션의 값을 설정하고 <samp class="option">+O</samp>는 해제합니다. 만약 <var class="var">shopt_option</var>이 제공되지 않으면, Bash는 <code class="code">shopt</code>이 허용하는 쉘 옵션들의 이름과 값을 표준 출력에 출력합니다. 호출 옵션이 <samp class="option">+O</samp>인 경우, 출력은 입력으로 재사용할 수 있는 형식으로 표시됩니다.
+</p>
+</dd>
+<dt><code class="code">--</code></dt>
+<dd><p><code class="code">--</code>는 옵션의 끝을 알리며 추가적인 옵션 처리를 중단합니다. <code class="code">--</code> 뒤의 모든 인자들은 쉘 스크립트 파일명과 해당 스크립트로 전달될 인자들로 취급됩니다(<a class="pxref" href="Shell-Scripts.html">쉘 스크립트</a> 참조).
+</p>
+</dd>
+<dt><code class="code">-</code></dt>
+<dd><p><code class="code">--</code>와 동일합니다.
+</p>
+</dd>
+</dl>
+
+<a class="index-entry-id" id="index-login-shell"></a>
+<p><em class="dfn">로그인 쉘(login shell)</em>이란 0번 인자의 첫 번째 문자가 &lsquo;<samp class="samp">-</samp>&rsquo;이거나 <samp class="option">--login</samp> 옵션과 함께 호출된 쉘을 말합니다.
+</p>
+<a class="index-entry-id" id="index-interactive-shell"></a>
+<p><em class="dfn">대화형 쉘(interactive shell)</em>이란 비-옵션 인자 없이 시작된 쉘(단, <samp class="option">-s</samp>가 지정된 경우는 제외), <samp class="option">-c</samp> 옵션 없이 시작된 쉘, 그리고 표준 입력과 표준 에러가 모두 (<i class="i">isatty(3)</i>에 의해 결정된 대로) 터미널에 연결된 쉘, 또는 <samp class="option">-i</samp> 옵션과 함께 시작된 쉘을 말합니다. 더 자세한 정보는 <a class="xref" href="Interactive-Shells.html">대화형 쉘</a>을 참조하십시오.
+</p>
+<p>옵션 처리 후 인자가 남아있고 <samp class="option">-c</samp> 나 <samp class="option">-s</samp> 옵션이 제공되지 않았다면, 첫 번째 인자는 쉘 명령어들을 포함한 파일 이름으로 취급됩니다(<a class="pxref" href="Shell-Scripts.html">쉘 스크립트</a> 참조). Bash가 이런 방식으로 호출되면 <code class="code">$0</code>은 해당 파일 이름으로 설정되고, 위치 파라미터들은 나머지 인자들로 설정됩니다. Bash는 이 파일로부터 명령어들을 읽어 실행한 뒤 종료합니다. Bash의 종료 상태는 스크립트에서 마지막으로 실행된 명령어의 종료 상태가 됩니다. 실행된 명령어가 없다면 종료 상태는 0입니다. Bash는 먼저 현재 디렉토리에서 파일을 열려고 시도하고, 파일을 찾지 못하면 <code class="env">PATH</code>에 있는 디렉토리들에서 해당 스크립트를 검색합니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Bash-Startup-Files.html">Bash 시작 파일</a>, 상위: <a href="Bash-Features.html">Bash 기능</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>명령어 그룹화 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="명령어 그룹화 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="명령어 그룹화 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Compound-Commands.html" rel="up" title="복합 명령어">
+<link href="Conditional-Constructs.html" rel="prev" title="조건부 구문">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsubsection-level-extent" id="Command-Grouping">
+<div class="nav-panel">
+<p>
+이전: <a href="Conditional-Constructs.html" accesskey="p" rel="prev">조건부 구문</a>, 상위: <a href="Compound-Commands.html" accesskey="u" rel="up">복합 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsubsection" id="Grouping-Commands"><span>3.2.5.3 명령어 그룹화<a class="copiable-link" href="#Grouping-Commands"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-commands_002c-grouping"></a>
+
+<p>Bash는 명령어 목록을 하나의 단위로 실행하기 위해 그룹화하는 두 가지 방법을 제공합니다. 명령어가 그룹화되면, 전체 명령어 목록에 대해 리다이렉션을 적용할 수 있습니다. 예를 들어, 목록 내의 모든 명령어의 출력을 단일 스트림으로 리다이렉트할 수 있습니다.
+</p>
+<dl class="table">
+<dt><code class="code">()</code></dt>
+<dd><div class="example">
+<pre class="example-preformatted">( <var class="var">list</var> )
+</pre></div>
+
+<p>명령어 목록을 소괄호 사이에 두면 쉘은 서브쉘(<a class="pxref" href="Command-Execution-Environment.html">명령어 실행 환경</a> 참조)을 강제로 생성하며, <var class="var">list</var> 내의 각 명령어는 해당 서브쉘 환경에서 실행됩니다.
+<var class="var">list</var>가 서브쉘에서 실행되기 때문에, 서브쉘이 완료된 후에는 변수 할당이 유지되지 않습니다.
+</p>
+</dd>
+<dt><a class="index-entry-id" id="index-_007d"></a>
+<a id="index-_007b"></a><span><code class="code">{}</code><a class="copiable-link" href="#index-_007b"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">{ <var class="var">list</var>; }
+</pre></div>
+
+<p>명령어 목록을 중괄호 사이에 두면 목록이 현재 쉘 환경에서 실행됩니다.
+서브쉘은 생성되지 않습니다.
+<var class="var">list</var> 뒤에는 세미콜론(또는 줄바꿈)이 반드시 필요합니다.
+</p></dd>
+</dl>
+
+<p>서브쉘 생성 여부 외에도, 역사적인 이유로 인해 이 두 구조 사이에는 미묘한 차이가 있습니다. 중괄호는 예약어이므로 <code class="code">blank</code>(공백)나 다른 쉘 메타 문자에 의해 <var class="var">list</var>와 구분되어야 합니다.
+소괄호는 연산자이므로, <var class="var">list</var>와 공백으로 구분되지 않더라도 쉘에 의해 별개의 토큰으로 인식됩니다.
+</p>
+<p>두 구조의 종료 상태는 모두 <var class="var">list</var>의 종료 상태입니다.
+</p>
+</div>
+
+
+
+</body>
+</html>

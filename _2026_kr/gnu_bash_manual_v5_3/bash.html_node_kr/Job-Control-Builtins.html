@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>작업 제어 빌트인 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="작업 제어 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="작업 제어 빌트인 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Job-Control.html" rel="up" title="작업 제어">
+<link href="Job-Control-Variables.html" rel="next" title="작업 제어 변수">
+<link href="Job-Control-Basics.html" rel="prev" title="작업 제어 기초">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="section-level-extent" id="Job-Control-Builtins">
+<div class="nav-panel">
+<p>
+다음: <a href="Job-Control-Variables.html" accesskey="n" rel="next">작업 제어 변수</a>, 이전: <a href="Job-Control-Basics.html" accesskey="p" rel="prev">작업 제어 기초</a>, 상위: <a href="Job-Control.html" accesskey="u" rel="up">작업 제어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Job-Control-Builtins-1"><span>7.2 작업 제어 빌트인<a class="copiable-link" href="#Job-Control-Builtins-1"> &para;</a></span></h3>
+
+<dl class="table">
+<dt><a id="index-bg"></a><span><code class="code">bg</code><a class="copiable-link" href="#index-bg"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">bg [<var class="var">jobspec</var> ...]
+</pre></div>
+
+<p>중단된 각 작업 <var class="var">jobspec</var>을 마치 &lsquo;<samp class="samp">&amp;</samp>&rsquo;와 함께 시작된 것처럼 백그라운드에서 재개합니다. <var class="var">jobspec</var>이 제공되지 않으면 쉘의 현재 작업(current job) 개념을 사용합니다. <code class="code">bg</code>는 작업 제어가 활성화되지 않은 상태에서 실행되거나, 활성화된 상태에서 실행되었더라도 <var class="var">jobspec</var>을 찾을 수 없거나 작업 제어 없이 시작된 작업을 지정하는 경우를 제외하고 0을 반환합니다.
+</p>
+</dd>
+<dt><a id="index-fg"></a><span><code class="code">fg</code><a class="copiable-link" href="#index-fg"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">fg [<var class="var">jobspec</var>]
+</pre></div>
+
+<p>작업 <var class="var">jobspec</var>을 포그라운드에서 재개하고 이를 현재 작업으로 만듭니다. <var class="var">jobspec</var>이 제공되지 않으면 <code class="code">fg</code>는 현재 작업을 재개합니다. 반환 상태는 포그라운드로 배치된 명령어의 종료 상태이거나, 작업 제어가 비활성화된 상태에서 실행된 경우, 또는 활성화된 상태에서 실행되었더라도 <var class="var">jobspec</var>이 유효한 작업을 지정하지 않거나 작업 제어 없이 시작된 작업을 지정하는 경우 0이 아닌 값이 됩니다.
+</p>
+</dd>
+<dt><a id="index-jobs"></a><span><code class="code">jobs</code><a class="copiable-link" href="#index-jobs"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">jobs [-lnprs] [<var class="var">jobspec</var>]
+jobs -x <var class="var">command</var> [<var class="var">arguments</var>]
+</pre></div>
+
+<p>첫 번째 형식은 활성 상태인 작업들을 나열합니다. 옵션들은 다음과 같은 의미를 갖습니다:
+</p>
+<dl class="table">
+<dt><code class="code">-l</code></dt>
+<dd><p>일반적인 정보와 더불어 프로세스 <small class="sc">ID</small>들을 나열합니다.
+</p>
+</dd>
+<dt><code class="code">-n</code></dt>
+<dd><p>사용자가 마지막으로 상태를 통지받은 이후에 상태가 변경된 작업들에 대한 정보만 표시합니다.
+</p>
+</dd>
+<dt><code class="code">-p</code></dt>
+<dd><p>작업의 프로세스 그룹 리더의 프로세스 <small class="sc">ID</small>만 나열합니다.
+</p>
+</dd>
+<dt><code class="code">-r</code></dt>
+<dd><p>실행 중인(running) 작업들만 표시합니다.
+</p>
+</dd>
+<dt><code class="code">-s</code></dt>
+<dd><p>중단된(stopped) 작업들만 표시합니다.
+</p></dd>
+</dl>
+
+<p><var class="var">jobspec</var>이 제공되면 <code class="code">jobs</code>는 해당 작업에 대한 정보로 출력을 제한합니다. <var class="var">jobspec</var>이 제공되지 않으면 모든 작업의 상태를 나열합니다. 반환 상태는 잘못된 옵션을 만나거나 유효하지 않은 <var class="var">jobspec</var>이 제공되지 않는 한 0입니다.
+</p>
+<p><samp class="option">-x</samp> 옵션이 제공되면, <code class="code">jobs</code>는 <var class="var">command</var>나 <var class="var">arguments</var>에서 발견되는 모든 <var class="var">jobspec</var>을 대응하는 프로세스 그룹 <small class="sc">ID</small>로 교체하고, <var class="var">arguments</var>를 전달하여 <var class="var">command</var>를 실행한 뒤 그 종료 상태를 반환합니다.
+</p>
+</dd>
+<dt><a id="index-kill"></a><span><code class="code">kill</code><a class="copiable-link" href="#index-kill"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">kill [-s <var class="var">sigspec</var>] [-n <var class="var">signum</var>] [-<var class="var">sigspec</var>] <var class="var">id</var> [...]
+kill -l|-L [<var class="var">exit_status</var>]
+</pre></div>
+
+<p><var class="var">sigspec</var> 또는 <var class="var">signum</var>에 의해 지정된 시그널을 각 <var class="var">id</var>로 명명된 프로세스들에게 보냅니다. 각 <var class="var">id</var>는 작업 사양 <var class="var">jobspec</var> 또는 프로세스 <small class="sc">ID</small> <var class="var">pid</var>일 수 있습니다. <var class="var">sigspec</var>은 <code class="code">SIGINT</code>와 같은 대소문자 구분 없는 시그널 이름(&lsquo;<samp class="samp">SIG</samp>&rsquo; 접두사는 선택 사항)이거나 시그널 번호입니다. <var class="var">signum</var>은 시그널 번호입니다. 만약 <var class="var">sigspec</var>과 <var class="var">signum</var>이 주어지지 않으면 <code class="code">kill</code>은 <code class="code">SIGTERM</code>을 보냅니다.
+</p>
+<p><samp class="option">-l</samp> 옵션은 시그널 이름들을 나열합니다. <samp class="option">-l</samp>과 함께 인자들이 제공되면, 해당 인자들에 대응하는 시그널 이름들을 나열하며 반환 상태는 0입니다. <var class="var">exit_status</var>는 시그널 번호나 시그널에 의해 종료된 프로세스의 종료 상태를 지정하는 숫자입니다; 이 인자가 주어지면 <code class="code">kill</code>은 해당 프로세스를 종료시킨 시그널의 이름을 출력합니다. <code class="code">kill</code>은 프로세스 종료 상태가 128보다 크다고 가정합니다; 그보다 작은 값은 시그널 번호로 간주합니다. <samp class="option">-L</samp> 옵션은 <samp class="option">-l</samp>과 동일합니다.
+</p>
+<p>반환 상태는 최소 하나의 시그널이라도 성공적으로 전송된 경우 0이며, 에러가 발생하거나 잘못된 옵션을 만난 경우 0이 아닙니다.
+</p>
+</dd>
+<dt><a id="index-wait"></a><span><code class="code">wait</code><a class="copiable-link" href="#index-wait"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">wait [-fn] [-p <var class="var">varname</var>] [<var class="var">id</var> ...]
+</pre></div>
+
+<p>각 <var class="var">id</var>로 지정된 자식 프로세스가 종료될 때까지 기다리고 마지막 <var class="var">id</var>의 종료 상태를 반환합니다. 각 <var class="var">id</var>는 프로세스 <small class="sc">ID</small> <var class="var">pid</var> 또는 작업 사양 <var class="var">jobspec</var>일 수 있습니다; 작업 사양이 제공되면 <code class="code">wait</code>은 해당 작업 내의 모든 프로세스들이 종료될 때까지 기다립니다.
+</p>
+<p>옵션이나 <var class="var">id</var>가 제공되지 않으면, <code class="code">wait</code>은 현재 실행 중인 모든 백그라운드 작업과 (프로세스 ID가 <var class="var">$!</var>와 동일한 경우) 마지막으로 실행된 프로세스 치환이 종료될 때까지 기다리며, 반환 상태는 0입니다.
+</p>
+<p><samp class="option">-n</samp> 옵션이 제공되면, <code class="code">wait</code>은 제공된 <var class="var">id</var>들 중 하나가 종료될 때까지 기다리거나, <var class="var">id</var>가 제공되지 않은 경우 임의의 작업이나 프로세스 치환이 완료될 때까지 기다린 후 그 종료 상태를 반환합니다. 만약 제공된 <var class="var">id</var>들 중 쉘의 자식 프로세스가 없거나, 인자가 주어지지 않았는데 쉘에 아직 기다려야 할 자식 프로세스가 없다면 종료 상태는 127이 됩니다.
+</p>
+<p><samp class="option">-p</samp> 옵션이 제공되면, <code class="code">wait</code>은 종료 상태가 반환된 작업의 프로세스 또는 작업 식별자를 옵션 인자로 지정된 변수 <var class="var">varname</var>에 할당합니다. 해당 변수는 읽기 전용이 아니어야 하며, 할당 전에 먼저 해제(unset)됩니다. 이 옵션은 <samp class="option">-n</samp> 옵션과 함께 사용할 때만 유용합니다.
+</p>
+<p>작업 제어가 활성화되었을 때 <samp class="option">-f</samp> 옵션을 제공하면, <code class="code">wait</code>이 각 <var class="var">id</var>의 상태가 변경될 때 반환되는 대신 완전히 종료될 때까지 기다리도록 강제합니다.
+</p>
+<p>그 어떤 <var class="var">id</var>도 쉘의 활성 자식 프로세스를 지정하지 않는다면 반환 상태는 127입니다. <code class="code">wait</code>이 시그널에 의해 중단된 경우, <var class="var">varname</var>은 해제된 상태로 남고 반환 상태는 위에서 설명한 대로 128보다 크게 됩니다(<a class="pxref" href="Signals.html">시그널</a> 참조). 그렇지 않으면 반환 상태는 마지막 <var class="var">id</var>의 종료 상태입니다.
+</p>
+</dd>
+<dt><a id="index-disown"></a><span><code class="code">disown</code><a class="copiable-link" href="#index-disown"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">disown [-ar] [-h] [<var class="var">id</var> ...]
+</pre></div>
+
+<p>옵션 없이 사용하면, 활성 작업 테이블에서 각 <var class="var">id</var>를 제거합니다. 각 <var class="var">id</var>는 작업 사양 <var class="var">jobspec</var> 또는 프로세스 <small class="sc">ID</small> <var class="var">pid</var>일 수 있습니다; <var class="var">id</var>가 <var class="var">pid</var>인 경우, <code class="code">disown</code>은 해당 <var class="var">pid</var>를 포함하는 작업을 <var class="var">jobspec</var>으로 사용합니다.
+</p>
+<p><samp class="option">-h</samp> 옵션이 제공되면, <code class="code">disown</code>은 작업 테이블에서 각 <var class="var">id</var>에 해당하는 작업을 제거하지 않고, 대신 쉘이 <code class="code">SIGHUP</code>을 받았을 때 해당 작업에게 <code class="code">SIGHUP</code>을 보내지 않도록 표시만 합니다.
+</p>
+<p><var class="var">id</var>가 제공되지 않은 경우, <samp class="option">-a</samp> 옵션은 모든 작업을 제거하거나 표시함을 의미합니다; <var class="var">id</var> 인자 없이 <samp class="option">-r</samp> 옵션이 사용되면 실행 중인 작업들만 제거하거나 표시합니다. <var class="var">id</var>가 제공되지 않고 <samp class="option">-a</samp>나 <samp class="option">-r</samp> 옵션도 제공되지 않았다면, <code class="code">disown</code>은 현재 작업을 제거하거나 표시합니다.
+</p>
+<p>반환 값은 <var class="var">id</var>가 유효한 작업을 지정하지 않은 경우를 제외하고 0입니다.
+</p>
+</dd>
+<dt><a id="index-suspend"></a><span><code class="code">suspend</code><a class="copiable-link" href="#index-suspend"> &para;</a></span></dt>
+<dd><div class="example">
+<pre class="example-preformatted">suspend [-f]
+</pre></div>
+
+<p><code class="code">SIGCONT</code> 시그널을 받을 때까지 이 쉘의 실행을 중단합니다. 로그인 쉘이나 작업 제어가 활성화되지 않은 쉘은 중단될 수 없습니다; <samp class="option">-f</samp> 옵션은 이를 무시하고 중단을 강제합니다. 반환 상태는 쉘이 로그인 쉘이 아니거나, 작업 제어가 비활성화된 상태에서 <samp class="option">-f</samp>가 제공되지 않은 경우를 제외하고 0입니다.
+</p>
+</dd>
+</dl>
+
+<p>작업 제어가 활성화되어 있지 않을 때, <code class="code">kill</code> 및 <code class="code">wait</code> 빌트인은 <var class="var">jobspec</var> 인자를 받지 않습니다. 반드시 프로세스 <small class="sc">ID</small>들을 제공해야 합니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Job-Control-Variables.html">작업 제어 변수</a>, 이전: <a href="Job-Control-Basics.html">작업 제어 기초</a>, 상위: <a href="Job-Control.html">작업 제어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

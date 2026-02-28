@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>대화형 쉘의 동작 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="대화형 쉘의 동작 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="대화형 쉘의 동작 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Interactive-Shells.html" rel="up" title="대화형 쉘">
+<link href="Is-this-Shell-Interactive_003f.html" rel="prev" title="이 쉘은 대화형인가?">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Interactive-Shell-Behavior">
+<div class="nav-panel">
+<p>
+이전: <a href="Is-this-Shell-Interactive_003f.html" accesskey="p" rel="prev">이 쉘은 대화형인가?</a>, 상위: <a href="Interactive-Shells.html" accesskey="u" rel="up">대화형 쉘</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Interactive-Shell-Behavior-1"><span>6.3.3 대화형 쉘의 동작<a class="copiable-link" href="#Interactive-Shell-Behavior-1"> &para;</a></span></h4>
+
+<p>쉘이 대화형으로 실행 중일 때, 다음과 같은 여러 가지 방식으로 동작이 변경됩니다.
+</p>
+<ol class="enumerate">
+<li> Bash는 <a class="ref" href="Bash-Startup-Files.html">Bash 시작 파일</a>에 설명된 대로 시작 파일들을 읽고 실행합니다.
+
+</li><li> 작업 제어(<a class="pxref" href="Job-Control.html">작업 제어</a> 참조)가 기본적으로 활성화됩니다. 작업 제어가 활성 상태일 때, Bash는 키보드에서 생성된 작업 제어 시그널인 <code class="code">SIGTTIN</code>, <code class="code">SIGTTOU</code>, 그리고 <code class="code">SIGTSTP</code>를 무시합니다.
+
+</li><li> Bash는 기본 프롬프트인 <code class="env">$PS1</code>을 출력하기 전에 <code class="env">PROMPT_COMMAND</code> 배열 변수의 설정된 요소 값들을 명령어로 실행합니다(<a class="pxref" href="Bash-Variables.html">Bash 변수</a> 참조).
+
+</li><li> Bash는 명령어의 첫 번째 줄을 읽기 전에 <code class="env">PS1</code>을 확장하여 표시하고, 여러 줄 명령어의 두 번째 이상의 줄을 읽기 전에는 <code class="env">PS2</code>를 확장하여 표시합니다. Bash는 명령어를 읽은 후 실행하기 직전에 <code class="env">PS0</code>을 확장하여 표시합니다. 프롬프트 문자열 이스케이프 시퀀스의 전체 목록은 <a class="ref" href="Controlling-the-Prompt.html">프롬프트 제어하기</a>를 참조하십시오.
+
+</li><li> Bash는 사용자의 터미널로부터 명령어를 읽기 위해 Readline(<a class="pxref" href="Command-Line-Editing.html">명령줄 편집</a> 참조)을 사용합니다.
+
+</li><li> Bash는 명령어를 읽는 동안 표준 입력에서 <code class="code">EOF</code>를 받았을 때 즉시 종료하는 대신, <code class="code">set -o</code>의 <code class="code">ignoreeof</code> 옵션 값을 확인합니다(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조).
+
+</li><li> Bash는 명령어 히스토리(<a class="pxref" href="Bash-History-Facilities.html">Bash 히스토리 기능</a> 참조)와 히스토리 확장(<a class="pxref" href="History-Interaction.html">히스토리 확장</a> 참조)을 기본적으로 활성화합니다. 히스토리가 활성화된 쉘이 종료될 때, Bash는 <code class="env">$HISTFILE</code>로 지정된 파일에 명령어 히스토리를 저장합니다.
+
+</li><li> 별칭 확장(<a class="pxref" href="Aliases.html">별칭</a> 참조)이 기본적으로 수행됩니다.
+
+</li><li> 트랩(trap)이 설정되어 있지 않은 경우, Bash는 <code class="code">SIGTERM</code>을 무시합니다(<a class="pxref" href="Signals.html">시그널</a> 참조).
+
+</li><li> 트랩이 설정되어 있지 않은 경우, <code class="code">SIGINT</code>를 포착하여 처리합니다(<a class="pxref" href="Signals.html">시그널</a> 참조). <code class="code">SIGINT</code>는 일부 쉘 빌트인 명령어를 중단시킵니다.
+
+</li><li> <code class="code">huponexit</code> 쉘 옵션이 활성화되어 있다면, 대화형 로그인 쉘은 종료 시 모든 작업(jobs)에게 <code class="code">SIGHUP</code>을 보냅니다(<a class="pxref" href="Signals.html">시그널</a> 참조).
+
+</li><li> 호출 시나 &lsquo;<samp class="samp">set -n</samp>&rsquo;을 사용할 때 <samp class="option">-n</samp> 옵션은 아무런 효과가 없습니다(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조).
+
+</li><li> Bash는 <code class="env">MAIL</code>, <code class="env">MAILPATH</code>, 그리고 <code class="env">MAILCHECK</code> 쉘 변수 값에 따라 주기적으로 메일을 확인합니다(<a class="pxref" href="Bash-Variables.html">Bash 변수</a> 참조).
+
+</li><li> &lsquo;<samp class="samp">set -u</samp>&rsquo;가 활성화된 후에도 설정되지 않은 쉘 변수 참조로 인한 확장 에러가 발생해도 쉘은 종료되지 않습니다(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조).
+
+</li><li> <code class="code">${<var class="var">var</var>:?<var class="var">word</var>}</code> 확장 시 <var class="var">var</var>가 해제되어 있거나 null이어서 발생하는 확장 에러로 인해 쉘이 종료되지 않습니다(<a class="pxref" href="Shell-Parameter-Expansion.html">쉘 파라미터 확장</a> 참조).
+
+</li><li> 쉘 빌트인 명령어 수행 중 발생한 리다이렉션 에러로 인해 쉘이 종료되지 않습니다.
+
+</li><li> <small class="sc">POSIX</small> 모드에서 실행 중일 때, 특수 빌트인이 에러 상태를 반환하더라도 쉘이 종료되지 않습니다(<a class="pxref" href="Bash-POSIX-Mode.html">Bash와 POSIX</a> 참조).
+
+</li><li> <code class="code">exec</code> 실패로 인해 쉘이 종료되지 않습니다(<a class="pxref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a> 참조).
+
+</li><li> 파서의 문법 오류로 인해 쉘이 종료되지 않습니다.
+
+</li><li> <code class="code">cdspell</code> 쉘 옵션이 활성화되어 있다면, 쉘은 <code class="code">cd</code> 빌트인의 디렉토리 인자에 대해 사소한 철자 수정을 시도합니다(<a class="ref" href="The-Shopt-Builtin.html">Shopt 빌트인</a>의 <code class="code">cdspell</code> 옵션 설명 참조). <code class="code">cdspell</code> 옵션은 오직 대화형 쉘에서만 유효합니다.
+
+</li><li> 쉘은 <code class="env">TMOUT</code> 변수 값을 확인하고, <code class="env">$PS1</code> 출력 후 지정된 초 내에 명령어를 읽지 못하면 종료합니다(<a class="pxref" href="Bash-Variables.html">Bash 변수</a> 참조).
+
+</li></ol>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+이전: <a href="Is-this-Shell-Interactive_003f.html">이 쉘은 대화형인가?</a>, 상위: <a href="Interactive-Shells.html">대화형 쉘</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

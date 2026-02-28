@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>환경 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="환경 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="환경 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Executing-Commands.html" rel="up" title="명령어 실행">
+<link href="Exit-Status.html" rel="next" title="종료 상태">
+<link href="Command-Execution-Environment.html" rel="prev" title="명령어 실행 환경">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Environment">
+<div class="nav-panel">
+<p>
+다음: <a href="Exit-Status.html" accesskey="n" rel="next">종료 상태</a>, 이전: <a href="Command-Execution-Environment.html" accesskey="p" rel="prev">명령어 실행 환경</a>, 상위: <a href="Executing-Commands.html" accesskey="u" rel="up">명령어 실행</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Environment-1"><span>3.7.4 환경 (Environment)<a class="copiable-link" href="#Environment-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-environment"></a>
+
+<p>프로그램이 호출될 때 해당 프로그램에는 <em class="dfn">환경(environment)</em>이라고 불리는 문자열 배열이 제공됩니다.
+이는 <code class="code">이름=값</code> 형식의 이름-값 쌍의 목록입니다.
+</p>
+<p>Bash는 환경을 조작하는 여러 가지 방법을 제공합니다.
+호출 시 쉘은 자신의 환경을 스캔하고 발견된 각 이름에 대해 파라미터를 생성하며, 자식 프로세스로 <code class="code">export</code>(내보내기)되도록 자동으로 표시합니다.
+실행되는 명령어들은 이 환경을 상속받습니다.
+<code class="code">export</code>, &lsquo;<samp class="samp">declare -x</samp>&rsquo;, 그리고 <code class="code">unset</code> 명령어는 파라미터와 함수를 추가하거나 삭제함으로써 환경을 수정합니다.
+환경 내의 파라미터 값이 수정되면, 새로운 값이 기존 값을 대체하여 자동으로 환경의 일부가 됩니다.
+모든 실행되는 명령어가 상속받는 환경은 쉘의 초기 환경(쉘 내부에서 수정되었을 수 있음)에서 <code class="code">unset</code> 및 &lsquo;<samp class="samp">export -n</samp>&rsquo; 명령어로 제거된 쌍들을 빼고, <code class="code">export</code> 및 &lsquo;<samp class="samp">declare -x</samp>&rsquo; 명령어로 추가된 것들을 더하여 구성됩니다.
+</p>
+<p><a class="ref" href="Shell-Parameters.html">쉘 파라미터</a>에 설명된 파라미터 할당문이 단순 명령어 앞에 나타나면, 해당 변수 할당은 그 명령어가 실행되는 동안만 해당 명령어 환경의 일부가 됩니다.
+이러한 할당문은 오직 해당 명령어가 보게 되는 환경에만 영향을 미칩니다.
+만약 이러한 할당문이 쉘 함수 호출 앞에 온다면, 변수들은 해당 함수의 지역 변수가 되며 해당 함수의 자식 프로세스들에게 내보내집니다.
+</p>
+<p>만약 <samp class="option">-k</samp> 옵션이 설정되어 있다면(<a class="pxref" href="The-Set-Builtin.html">Set 빌트인</a> 참조), 명령어 이름 앞에 오는 것뿐만 아니라 모든 파라미터 할당이 명령어의 환경에 배치됩니다.
+</p>
+<p>Bash가 외부 명령어를 호출할 때, 변수 &lsquo;<samp class="samp">$_</samp>&rsquo;은 해당 명령어의 전체 경로명으로 설정되어 해당 명령어의 환경으로 전달됩니다.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Exit-Status.html">종료 상태</a>, 이전: <a href="Command-Execution-Environment.html">명령어 실행 환경</a>, 상위: <a href="Executing-Commands.html">명령어 실행</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

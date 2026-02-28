@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Readline 초기화 파일 문법 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="Readline 초기화 파일 문법 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="Readline 초기화 파일 문법 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Readline-Init-File.html" rel="up" title="Readline 초기화 파일">
+<link href="Conditional-Init-Constructs.html" rel="next" title="조건부 초기화 구문">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Readline-Init-File-Syntax">
+<div class="nav-panel">
+<p>
+다음: <a href="Conditional-Init-Constructs.html" accesskey="n" rel="next">조건부 초기화 구문</a>, 상위: <a href="Readline-Init-File.html" accesskey="u" rel="up">Readline 초기화 파일</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Readline-Init-File-Syntax-1"><span>8.3.1 Readline 초기화 파일 문법<a class="copiable-link" href="#Readline-Init-File-Syntax-1"> &para;</a></span></h4>
+
+<p>Readline 초기화 파일에는 몇 가지 기본 구조만 허용됩니다. 빈 줄은 무시됩니다. &lsquo;#&rsquo;으로 시작하는 줄은 주석입니다. &lsquo;$&rsquo;로 시작하는 줄은 조건부 구조를 나타냅니다(<a class="pxref" href="Conditional-Init-Constructs.html">조건부 초기화 구문</a> 참조). 그 외의 줄은 변수 설정 및 키 바인딩을 나타냅니다.
+</p>
+<dl class="table">
+<dt>변수 설정 (Variable Settings)</dt>
+<dd><p>초기화 파일 내에서 <code class="code">set</code> 명령어를 사용하여 Readline 변수의 값을 변경함으로써 Readline의 런타임 동작을 수정할 수 있습니다. 문법은 다음과 같이 간단합니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">set <var class="var">variable</var> <var class="var">value</var>
+</pre></div>
+
+<p>예를 들어, 다음은 기본 Emacs 스타일 키 바인딩에서 <code class="code">vi</code> 라인 편집 명령어를 사용하도록 변경하는 방법입니다:
+</p>
+<div class="example">
+<pre class="example-preformatted">set editing-mode vi
+</pre></div>
+
+<p>변수 이름과 값은 적절한 경우 대소문자를 구분하지 않고 인식됩니다. 인식되지 않는 변수 이름은 무시됩니다.
+</p>
+<p>불리언(Boolean) 변수(on 또는 off로 설정 가능한 변수)는 값이 null이나 비어 있는 경우, <var class="var">on</var>(대소문자 구분 없음), 또는 1인 경우 on으로 설정됩니다. 그 외의 모든 값은 변수를 off로 설정하게 합니다.
+</p>
+<p><code class="code">bind -V</code> 명령어는 현재 Readline 변수 이름과 값 목록을 보여줍니다. <a class="xref" href="Bash-Builtins.html">Bash 빌트인 명령어</a>를 참조하십시오.
+</p>
+<p>다음 변수들을 통해 매우 많은 런타임 동작을 변경할 수 있습니다.
+</p>
+<a class="index-entry-id" id="index-variables_002c-readline"></a>
+<dl class="table">
+<dt><a id="index-active_002dregion_002dstart_002dcolor"></a><span><code class="code">active-region-start-color</code><a class="copiable-link" href="#index-active_002dregion_002dstart_002dcolor"> &para;</a></span></dt>
+<dd><p>활성 리전(active region)의 텍스트를 표시할 때 텍스트 색상과 배경을 제어하는 문자열 변수입니다(아래 <code class="code">enable-active-region</code> 설명 참조). 이 문자열은 화면의 물리적인 문자 위치를 차지해서는 안 되므로, 오직 터미널 이스케이프 시퀀스로만 구성되어야 합니다. 활성 리전의 텍스트를 표시하기 전에 터미널로 출력됩니다. 이 변수는 터미널 유형이 변경될 때마다 기본값으로 리셋됩니다. 기본값은 터미널의 terminfo 설명으로부터 얻은, 터미널을 강조(standout) 모드로 전환하는 문자열입니다. 예시 값으로는 &lsquo;&#92;e[01;33m&rsquo; 등이 있을 수 있습니다.
+</p>
+</dd>
+<dt><a id="index-active_002dregion_002dend_002dcolor"></a><span><code class="code">active-region-end-color</code><a class="copiable-link" href="#index-active_002dregion_002dend_002dcolor"> &para;</a></span></dt>
+<dd><p><code class="code">active-region-start-color</code>의 효과를 &ldquo;취소&rdquo;하고 활성 리전의 텍스트를 표시한 후 터미널 디스플레이를 &ldquo;정상&rdquo; 상태로 복구하는 문자열 변수입니다. 이 문자열은 화면의 물리적인 문자 위치를 차지해서는 안 되므로, 오직 터미널 이스케이프 시퀀스로만 구성되어야 합니다. 활성 리전의 텍스트를 표시한 후에 터미널로 출력됩니다. 이 변수는 터미널 유형이 변경될 때마다 기본값으로 리셋됩니다. 기본값은 터미널의 terminfo 설명으로부터 얻은, 터미널의 강조 모드를 해제하는 문자열입니다. 예시 값으로는 &lsquo;&#92;e[0m&rsquo; 등이 있을 수 있습니다.
+</p>
+</dd>
+<dt><a id="index-bell_002dstyle"></a><span><code class="code">bell-style</code><a class="copiable-link" href="#index-bell_002dstyle"> &para;</a></span></dt>
+<dd><p>Readline이 터미널 벨을 울려야 할 때 어떤 일이 일어날지 제어합니다. &lsquo;none&rsquo;으로 설정되면 Readline은 절대 벨을 울리지 않습니다. &lsquo;visible&rsquo;로 설정되면 사용 가능한 경우 시각적 벨(visible bell)을 사용합니다. &lsquo;audible&rsquo;(기본값)로 설정되면 Readline은 터미널의 벨을 울리려고 시도합니다.
+</p>
+</dd>
+<dt><a id="index-bind_002dtty_002dspecial_002dchars"></a><span><code class="code">bind-tty-special-chars</code><a class="copiable-link" href="#index-bind_002dtty_002dspecial_002dchars"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;(기본값)으로 설정되면, Readline은 커널의 터미널 드라이버에 의해 특별하게 처리되는 제어 문자들을 그에 대응하는 Readline 기능들에 바인딩하려고 시도합니다. 이들은 여기에 설명된 기본 Readline 바인딩보다 우선합니다. Bash 프롬프트에서 &lsquo;stty -a&rsquo;를 입력하여 특수 제어 문자(보통 <code class="code">cchars</code>)를 포함한 현재 터미널 설정을 확인하십시오.
+</p>
+</dd>
+<dt><a id="index-blink_002dmatching_002dparen"></a><span><code class="code">blink-matching-paren</code><a class="copiable-link" href="#index-blink_002dmatching_002dparen"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 닫는 소괄호를 입력했을 때 대응하는 여는 소괄호 위치로 커서를 잠시 이동시키려고 시도합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-colored_002dcompletion_002dprefix"></a><span><code class="code">colored-completion-prefix</code><a class="copiable-link" href="#index-colored_002dcompletion_002dprefix"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, 자동 완성 목록을 표시할 때 가능한 완성 후보들의 공통 접두사를 다른 색상으로 표시합니다. 색상 정의는 <code class="env">LS_COLORS</code> 환경 변수의 값으로부터 가져옵니다. 만약 <code class="env">LS_COLORS</code>에 커스텀 접미사 &lsquo;readline-colored-completion-prefix&rsquo;에 대한 색상 정의가 있다면, Readline은 기본값 대신 이 색상을 공통 접두사에 사용합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-colored_002dstats"></a><span><code class="code">colored-stats</code><a class="copiable-link" href="#index-colored_002dstats"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 가능한 완성 후보들을 파일 유형을 나타내는 서로 다른 색상으로 표시합니다. 색상 정의는 <code class="env">LS_COLORS</code> 환경 변수의 값으로부터 가져옵니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-comment_002dbegin"></a><span><code class="code">comment-begin</code><a class="copiable-link" href="#index-comment_002dbegin"> &para;</a></span></dt>
+<dd><p><code class="code">insert-comment</code> 명령어에 의해 줄의 처음에 삽입될 문자열입니다. 기본값은 <code class="code">&quot;#&quot;</code>입니다.
+</p>
+</dd>
+<dt><a id="index-completion_002ddisplay_002dwidth"></a><span><code class="code">completion-display-width</code><a class="copiable-link" href="#index-completion_002ddisplay_002dwidth"> &para;</a></span></dt>
+<dd><p>자동 완성을 수행할 때 가능한 일치 항목들을 표시하는 데 사용할 화면 열(columns)의 수입니다. 값이 0보다 작거나 터미널 화면 너비보다 크면 무시됩니다. 값이 0이면 일치 항목들을 한 줄에 하나씩 표시합니다. 기본값은 -1입니다.
+</p>
+</dd>
+<dt><a id="index-completion_002dignore_002dcase"></a><span><code class="code">completion-ignore-case</code><a class="copiable-link" href="#index-completion_002dignore_002dcase"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 파일명 매칭 및 자동 완성을 대소문자 구분 없이 수행합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-completion_002dmap_002dcase"></a><span><code class="code">completion-map-case</code><a class="copiable-link" href="#index-completion_002dmap_002dcase"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되어 있고 <var class="var">completion-ignore-case</var>가 활성화된 경우, Readline은 대소문자 구분 없는 파일명 매칭 및 자동 완성을 수행할 때 하이픈(&lsquo;-&rsquo;)과 언더스코어(&lsquo;_&rsquo;)를 동일하게 취급합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-completion_002dprefix_002ddisplay_002dlength"></a><span><code class="code">completion-prefix-display-length</code><a class="copiable-link" href="#index-completion_002dprefix_002ddisplay_002dlength"> &para;</a></span></dt>
+<dd><p>수정 없이 표시될 가능한 완성 후보 목록의 공통 접두사의 최대 문자 길이입니다. 0보다 큰 값으로 설정되면, Readline은 가능한 완성 후보들을 표시할 때 이 값보다 긴 공통 접두사들을 생략 부호(...)로 대체합니다. 완성이 마침표(.)로 시작하고 Readline이 파일 이름을 완성하는 중이라면, 생략 부호 대신 세 개의 언더스코어를 사용합니다.
+</p>
+</dd>
+<dt><a id="index-completion_002dquery_002ditems"></a><span><code class="code">completion-query-items</code><a class="copiable-link" href="#index-completion_002dquery_002ditems"> &para;</a></span></dt>
+<dd><p>목록을 표시할지 여부를 사용자에게 묻는 기준이 되는 가능한 완성 후보의 개수입니다. 가능한 완성 후보의 개수가 이 값보다 크거나 같으면, Readline은 사용자가 이를 보길 원하는지 묻습니다. 그렇지 않으면 그냥 목록을 나열합니다. 이 변수는 0보다 크거나 같은 정수 값으로 설정되어야 합니다. 0으로 설정하면 절대 묻지 않음을 의미하며, 음수 값은 0으로 취급됩니다. 기본 제한값은 <code class="code">100</code>입니다.
+</p>
+</dd>
+<dt><a id="index-convert_002dmeta"></a><span><code class="code">convert-meta</code><a class="copiable-link" href="#index-convert_002dmeta"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 읽어들인 문자 중 여덟 번째 비트가 설정된 문자를 여덟 번째 비트를 지우고 <kbd class="key">ESC</kbd> 문자를 앞에 붙임으로써 <small class="sc">ASCII</small> 키 시퀀스로 변환하여, 메타 접두사가 붙은 키 시퀀스로 바꿉니다. 기본값은 &lsquo;on&rsquo;이지만, 로케일에 여덟 번째 비트가 설정된 바이트를 포함할 수 있는 인코딩의 문자들이 포함되어 있다면 Readline은 이를 &lsquo;off&rsquo;로 설정합니다. 이 변수는 <code class="code">LC_CTYPE</code> 로케일 카테고리에 의존하며, 로케일이 변경되면 그 값도 변경될 수 있습니다. 이 변수는 키 바인딩에도 영향을 줍니다; 아래 <code class="code">force-meta-prefix</code> 설명을 참조하십시오.
+</p>
+</dd>
+<dt><a id="index-disable_002dcompletion"></a><span><code class="code">disable-completion</code><a class="copiable-link" href="#index-disable_002dcompletion"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면 Readline은 단어 자동 완성을 억제합니다. 자동 완성 문자들은 마치 <code class="code">self-insert</code>에 매핑된 것처럼 줄에 삽입됩니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-echo_002dcontrol_002dcharacters"></a><span><code class="code">echo-control-characters</code><a class="copiable-link" href="#index-echo_002dcontrol_002dcharacters"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, 이를 지원한다고 표시된 운영체제에서 Readline은 키보드에서 생성된 시그널에 대응하는 문자를 에코(echo)합니다. 기본값은 &lsquo;on&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-editing_002dmode"></a><span><code class="code">editing-mode</code><a class="copiable-link" href="#index-editing_002dmode"> &para;</a></span></dt>
+<dd><p><code class="code">editing-mode</code> 변수는 기본 키 바인딩 세트를 제어합니다. 기본적으로 Readline은 키 입력 방식이 Emacs와 가장 유사한 emacs 편집 모드로 시작합니다. 이 변수는 &lsquo;emacs&rsquo; 또는 &lsquo;vi&rsquo;로 설정될 수 있습니다.
+</p>
+</dd>
+<dt><a id="index-emacs_002dmode_002dstring"></a><span><code class="code">emacs-mode-string</code><a class="copiable-link" href="#index-emacs_002dmode_002dstring"> &para;</a></span></dt>
+<dd><p><var class="var">show-mode-in-prompt</var> 변수가 활성화되어 있으면, emacs 편집 모드가 활성 상태일 때 기본 프롬프트의 마지막 줄 바로 앞에 이 문자열이 표시됩니다. 이 값은 키 바인딩처럼 확장되므로, 표준 메타 및 제어 접두사와 백슬래시 이스케이프 시퀀스를 사용할 수 있습니다. &lsquo;&#92;1&rsquo; 및 &lsquo;&#92;2&rsquo; 이스케이프는 출력되지 않는 문자 시퀀스의 시작과 끝을 나타내며, 모드 문자열 내에 터미널 제어 시퀀스를 포함시키는 데 사용될 수 있습니다. 기본값은 &lsquo;@&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-enable_002dactive_002dregion-The"></a><span><code class="code">enable-active-region</code><a class="copiable-link" href="#index-enable_002dactive_002dregion-The"> &para;</a></span></dt>
+<dd><p><em class="dfn">포인트(point)</em>는 현재 커서 위치이고, <em class="dfn">마크(mark)</em>는 저장된 커서 위치를 참조합니다(<a class="pxref" href="Commands-For-Moving.html">이동 명령어</a> 참조). 포인트와 마크 사이의 텍스트를 <em class="dfn">리전(region)</em>이라고 부릅니다. 이 변수가 &lsquo;on&rsquo;으로 설정되면 Readline은 특정 명령어들이 리전을 <em class="dfn">활성(active)</em> 상태로 지정하는 것을 허용합니다. 리전이 활성 상태일 때, Readline은 <code class="code">active-region-start-color</code> 변수 값을 사용하여 리전 내의 텍스트를 강조 표시합니다. 이 값의 기본값은 터미널의 강조 모드를 켜는 문자열입니다. 활성 리전은 bracketed-paste에 의해 삽입된 텍스트와 점진적 및 비점진적 히스토리 검색에 의해 발견된 일치하는 텍스트를 보여줍니다. 기본값은 &lsquo;on&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-enable_002dbracketed_002dpaste"></a><span><code class="code">enable-bracketed-paste</code><a class="copiable-link" href="#index-enable_002dbracketed_002dpaste"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 터미널에서 붙여넣은 각 내용을 키보드에서 읽어들인 문자들처럼 하나씩 처리하는 대신 단일 문자열로 편집 버퍼에 삽입하도록 터미널을 구성합니다. 이를 터미널을 <em class="dfn">bracketed paste 모드</em>로 전환한다고 합니다; 이는 붙여넣은 텍스트 내에 포함된 키 시퀀스에 바인딩된 편집 명령어가 Readline에 의해 실행되는 것을 방지합니다. 기본값은 &lsquo;on&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-enable_002dkeypad"></a><span><code class="code">enable-keypad</code><a class="copiable-link" href="#index-enable_002dkeypad"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 호출될 때 애플리케이션 키패드를 활성화하려고 시도합니다. 일부 시스템에서는 화살표 키를 활성화하기 위해 이 설정이 필요합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-enable_002dmeta_002dkey"></a><span><code class="code">enable-meta-key</code><a class="copiable-link" href="#index-enable_002dmeta_002dkey"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 호출될 때 터미널이 지원한다고 주장하는 모든 메타 수식 키를 활성화하려고 시도합니다. 많은 터미널에서 Meta 키는 8비트 문자들을 보내는 데 사용됩니다; 이 변수는 문자가 입력될 때(메타 문자) Meta 키를 누르고 있으면 문자의 여덟 번째 비트(0200)를 설정하는 모드를 켜거나 끌 수 있는 터미널 기능이 있는지 확인합니다. 기본값은 &lsquo;on&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-expand_002dtilde"></a><span><code class="code">expand-tilde</code><a class="copiable-link" href="#index-expand_002dtilde"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 단어 자동 완성을 시도할 때 물결표 확장(tilde expansion)을 시도합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-force_002dmeta_002dprefix"></a><span><code class="code">force-meta-prefix</code><a class="copiable-link" href="#index-force_002dmeta_002dprefix"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 <kbd class="kbd">&#92;M-</kbd> 또는 <code class="code">Meta-</code>를 포함하는 키 시퀀스를 바인딩할 때(<a class="ref" href="#Readline-Init-File-Syntax">Readline 초기화 파일 문법</a>의 <code class="code">키 바인딩</code> 참조), <kbd class="kbd">&#92;M-</kbd><var class="var">C</var> 또는 <code class="code">Meta-</code><var class="var">C</var> 형식의 키 시퀀스를 두 글자 시퀀스인 <kbd class="key">ESC</kbd> <var class="var">C</var>로 변환(메타 접두사 추가)하여 동작을 수정합니다. <code class="code">force-meta-prefix</code>가 &lsquo;off&rsquo;(기본값)로 설정되어 있다면, Readline은 <code class="code">convert-meta</code> 변수의 값을 사용하여 이 변환 수행 여부를 결정합니다: <code class="code">convert-meta</code>가 &lsquo;on&rsquo;이면 위에서 설명한 변환을 수행하고, &lsquo;off&rsquo;이면 여덟 번째 비트(0200)를 설정하여 <var class="var">C</var>를 메타 문자로 변환합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-history_002dpreserve_002dpoint"></a><span><code class="code">history-preserve-point</code><a class="copiable-link" href="#index-history_002dpreserve_002dpoint"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, 히스토리 코드는 <code class="code">previous-history</code> 또는 <code class="code">next-history</code>로 불러온 각 히스토리 줄에서 포인트(현재 커서 위치)를 동일한 위치에 두려고 시도합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-history_002dsize"></a><span><code class="code">history-size</code><a class="copiable-link" href="#index-history_002dsize"> &para;</a></span></dt>
+<dd><p>히스토리 목록에 저장될 최대 히스토리 항목 개수를 설정합니다. 0으로 설정하면 기존의 모든 히스토리 항목들이 삭제되고 새로운 항목들이 저장되지 않습니다. 0보다 작은 값으로 설정하면 히스토리 항목 개수에 제한을 두지 않습니다. 기본적으로 Bash는 최대 히스토리 항목 개수를 <code class="code">HISTSIZE</code> 쉘 변수의 값으로 설정합니다. <var class="var">history-size</var>를 숫자가 아닌 값으로 설정하려고 시도하면 최대 히스토리 항목 개수는 500으로 설정됩니다.
+</p>
+</dd>
+<dt><a id="index-horizontal_002dscroll_002dmode"></a><span><code class="code">horizontal-scroll-mode</code><a class="copiable-link" href="#index-horizontal_002dscroll_002dmode"> &para;</a></span></dt>
+<dd><p>이 변수를 &lsquo;on&rsquo;으로 설정하면, 편집 중인 줄이 화면 너비보다 길어질 때 새로운 화면 줄로 줄바꿈(wrap)하는 대신 단일 화면 줄에서 수평으로 스크롤하게 됩니다. 높이가 1인 터미널의 경우 이 변수는 자동으로 &lsquo;on&rsquo;으로 설정됩니다. 기본적으로 이 변수는 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a class="index-entry-id" id="index-meta_002dflag"></a>
+<a id="index-input_002dmeta"></a><span><code class="code">input-meta</code><a class="copiable-link" href="#index-input_002dmeta"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 터미널의 지원 여부와 관계없이 8비트 입력을 활성화합니다(즉, 읽어들인 문자의 여덟 번째 비트를 지우지 않습니다). 기본값은 &lsquo;off&rsquo;이지만, 로케일에 여덟 번째 비트가 설정된 바이트를 포함할 수 있는 인코딩의 문자들이 포함되어 있다면 Readline은 이를 &lsquo;on&rsquo;으로 설정합니다. 이 변수는 <code class="code">LC_CTYPE</code> 로케일 카테고리에 의존하며, 로케일이 변경되면 그 값도 변경될 수 있습니다. <code class="code">meta-flag</code>라는 이름은 <code class="code">input-meta</code>의 동의어입니다.
+</p>
+</dd>
+<dt><a id="index-isearch_002dterminators"></a><span><code class="code">isearch-terminators</code><a class="copiable-link" href="#index-isearch_002dterminators"> &para;</a></span></dt>
+<dd><p>해당 문자를 즉시 명령어로 실행하지 않고 점진적 검색을 종료시키는 문자들의 문자열입니다(<a class="pxref" href="Searching.html">히스토리에서 명령어 검색</a> 참조). 이 변수에 값이 주어지지 않았다면 <kbd class="key">ESC</kbd> 및 <kbd class="kbd">C-j</kbd> 문자가 점진적 검색을 종료시킵니다.
+</p>
+</dd>
+<dt><a id="index-keymap"></a><span><code class="code">keymap</code><a class="copiable-link" href="#index-keymap"> &para;</a></span></dt>
+<dd><p>키 바인딩 명령어를 위한 Readline의 현재 키맵 개념을 설정합니다. 빌트인 <code class="code">keymap</code> 이름으로는 <code class="code">emacs</code>, <code class="code">emacs-standard</code>, <code class="code">emacs-meta</code>, <code class="code">emacs-ctlx</code>, <code class="code">vi</code>, <code class="code">vi-move</code>, <code class="code">vi-command</code>, 그리고 <code class="code">vi-insert</code>가 있습니다. <code class="code">vi</code>는 <code class="code">vi-command</code>와 동일하며(<code class="code">vi-move</code> 또한 동의어임), <code class="code">emacs</code>는 <code class="code">emacs-standard</code>와 동일합니다. 애플리케이션에서 추가적인 이름을 더할 수도 있습니다. 기본값은 <code class="code">emacs</code>이며, <code class="code">editing-mode</code> 변수의 값 또한 기본 키맵에 영향을 줍니다.
+</p>
+</dd>
+<dt><code class="code">keyseq-timeout</code></dt>
+<dd><p>모호한 키 시퀀스(지금까지 읽은 입력으로 완전한 키 시퀀스를 형성할 수도 있고, 더 긴 키 시퀀스를 완성하기 위해 추가 입력을 더 받을 수도 있는 상태)를 읽을 때 Readline이 문자를 기다릴 시간을 지정합니다. 타임아웃 내에 추가 입력이 없으면 Readline은 더 짧지만 완전한 키 시퀀스를 사용합니다. Readline은 이 값을 사용하여 현재 입력 소스(기본값은 <code class="code">rl_instream</code>)에 입력이 가용한지 판단합니다. 값은 밀리초(milliseconds) 단위로 지정되므로, 1000이라는 값은 Readline이 추가 입력을 위해 1초를 기다림을 의미합니다. 이 변수가 0보다 작거나 같은 값, 혹은 숫자가 아닌 값으로 설정되면 Readline은 어떤 키 시퀀스를 완성할지 결정하기 위해 다른 키가 눌릴 때까지 기다립니다. 기본값은 <code class="code">500</code>입니다.
+</p>
+</dd>
+<dt><code class="code">mark-directories</code></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, 자동 완성된 디렉토리 이름 뒤에 슬래시(/)가 붙습니다. 기본값은 &lsquo;on&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-mark_002dmodified_002dlines"></a><span><code class="code">mark-modified-lines</code><a class="copiable-link" href="#index-mark_002dmodified_002dlines"> &para;</a></span></dt>
+<dd><p>이 변수가 &lsquo;on&rsquo;으로 설정되면, Readline은 수정된 히스토리 줄의 시작 부분에 별표(&lsquo;*&rsquo;)를 표시합니다. 이 변수는 기본적으로 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-mark_002dsymlinked_002ddirectories"></a><span><code class="code">mark-symlinked-directories</code><a class="copiable-link" href="#index-mark_002dsymlinked_002ddirectories"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, 디렉토리에 대한 심볼릭 링크인 완성된 이름 뒤에 슬래시가 붙습니다(<code class="code">mark-directories</code> 설정에 따름). 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-match_002dhidden_002dfiles"></a><span><code class="code">match-hidden-files</code><a class="copiable-link" href="#index-match_002dhidden_002dfiles"> &para;</a></span></dt>
+<dd><p>이 변수가 &lsquo;on&rsquo;으로 설정되면, Readline이 파일명 완성을 수행할 때 &lsquo;.&rsquo;으로 시작하는 파일(숨김 파일)들을 일치 항목으로 찾도록 강제합니다. &lsquo;off&rsquo;로 설정되면 사용자가 완성할 파일 이름의 시작 부분에 &lsquo;.&rsquo;을 명시적으로 포함해야 합니다. 이 변수는 기본적으로 &lsquo;on&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-menu_002dcomplete_002ddisplay_002dprefix"></a><span><code class="code">menu-complete-display-prefix</code><a class="copiable-link" href="#index-menu_002dcomplete_002ddisplay_002dprefix"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, 메뉴 완성(menu completion) 시 목록을 순환하기 전에 가능한 완성 후보들의 공통 접두사(비어 있을 수 있음)를 먼저 표시합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-output_002dmeta"></a><span><code class="code">output-meta</code><a class="copiable-link" href="#index-output_002dmeta"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 여덟 번째 비트가 설정된 문자를 메타 접두사가 붙은 이스케이프 시퀀스 대신 직접 표시합니다. 기본값은 &lsquo;off&rsquo;이지만, 로케일에 여덟 번째 비트가 설정된 바이트를 포함할 수 있는 인코딩의 문자들이 포함되어 있다면 Readline은 이를 &lsquo;on&rsquo;으로 설정합니다. 이 변수는 <code class="code">LC_CTYPE</code> 로케일 카테고리에 의존하며, 로케일이 변경되면 그 값도 변경될 수 있습니다.
+</p>
+</dd>
+<dt><a id="index-page_002dcompletions"></a><span><code class="code">page-completions</code><a class="copiable-link" href="#index-page_002dcompletions"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 가능한 완성 후보들을 한 번에 한 화면씩 표시하기 위해 <i class="i">more</i>(1)와 유사한 내부 페이저(pager)를 사용합니다. 이 변수는 기본적으로 &lsquo;on&rsquo;입니다.
+</p>
+</dd>
+<dt><code class="code">prefer-visible-bell</code></dt>
+<dd><p><code class="code">bell-style</code>을 참조하십시오.
+</p>
+</dd>
+<dt><code class="code">print-completions-horizontally</code></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 완성 후보들을 화면 아래 방향이 아닌 알파벳 순서대로 가로 방향으로 정렬하여 표시합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-revert_002dall_002dat_002dnewline"></a><span><code class="code">revert-all-at-newline</code><a class="copiable-link" href="#index-revert_002dall_002dat_002dnewline"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 <code class="code">accept-line</code>을 실행하여 복귀하기 전에 히스토리 줄에 가한 모든 변경 사항을 취소합니다. 기본적으로 히스토리 줄은 수정될 수 있으며 <code class="code">readline()</code> 호출 간에도 개별적인 취소 목록을 유지할 수 있습니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-search_002dignore_002dcase"></a><span><code class="code">search-ignore-case</code><a class="copiable-link" href="#index-search_002dignore_002dcase"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, Readline은 점진적 및 비점진적 히스토리 목록 검색을 대소문자 구분 없이 수행합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-show_002dall_002dif_002dambiguous"></a><span><code class="code">show-all-if-ambiguous</code><a class="copiable-link" href="#index-show_002dall_002dif_002dambiguous"> &para;</a></span></dt>
+<dd><p>이 변수는 자동 완성 기능의 기본 동작을 변경합니다. &lsquo;on&rsquo;으로 설정되면, 가능한 완성 후보가 둘 이상인 단어 입력 시 벨을 울리는 대신 즉시 일치 항목들을 나열합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-show_002dall_002dif_002dunmodified"></a><span><code class="code">show-all-if-unmodified</code><a class="copiable-link" href="#index-show_002dall_002dif_002dunmodified"> &para;</a></span></dt>
+<dd><p>이 변수는 <var class="var">show-all-if-ambiguous</var>와 유사한 방식으로 자동 완성 기능의 기본 동작을 변경합니다. &lsquo;on&rsquo;으로 설정되면, 가능한 완성 후보가 둘 이상이지만 추가로 완성될 수 있는 부분 접두사가 없는 단어(가능한 완성 후보들이 공통 접두사를 공유하지 않는 경우) 입력 시 벨을 울리는 대신 즉시 일치 항목들을 나열합니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-show_002dmode_002din_002dprompt"></a><span><code class="code">show-mode-in-prompt</code><a class="copiable-link" href="#index-show_002dmode_002din_002dprompt"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, 프롬프트의 시작 부분에 emacs, vi 명령어, 또는 vi 삽입 모드 등 현재 편집 모드를 나타내는 문자열을 추가합니다. 모드 문자열은 사용자가 직접 설정할 수 있습니다(예: <var class="var">emacs-mode-string</var>). 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-skip_002dcompleted_002dtext"></a><span><code class="code">skip-completed-text</code><a class="copiable-link" href="#index-skip_002dcompleted_002dtext"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, 줄에 단일 일치 항목을 삽입할 때 기본 자동 완성 동작이 변경됩니다. 이는 오직 단어의 중간에서 자동 완성을 수행할 때만 활성화됩니다. 활성화된 경우, Readline은 자동 완성 결과 중 현재 완성 중인 단어의 포인트(point) 뒤에 오는 문자와 일치하는 문자들을 삽입하지 않으므로, 커서 뒤의 단어 부분들이 중복되지 않게 됩니다. 예를 들어, 이 기능이 활성화되어 있고 가능한 완성 후보가 하나뿐이라면, &lsquo;Makefile&rsquo;에서 커서가 첫 번째 &lsquo;e&rsquo; 뒤에 있을 때 완성을 시도하면 &lsquo;Makefilefile&rsquo;이 아닌 &lsquo;Makefile&rsquo;이 결과로 나옵니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-vi_002dcmd_002dmode_002dstring"></a><span><code class="code">vi-cmd-mode-string</code><a class="copiable-link" href="#index-vi_002dcmd_002dmode_002dstring"> &para;</a></span></dt>
+<dd><p><var class="var">show-mode-in-prompt</var> 변수가 활성화되어 있으면, vi 편집 모드에서 명령어 모드일 때 기본 프롬프트의 마지막 줄 바로 앞에 이 문자열이 표시됩니다. 이 값은 키 바인딩처럼 확장되므로, 표준 메타 및 제어 접두사와 백슬래시 이스케이프 시퀀스를 사용할 수 있습니다. &lsquo;&#92;1&rsquo; 및 &lsquo;&#92;2&rsquo; 이스케이프는 출력되지 않는 문자 시퀀스의 시작과 끝을 나타내며, 모드 문자열 내에 터미널 제어 시퀀스를 포함시키는 데 사용될 수 있습니다. 기본값은 &lsquo;(cmd)&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-vi_002dins_002dmode_002dstring"></a><span><code class="code">vi-ins-mode-string</code><a class="copiable-link" href="#index-vi_002dins_002dmode_002dstring"> &para;</a></span></dt>
+<dd><p><var class="var">show-mode-in-prompt</var> 변수가 활성화되어 있으면, vi 편집 모드에서 삽입 모드일 때 기본 프롬프트의 마지막 줄 바로 앞에 이 문자열이 표시됩니다. 이 값은 키 바인딩처럼 확장되므로, 표준 메타 및 제어 접두사와 백슬래시 이스케이프 시퀀스를 사용할 수 있습니다. &lsquo;&#92;1&rsquo; 및 &lsquo;&#92;2&rsquo; 이스케이프는 출력되지 않는 문자 시퀀스의 시작과 끝을 나타내며, 모드 문자열 내에 터미널 제어 시퀀스를 포함시키는 데 사용될 수 있습니다. 기본값은 &lsquo;(ins)&rsquo;입니다.
+</p>
+</dd>
+<dt><a id="index-visible_002dstats"></a><span><code class="code">visible-stats</code><a class="copiable-link" href="#index-visible_002dstats"> &para;</a></span></dt>
+<dd><p>&lsquo;on&rsquo;으로 설정되면, 가능한 완성 후보들을 나열할 때 파일의 유형을 나타내는 문자가 파일 이름 뒤에 덧붙여집니다. 기본값은 &lsquo;off&rsquo;입니다.
+</p>
+</dd>
+</dl>
+
+</dd>
+<dt>키 바인딩 (Key Bindings)</dt>
+<dd><p>초기화 파일에서 키 바인딩을 제어하는 문법은 간단합니다. 먼저 변경하고자 하는 명령어의 이름을 찾아야 합니다. 다음 섹션들에는 명령어 이름, 존재하는 경우 기본 키 바인딩, 그리고 명령어가 수행하는 작업에 대한 짧은 설명이 포함된 표들이 있습니다.
+</p>
+<p>명령어 이름을 알았다면, 초기화 파일의 한 줄에 해당 명령어를 바인딩하고자 하는 키의 이름, 콜론, 그리고 명령어 이름을 차례로 적으면 됩니다. 키 이름과 콜론 사이에는 공백이 올 수 없습니다. 공백이 있으면 키 이름의 일부로 해석됩니다. 키 이름은 사용자가 가장 편하게 느끼는 방식에 따라 여러 가지로 표현될 수 있습니다.
+</p>
+<p>명령어 이름 외에도, Readline은 키가 눌렸을 때 삽입될 문자열인 <var class="var">매크로(macro)</var>에 키를 바인딩하는 것을 허용합니다. 매크로와 명령어의 차이점은 매크로는 작은따옴표나 큰따옴표로 감싸져 있다는 점입니다.
+</p>
+<p><code class="code">bind -p</code> 명령어는 Readline 함수 이름과 바인딩 정보를 초기화 파일에 직접 넣을 수 있는 형식으로 표시합니다. <a class="xref" href="Bash-Builtins.html">Bash 빌트인 명령어</a>를 참조하십시오.
+</p>
+<dl class="table">
+<dt><var class="var">keyname</var>:&nbsp;<var class="var">function-name</var>&nbsp;또는&nbsp;<var class="var">macro</var><!-- /@w --></dt>
+<dd><p><var class="var">keyname</var>은 영어로 적힌 키의 이름입니다. 예를 들어:
+</p><div class="example">
+<pre class="example-preformatted">Control-u: universal-argument
+Meta-Rubout: backward-kill-word
+Control-o: &quot;&gt; output&quot;
+</pre></div>
+
+<p>위의 예시에서, <kbd class="kbd">C-u</kbd>는 <code class="code">universal-argument</code> 함수에 바인딩되고, <kbd class="kbd">M-DEL</kbd>은 <code class="code">backward-kill-word</code> 함수에 바인딩되며, <kbd class="kbd">C-o</kbd>는 오른쪽에 표현된 매크로를 실행하도록(즉, 줄에 &lsquo;&gt; output&rsquo; 텍스트를 삽입하도록) 바인딩됩니다.
+</p>
+<p>이 키 바인딩 문법은 여러 기호 문자 이름들을 인식합니다: <var class="var">DEL</var>, <var class="var">ESC</var>, <var class="var">ESCAPE</var>, <var class="var">LFD</var>, <var class="var">NEWLINE</var>, <var class="var">RET</var>, <var class="var">RETURN</var>, <var class="var">RUBOUT</var> (파괴적인 백스페이스), <var class="var">SPACE</var>, <var class="var">SPC</var>, 그리고 <var class="var">TAB</var>.
+</p>
+</dd>
+<dt>&quot;<var class="var">keyseq</var>&quot;:&nbsp;<var class="var">function-name</var>&nbsp;또는&nbsp;<var class="var">macro</var><!-- /@w --></dt>
+<dd><p><var class="var">keyseq</var>는 위에서 본 <var class="var">keyname</var>과 달리, 전체 키 시퀀스를 나타내는 문자열을 큰따옴표 안에 넣어 지정할 수 있습니다. 다음 예시와 같이 몇몇 <small class="sc">GNU</small> Emacs 스타일의 키 이스케이프를 사용할 수 있지만, 특수 문자 이름들은 인식되지 않습니다.
+</p>
+<div class="example">
+<pre class="example-preformatted">&quot;&#92;C-u&quot;: universal-argument
+&quot;&#92;C-x&#92;C-r&quot;: re-read-init-file
+&quot;&#92;e[11~&quot;: &quot;Function Key 1&quot;
+</pre></div>
+
+<p>위의 예시에서, <kbd class="kbd">C-u</kbd>는 다시 <code class="code">universal-argument</code> 함수에 바인딩되고(첫 번째 예시와 동일), &lsquo;<samp class="samp"><kbd class="kbd">C-x</kbd> <kbd class="kbd">C-r</kbd></samp>&rsquo;은 <code class="code">re-read-init-file</code> 함수에 바인딩되며, &lsquo;<samp class="samp"><kbd class="key">ESC</kbd> <kbd class="key">[</kbd> <kbd class="key">1</kbd> <kbd class="key">1</kbd> <kbd class="key">~</kbd></samp>&rsquo;은 &lsquo;Function Key 1&rsquo; 텍스트를 삽입하도록 바인딩됩니다.
+</p>
+</dd>
+</dl>
+
+<p>키 시퀀스를 지정할 때 사용할 수 있는 <small class="sc">GNU</small> Emacs 스타일 이스케이프 시퀀스는 다음과 같습니다:
+</p>
+<dl class="table">
+<dt><code class="code"><kbd class="kbd">&#92;C-</kbd></code></dt>
+<dd><p>Control 접두사.
+</p></dd>
+<dt><code class="code"><kbd class="kbd">&#92;M-</kbd></code></dt>
+<dd><p>위의 <code class="code">force-meta-prefix</code> 설명에서와 같이 메타 접두사를 추가하거나 뒤에 오는 문자를 메타 문자로 변환합니다(<a class="ref" href="#Readline-Init-File-Syntax">Readline 초기화 파일 문법</a>의 <code class="code">변수 설정</code> 참조).
+</p></dd>
+<dt><code class="code"><kbd class="kbd">&#92;e</kbd></code></dt>
+<dd><p>이스케이프(escape) 문자.
+</p></dd>
+<dt><code class="code"><kbd class="kbd">&#92;&#92;</kbd></code></dt>
+<dd><p>백슬래시.
+</p></dd>
+<dt><code class="code"><kbd class="kbd">&#92;&quot;</kbd></code></dt>
+<dd><p>큰따옴표(&quot;).
+</p></dd>
+<dt><code class="code"><kbd class="kbd">&#92;'</kbd></code></dt>
+<dd><p>작은따옴표 또는 아포스트로피(').
+</p></dd>
+</dl>
+
+<p><small class="sc">GNU</small> Emacs 스타일 이스케이프 시퀀스 외에도, 두 번째 백슬래시 이스케이프 세트를 사용할 수 있습니다:
+</p>
+<dl class="table">
+<dt><code class="code">&#92;a</code></dt>
+<dd><p>경고 (벨).
+</p></dd>
+<dt><code class="code">&#92;b</code></dt>
+<dd><p>백스페이스.
+</p></dd>
+<dt><code class="code">&#92;d</code></dt>
+<dd><p>삭제(delete).
+</p></dd>
+<dt><code class="code">&#92;f</code></dt>
+<dd><p>폼 피드(form feed).
+</p></dd>
+<dt><code class="code">&#92;n</code></dt>
+<dd><p>줄바꿈(newline).
+</p></dd>
+<dt><code class="code">&#92;r</code></dt>
+<dd><p>캐리지 리턴(carriage return).
+</p></dd>
+<dt><code class="code">&#92;t</code></dt>
+<dd><p>수평 탭.
+</p></dd>
+<dt><code class="code">&#92;v</code></dt>
+<dd><p>수직 탭.
+</p></dd>
+<dt><code class="code">&#92;<var class="var">nnn</var></code></dt>
+<dd><p>값이 8진수 <var class="var">nnn</var>(1~3자리)인 8비트 문자.
+</p></dd>
+<dt><code class="code">&#92;x<var class="var">HH</var></code></dt>
+<dd><p>값이 16진수 <var class="var">HH</var>(1~2자리)인 8비트 문자.
+</p></dd>
+</dl>
+
+<p>매크로 텍스트를 입력할 때, 매크로 정의임을 나타내기 위해 반드시 작은따옴표나 큰따옴표를 사용해야 합니다. 따옴표가 없는 텍스트는 함수 이름으로 간주됩니다. 위에서 설명한 백슬래시 이스케이프들은 매크로 본체 내에서 확장됩니다. 백슬래시는 매크로 텍스트 내에서 &lsquo;&quot;&rsquo;와 &lsquo;'&rsquo;를 포함한 다른 모든 문자들을 인용 처리합니다. 예를 들어, 다음 바인딩은 &lsquo;<samp class="samp"><kbd class="kbd">C-x</kbd> &#92;</samp>&rsquo; 입력 시 줄에 단일 &lsquo;&#92;&rsquo; 문자를 삽입하도록 합니다:
+</p><div class="example">
+<pre class="example-preformatted">&quot;&#92;C-x&#92;&#92;&quot;: &quot;&#92;&#92;&quot;
+</pre></div>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Conditional-Init-Constructs.html">조건부 초기화 구문</a>, 상위: <a href="Readline-Init-File.html">Readline 초기화 파일</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>이동 명령어 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="이동 명령어 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="이동 명령어 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Bindable-Readline-Commands.html" rel="up" title="바인딩 가능한 Readline 명령어">
+<link href="Commands-For-History.html" rel="next" title="히스토리 조작 명령어">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Commands-For-Moving">
+<div class="nav-panel">
+<p>
+다음: <a href="Commands-For-History.html" accesskey="n" rel="next">히스토리 조작 명령어</a>, 상위: <a href="Bindable-Readline-Commands.html" accesskey="u" rel="up">바인딩 가능한 Readline 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Commands-For-Moving-1"><span>8.4.1 이동 명령어<a class="copiable-link" href="#Commands-For-Moving-1"> &para;</a></span></h4>
+<dl class="ftable">
+<dt><a id="index-beginning_002dof_002dline-_0028C_002da_0029"></a><span><code class="code">beginning-of-line (C-a)</code><a class="copiable-link" href="#index-beginning_002dof_002dline-_0028C_002da_0029"> &para;</a></span></dt>
+<dd><p>현재 줄의 처음으로 이동합니다. 일부 키보드의 Home 키에 바인딩되어 있을 수 있습니다.
+</p>
+</dd>
+<dt><a id="index-end_002dof_002dline-_0028C_002de_0029"></a><span><code class="code">end-of-line (C-e)</code><a class="copiable-link" href="#index-end_002dof_002dline-_0028C_002de_0029"> &para;</a></span></dt>
+<dd><p>줄의 끝으로 이동합니다. 일부 키보드의 End 키에 바인딩되어 있을 수 있습니다.
+</p>
+</dd>
+<dt><a id="index-forward_002dchar-_0028C_002df_0029"></a><span><code class="code">forward-char (C-f)</code><a class="copiable-link" href="#index-forward_002dchar-_0028C_002df_0029"> &para;</a></span></dt>
+<dd><p>한 문자 앞으로 이동합니다. 일부 키보드의 오른쪽 화살표 키에 바인딩되어 있을 수 있습니다.
+</p>
+</dd>
+<dt><a id="index-backward_002dchar-_0028C_002db_0029"></a><span><code class="code">backward-char (C-b)</code><a class="copiable-link" href="#index-backward_002dchar-_0028C_002db_0029"> &para;</a></span></dt>
+<dd><p>한 문자 뒤로 이동합니다. 일부 키보드의 왼쪽 화살표 키에 바인딩되어 있을 수 있습니다.
+</p>
+</dd>
+<dt><a id="index-forward_002dword-_0028M_002df_0029"></a><span><code class="code">forward-word (M-f)</code><a class="copiable-link" href="#index-forward_002dword-_0028M_002df_0029"> &para;</a></span></dt>
+<dd><p>다음 단어의 끝으로 이동합니다. 단어는 문자와 숫자로 구성됩니다.
+</p>
+</dd>
+<dt><a id="index-backward_002dword-_0028M_002db_0029"></a><span><code class="code">backward-word (M-b)</code><a class="copiable-link" href="#index-backward_002dword-_0028M_002db_0029"> &para;</a></span></dt>
+<dd><p>현재 또는 이전 단어의 시작으로 이동합니다. 단어는 문자와 숫자로 구성됩니다.
+</p>
+</dd>
+<dt><a id="index-shell_002dforward_002dword-_0028M_002dC_002df_0029"></a><span><code class="code">shell-forward-word (M-C-f)</code><a class="copiable-link" href="#index-shell_002dforward_002dword-_0028M_002dC_002df_0029"> &para;</a></span></dt>
+<dd><p>다음 단어의 끝으로 이동합니다. 단어는 인용되지 않은 쉘 메타 문자로 구분됩니다.
+</p>
+</dd>
+<dt><a id="index-shell_002dbackward_002dword-_0028M_002dC_002db_0029"></a><span><code class="code">shell-backward-word (M-C-b)</code><a class="copiable-link" href="#index-shell_002dbackward_002dword-_0028M_002dC_002db_0029"> &para;</a></span></dt>
+<dd><p>현재 또는 이전 단어의 시작으로 이동합니다. 단어는 인용되지 않은 쉘 메타 문자로 구분됩니다.
+</p>
+</dd>
+<dt><a id="index-previous_002dscreen_002dline-_0028_0029"></a><span><code class="code">previous-screen-line ()</code><a class="copiable-link" href="#index-previous_002dscreen_002dline-_0028_0029"> &para;</a></span></dt>
+<dd><p>이전 물리 화면 줄의 동일한 물리 화면 열로 포인트를 이동시키려고 시도합니다. 현재 Readline 줄이 한 줄보다 길지 않거나, 포인트가 프롬프트 길이와 화면 너비를 합친 것보다 크지 않다면 원하는 효과를 얻지 못할 수 있습니다.
+</p>
+</dd>
+<dt><a id="index-next_002dscreen_002dline-_0028_0029"></a><span><code class="code">next-screen-line ()</code><a class="copiable-link" href="#index-next_002dscreen_002dline-_0028_0029"> &para;</a></span></dt>
+<dd><p>다음 물리 화면 줄의 동일한 물리 화면 열로 포인트를 이동시키려고 시도합니다. 현재 Readline 줄이 한 줄보다 길지 않거나, 현재 Readline 줄의 길이가 프롬프트 길이와 화면 너비를 합친 것보다 크지 않다면 원하는 효과를 얻지 못할 수 있습니다.
+</p>
+</dd>
+<dt><a id="index-clear_002ddisplay-_0028M_002dC_002dl_0029"></a><span><code class="code">clear-display (M-C-l)</code><a class="copiable-link" href="#index-clear_002ddisplay-_0028M_002dC_002dl_0029"> &para;</a></span></dt>
+<dd><p>화면과 가능할 경우 터미널의 스크롤백 버퍼를 지운 다음, 현재 줄을 화면의 맨 윗줄에 다시 그립니다.
+</p>
+</dd>
+<dt><a id="index-clear_002dscreen-_0028C_002dl_0029"></a><span><code class="code">clear-screen (C-l)</code><a class="copiable-link" href="#index-clear_002dscreen-_0028C_002dl_0029"> &para;</a></span></dt>
+<dd><p>화면을 지우고 현재 줄을 화면 맨 윗줄에 다시 그립니다. 숫자 인자가 주어지면 화면을 지우지 않고 현재 줄만 새로고침합니다.
+</p>
+</dd>
+<dt><a id="index-redraw_002dcurrent_002dline-_0028_0029"></a><span><code class="code">redraw-current-line ()</code><a class="copiable-link" href="#index-redraw_002dcurrent_002dline-_0028_0029"> &para;</a></span></dt>
+<dd><p>현재 줄을 새로고침합니다. 기본적으로 바인딩되어 있지 않습니다.
+</p>
+</dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Commands-For-History.html">히스토리 조작 명령어</a>, 상위: <a href="Bindable-Readline-Commands.html">바인딩 가능한 Readline 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

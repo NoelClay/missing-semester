@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>종료 상태 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="종료 상태 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="종료 상태 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Executing-Commands.html" rel="up" title="명령어 실행">
+<link href="Signals.html" rel="next" title="시그널">
+<link href="Environment.html" rel="prev" title="환경">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Exit-Status">
+<div class="nav-panel">
+<p>
+다음: <a href="Signals.html" accesskey="n" rel="next">시그널</a>, 이전: <a href="Environment.html" accesskey="p" rel="prev">환경</a>, 상위: <a href="Executing-Commands.html" accesskey="u" rel="up">명령어 실행</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Exit-Status-1"><span>3.7.5 종료 상태 (Exit Status)<a class="copiable-link" href="#Exit-Status-1"> &para;</a></span></h4>
+<a class="index-entry-id" id="index-exit-status-1"></a>
+
+<p>실행된 명령어의 종료 상태(exit status)는 <code class="code">waitpid</code> 시스템 콜 또는 그와 동등한 함수가 반환하는 값입니다.
+종료 상태는 0에서 255 사이의 값을 갖지만, 아래 설명된 대로 쉘은 125 이상의 값들을 특별한 의미로 사용하기도 합니다.
+쉘 빌트인 및 복합 명령어의 종료 상태 또한 이 범위로 제한됩니다.
+특정 상황에서 쉘은 특정한 실패 모드를 나타내기 위해 특별한 값들을 사용합니다.
+</p>
+<p>쉘의 관점에서, 종료 상태 0으로 종료된 명령어는 성공한 것입니다.
+따라서 종료 상태 0은 성공을 의미하며, 0이 아닌 종료 상태는 실패를 의미합니다.
+겉보기에 직관에 반하는 것처럼 보이는 이러한 체계가 사용되는 이유는, 성공을 나타내는 확실한 방법 하나와 다양한 실패 모드를 나타내는 여러 가지 방법들을 제공하기 위해서입니다.
+</p>
+<p>명령어가 번호가 <var class="var">N</var>인 치명적인 시그널에 의해 종료된 경우, Bash는 128+<var class="var">N</var>을 종료 상태로 사용합니다.
+</p>
+<p>명령어를 찾을 수 없는 경우, 이를 실행하기 위해 생성된 자식 프로세스는 상태 127을 반환합니다.
+명령어를 찾았으나 실행 가능하지 않은 경우, 반환 상태는 126입니다.
+</p>
+<p>확장 또는 리다이렉션 과정에서의 에러로 인해 명령어가 실패한 경우, 종료 상태는 0보다 큽니다.
+</p>
+<p>종료 상태는 Bash의 조건부 명령어(<a class="pxref" href="Conditional-Constructs.html">조건부 구문</a> 참조) 및 일부 목록 구조(<a class="pxref" href="Lists.html">명령어 목록</a> 참조)에서 사용됩니다.
+</p>
+<p>모든 Bash 빌트인은 성공 시 0을 반환하고 실패 시 0이 아닌 상태를 반환하므로, 조건부 및 목록 구조에서 사용될 수 있습니다.
+모든 빌트인은 잘못된 사용법(일반적으로 잘못된 옵션이나 인자 누락)을 나타내기 위해 종료 상태 2를 반환합니다.
+</p>
+<p>마지막 명령어의 종료 상태는 특수 파라미터 $?에서 확인할 수 있습니다(<a class="pxref" href="Special-Parameters.html">특수 파라미터</a> 참조).
+</p>
+<p>문법 에러가 발생하여 0이 아닌 값으로 종료되는 경우를 제외하고, Bash 자체는 마지막으로 실행된 명령어의 종료 상태를 반환합니다.
+또한 <code class="code">exit</code> 빌트인 명령어(<a class="pxref" href="Bourne-Shell-Builtins.html">Bourne 쉘 빌트인</a> 참조)를 확인하십시오.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+다음: <a href="Signals.html">시그널</a>, 이전: <a href="Environment.html">환경</a>, 상위: <a href="Executing-Commands.html">명령어 실행</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+
+
+
+</body>
+</html>

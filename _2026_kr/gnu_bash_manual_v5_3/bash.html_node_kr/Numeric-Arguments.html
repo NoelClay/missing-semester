@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- Created by GNU Texinfo 7.2, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>숫자 인자 지정하기 (Bash 레퍼런스 매뉴얼)</title>
+
+<meta name="description" content="숫자 인자 지정하기 (Bash 레퍼런스 매뉴얼)">
+<meta name="keywords" content="숫자 인자 지정하기 (Bash 레퍼런스 매뉴얼)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="최상위">
+<link href="Indexes.html" rel="index" title="색인">
+<link href="index.html#SEC_Contents" rel="contents" title="목차">
+<link href="Bindable-Readline-Commands.html" rel="up" title="바인딩 가능한 Readline 명령어">
+<link href="Commands-For-Completion.html" rel="next" title="자동 완성 명령어">
+<link href="Commands-For-Killing.html" rel="prev" title="삭제 및 붙여넣기(Yanking)">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.gnu.org/software/gnulib/manual.css">
+
+
+</head>
+
+<body lang="ko">
+<div class="subsection-level-extent" id="Numeric-Arguments">
+<div class="nav-panel">
+<p>
+다음: <a href="Commands-For-Completion.html" accesskey="n" rel="next">자동 완성 명령어</a>, 이전: <a href="Commands-For-Killing.html" accesskey="p" rel="prev">삭제 및 붙여넣기(Yanking)</a>, 상위: <a href="Bindable-Readline-Commands.html" accesskey="u" rel="up">바인딩 가능한 Readline 명령어</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">목차</a>][<a href="Indexes.html" title="Index" rel="index">색인</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Specifying-Numeric-Arguments"><span>8.4.5 숫자 인자 지정하기<a class="copiable-link" href="#Specifying-Numeric-Arguments"> &para;</a></span></h4>
+<dl class="ftable">
+<dt><a id="index-digit_002dargument-_0028M_002d0_002c-M_002d1_002c-_002e_002e_002e-M_002d_002d_0029"></a><span><code class="code">digit-argument (<kbd class="kbd">M-0</kbd>, <kbd class="kbd">M-1</kbd>, &hellip; <kbd class="kbd">M--</kbd>)</code><a class="copiable-link" href="#index-digit_002dargument-_0028M_002d0_002c-M_002d1_002c-_002e_002e_002e-M_002d_002d_0029"> &para;</a></span></dt>
+<dd><p>이미 누적되고 있는 인자에 이 숫자를 추가하거나, 새로운 인자를 시작합니다. <kbd class="kbd">M--</kbd>는 음수 인자를 시작합니다.
+</p>
+</dd>
+<dt><a id="index-universal_002dargument-_0028_0029"></a><span><code class="code">universal-argument ()</code><a class="copiable-link" href="#index-universal_002dargument-_0028_0029"> &para;</a></span></dt>
+<dd><p>인자를 지정하는 또 다른 방법입니다. 이 명령어 뒤에 하나 이상의 숫자(선택적으로 앞에 마이너스 기호 포함)가 오면, 해당 숫자들로 인자를 정의합니다. 이 명령어 뒤에 숫자들이 오고, 다시 <code class="code">universal-argument</code>를 실행하면 숫자 인자 입력을 종료하며, 그 외의 경우에는 무시됩니다. 특수한 경우로, 이 명령어 바로 뒤에 숫자나 마이너스 기호가 아닌 문자가 오면 다음 명령어의 인자 개수는 4배가 됩니다. 인자 개수는 처음에 1이므로, 이 함수를 한 번 실행하면 인자 개수는 4가 되고, 두 번 실행하면 16이 되는 식입니다. 기본적으로 바인딩되어 있지 않습니다.
+</p></dd>
+</dl>
+
+</div>
+
+
+
+</body>
+</html>
