@@ -2574,6 +2574,292 @@ const PHASE_COLORS = {
   }
 };
 
+// ============================================
+// COMPONENTS
+// ============================================
+
+const ProgressBar = ({ exercisesState, currentLecId, currentExId, onNavigate }) => {
+  const getProgressSummary = () => {
+    return LECTURES.map(lecture => ({
+      lecId: lecture.id,
+      lecTitle: lecture.title,
+      exercises: lecture.exercises.map(ex => ({
+        exId: ex.id,
+        exTitle: ex.title,
+        phase: exercisesState[`${lecture.id}-${ex.id}`]?.phase || 0
+      }))
+    }));
+  };
+
+  const summary = getProgressSummary();
+
+  return (
+    <div style={{
+      borderTop: '2px solid #e2e8f0',
+      padding: '16px',
+      backgroundColor: '#f8f9fa'
+    }}>
+      {summary.map(lecture => (
+        <div key={lecture.lecId} style={{ marginBottom: '16px' }}>
+          <div style={{
+            fontSize: '14px',
+            fontWeight: 'bold',
+            marginBottom: '8px',
+            color: '#1a1a2e'
+          }}>
+            Lecture {lecture.lecId}: {lecture.lecTitle}
+          </div>
+          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+            {lecture.exercises.map(ex => {
+              const isCurrentEx = currentLecId === lecture.lecId &&
+                                 currentExId === ex.exId;
+              const [isHovered, setIsHovered] = React.useState(false);
+
+              return (
+                <button
+                  key={`${lecture.lecId}-${ex.exId}`}
+                  onClick={() => onNavigate(lecture.lecId, ex.exId)}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    border: isCurrentEx ? '3px solid #2d3748' : '1px solid #cbd5e0',
+                    backgroundColor: getSegmentColor(ex.phase),
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    transform: isHovered ? 'scale(1.15)' : 'scale(1)',
+                    boxShadow: isHovered ? '0 0 8px rgba(66, 153, 225, 0.5)' : 'none'
+                  }}
+                  title={`${lecture.lecId}-${ex.exId}: ${ex.exTitle}`}
+                  aria-label={`Exercise ${lecture.lecId}-${ex.exId}: ${ex.exTitle}`}
+                />
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const PhaseSelector = ({
+  exercisesState,
+  currentLecId,
+  currentExId,
+  currentPhase,
+  isReviewMode,
+  onPhaseChange
+}) => {
+  const key = `${currentLecId}-${currentExId}`;
+  const exercise = exercisesState[key];
+
+  if (!exercise) return null;
+
+  const available = getAvailablePhases(exercise, isReviewMode);
+  const LABELS = ['INTRO', 'SOCRATIC', 'FEYNMAN', 'DONE'];
+
+  return (
+    <div style={{
+      display: 'flex',
+      gap: '8px',
+      marginBottom: '16px',
+      padding: '12px',
+      backgroundColor: '#f8f9fa',
+      borderRadius: '8px',
+      flexWrap: 'wrap'
+    }}>
+      {[0, 1, 2, 3].map(phaseNum => (
+        <button
+          key={phaseNum}
+          onClick={() => available[phaseNum] && onPhaseChange(phaseNum)}
+          disabled={!available[phaseNum]}
+          style={{
+            padding: '8px 12px',
+            borderRadius: '6px',
+            border: currentPhase === phaseNum ? '2px solid #2d3748' : '1px solid #cbd5e0',
+            backgroundColor: currentPhase === phaseNum ? '#4299e1' : '#ffffff',
+            color: currentPhase === phaseNum ? '#ffffff' : '#1a1a2e',
+            cursor: available[phaseNum] ? 'pointer' : 'not-allowed',
+            opacity: available[phaseNum] ? 1 : 0.5,
+            fontWeight: currentPhase === phaseNum ? 'bold' : 'normal',
+            transition: 'all 0.2s ease'
+          }}
+        >
+          {phaseNum}: {LABELS[phaseNum]}
+          {exercise.isPhaseAttempted[phaseNum] && ' ✓'}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+const ActionButtons = ({
+  currentPhase,
+  isReviewMode,
+  onContinue,
+  onNext,
+  onReview
+}) => {
+  if (isReviewMode) {
+    return null;
+  }
+
+  if (currentPhase < 3) {
+    return (
+      <div style={{ margin: '16px 0' }}>
+        <button
+          onClick={onContinue}
+          style={{
+            backgroundColor: '#4299e1',
+            color: 'white',
+            padding: '12px 24px',
+            borderRadius: '8px',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            transition: 'background-color 0.2s'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.backgroundColor = '#2463a4';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.backgroundColor = '#4299e1';
+          }}
+        >
+          계속하기 →
+        </button>
+      </div>
+    );
+  } else {
+    return (
+      <div style={{ display: 'flex', gap: '12px', margin: '16px 0' }}>
+        <button
+          onClick={onNext}
+          style={{
+            backgroundColor: '#48bb78',
+            color: 'white',
+            padding: '12px 24px',
+            borderRadius: '8px',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            flex: 1
+          }}
+        >
+          다음 연습 ↓
+        </button>
+        <button
+          onClick={onReview}
+          style={{
+            backgroundColor: '#ed8936',
+            color: 'white',
+            padding: '12px 24px',
+            borderRadius: '8px',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            flex: 1
+          }}
+        >
+          복습하기
+        </button>
+      </div>
+    );
+  }
+};
+
+const ErrorNotification = ({ notification, onDismiss }) => {
+  if (!notification) return null;
+
+  const getIcon = (type) => {
+    switch(type) {
+      case 'error': return '❌';
+      case 'warning': return '⚠️';
+      case 'info': return 'ℹ️';
+      case 'success': return '✅';
+      default: return '💬';
+    }
+  };
+
+  const getColor = (type) => {
+    switch(type) {
+      case 'error': return '#dc2626';
+      case 'warning': return '#ea580c';
+      case 'info': return '#2563eb';
+      case 'success': return '#16a34a';
+      default: return '#6366f1';
+    }
+  };
+
+  const color = getColor(notification.type);
+
+  return (
+    <div style={{
+      backgroundColor: `${color}15`,
+      border: `2px solid ${color}`,
+      borderRadius: '8px',
+      padding: '16px',
+      marginBottom: '16px',
+      color: color,
+      display: 'flex',
+      gap: '12px',
+      alignItems: 'flex-start'
+    }}>
+      <div style={{ fontSize: '20px', marginTop: '2px' }}>
+        {getIcon(notification.type)}
+      </div>
+
+      <div style={{ flex: 1 }}>
+        {notification.title && (
+          <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>
+            {notification.title}
+          </div>
+        )}
+        <div>{notification.message}</div>
+
+        {notification.action && (
+          <button
+            onClick={notification.action.onClick}
+            style={{
+              marginTop: '12px',
+              backgroundColor: color,
+              color: 'white',
+              padding: '8px 12px',
+              borderRadius: '4px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}
+          >
+            {notification.action.label}
+          </button>
+        )}
+      </div>
+
+      {onDismiss && (
+        <button
+          onClick={onDismiss}
+          style={{
+            background: 'none',
+            border: 'none',
+            fontSize: '20px',
+            cursor: 'pointer',
+            color: color,
+            padding: 0
+          }}
+        >
+          ✕
+        </button>
+      )}
+    </div>
+  );
+};
+
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 export default function App() {
   // ============================================
