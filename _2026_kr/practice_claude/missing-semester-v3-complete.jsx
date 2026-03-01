@@ -3087,6 +3087,93 @@ export default function App() {
     console.log("[REVIEW_MODE]", { enabled: false });
   }, []);
 
+  // ============================================
+  // AI RESPONSE HANDLING (Task 13)
+  // ============================================
+
+  const generateAIResponse = async (userMessage, phase, conversationHistory) => {
+    const apiCall = async () => {
+      const response = await fetch('/api/generate-response', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userMessage,
+          phase: phase,
+          history: conversationHistory
+        }),
+        timeout: 15000
+      });
+
+      if (!response.ok) {
+        const error = new Error(`API Error ${response.status}`);
+        error.statusCode = response.status;
+        throw error;
+      }
+
+      const data = await response.json();
+      return data.content;
+    };
+
+    return exponentialBackoffRetry(
+      apiCall,
+      3,
+      `[AI_RESPONSE] phase ${phase}`
+    );
+  };
+
+  const handleSendMessage = async (userMessage) => {
+    if (!userMessage.trim()) return;
+
+    const newHistory = [
+      ...currentConversationHistory,
+      { role: 'user', content: userMessage }
+    ];
+
+    setCurrentConversationHistory(newHistory);
+
+    showNotification('info', null, '응답 생성 중...');
+
+    const result = await generateAIResponse(
+      userMessage,
+      currentPhase,
+      newHistory
+    );
+
+    if (!result.success) {
+      showNotification(
+        'error',
+        'AI 응답 생성 실패',
+        result.error || '알 수 없는 오류가 발생했습니다.',
+        {
+          label: '다시 시도',
+          onClick: () => handleSendMessage(userMessage)
+        }
+      );
+      return;
+    }
+
+    const finalHistory = [
+      ...newHistory,
+      { role: 'assistant', content: result.data }
+    ];
+
+    const key = `${currentLecId}-${currentExId}`;
+    setExercisesState(prev => ({
+      ...prev,
+      [key]: {
+        ...prev[key],
+        conversationHistory: {
+          ...prev[key].conversationHistory,
+          [currentPhase]: finalHistory
+        }
+      }
+    }));
+
+    setCurrentConversationHistory(finalHistory);
+
+    showNotification('success', null, '응답이 생성되었습니다.');
+  };
+
   const lec = LECTURES.find(l => l.id === lecId);
   const ex = lec?.exercises.find(e => e.id === exId);
   const accent = lec?.accent || "#39ff14";
@@ -3104,6 +3191,85 @@ export default function App() {
 
   const totalEx = LECTURES.reduce((s, l) => s + l.exercises.length, 0);
   const totalDone = LECTURES.reduce((s, l) => s + l.exercises.filter(e => (phases[e.id] || 0) === PHASE.DONE).length, 0);
+
+  // ============================================
+  // HELPER FUNCTIONS FOR RENDERING (Task 14)
+  // ============================================
+
+  const getCurrentExerciseTitle = () => {
+    const lecture = LECTURES.find(l => l.id === currentLecId);
+    if (!lecture) return "Unknown";
+
+    const exercise = lecture.exercises.find(e => e.id === currentExId);
+    return exercise ? exercise.title : "Unknown";
+  };
+
+  const renderPhaseContent = () => {
+    const colors = PHASE_COLORS[currentPhase];
+    if (!colors) return null;
+
+    const containerStyle = {
+      backgroundColor: colors.bg,
+      border: `2px solid ${colors.border}`,
+      color: colors.text,
+      padding: '20px',
+      borderRadius: '8px',
+      marginBottom: '16px',
+      minHeight: '300px'
+    };
+
+    const PHASE_LABELS = ['INTRO', 'SOCRATIC', 'FEYNMAN', 'DONE'];
+
+    return (
+      <div style={containerStyle}>
+        <h3>{PHASE_LABELS[currentPhase]} - 학습 단계</h3>
+        <p>This phase content will be populated from the existing exercise data.</p>
+        {isReviewMode && (
+          <p style={{ color: colors.textSecondary, fontSize: '14px', marginTop: '12px' }}>
+            복습 모드: 다른 단계를 자유롭게 탐색할 수 있습니다.
+          </p>
+        )}
+      </div>
+    );
+  };
+
+  const renderCourseCompletedPage = () => {
+    return (
+      <div style={{
+        backgroundColor: '#e8f5e9',
+        border: '2px solid #48bb78',
+        padding: '40px',
+        borderRadius: '8px',
+        textAlign: 'center'
+      }}>
+        <h1 style={{ color: '#1b5e20', marginBottom: '16px' }}>
+          🎉 Missing Semester 완료!
+        </h1>
+        <p style={{ color: '#2d6a4f', fontSize: '18px', marginBottom: '24px' }}>
+          모든 강의와 연습을 성공적으로 완료했습니다.
+        </p>
+        <button
+          onClick={() => {
+            setPage("index");
+            setCurrentLecId("1");
+            setCurrentExId("1");
+          }}
+          style={{
+            backgroundColor: '#48bb78',
+            color: 'white',
+            padding: '12px 24px',
+            borderRadius: '8px',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '16px',
+            fontWeight: 'bold'
+          }}
+        >
+          홈으로 돌아가기
+        </button>
+      </div>
+    );
+  };
 
   return (
     <div style={{ display: "flex", height: "100vh", background: "#020202", fontFamily: "'IBM Plex Mono', monospace", color: "#5a5a5a", overflow: "hidden" }}>
