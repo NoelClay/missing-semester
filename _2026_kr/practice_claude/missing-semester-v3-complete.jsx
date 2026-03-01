@@ -2942,6 +2942,151 @@ export default function App() {
     }
   };
 
+  // ============================================
+  // HANDLER FUNCTIONS (Tasks 8-12)
+  // ============================================
+
+  const handleNavigateToExercise = useCallback((lecId, exId) => {
+    const validation = validateExerciseExists(lecId, exId);
+    if (!validation.exists) {
+      console.error("[NAVIGATE_ERROR]", validation.reason, { lecId, exId });
+      return;
+    }
+
+    const key = `${lecId}-${exId}`;
+
+    if (!exercisesState[key]) {
+      setExercisesState(prev => ({
+        ...prev,
+        [key]: {
+          phase: 0,
+          isPhaseAttempted: [false, false, false, false],
+          conversationHistory: { 0: [], 1: [], 2: [], 3: [] },
+          attempts: 0,
+          isCompleted: false,
+          lastVisited: Date.now()
+        }
+      }));
+    } else {
+      setExercisesState(prev => ({
+        ...prev,
+        [key]: {
+          ...prev[key],
+          lastVisited: Date.now()
+        }
+      }));
+    }
+
+    setCurrentLecId(lecId);
+    setCurrentExId(exId);
+    setCurrentPhase(0);
+    setCurrentConversationHistory([]);
+    setIsReviewMode(false);
+
+    console.log("[NAVIGATE]", { from: `${currentLecId}-${currentExId}`, to: key });
+  }, [exercisesState, currentLecId, currentExId]);
+
+  const handlePhaseChange = useCallback((newPhase) => {
+    const key = `${currentLecId}-${currentExId}`;
+    const exercise = exercisesState[key];
+
+    if (!exercise) {
+      console.error("[PHASE_CHANGE_ERROR]", "EXERCISE_NOT_FOUND", { key });
+      return;
+    }
+
+    const available = getAvailablePhases(exercise, isReviewMode);
+    if (!available[newPhase]) {
+      console.error("[PHASE_LOCKED]", { requested: newPhase, available });
+      return;
+    }
+
+    setExercisesState(prev => {
+      const attempts = [...(prev[key].isPhaseAttempted || [false, false, false, false])];
+      attempts[newPhase] = true;
+
+      return {
+        ...prev,
+        [key]: {
+          ...prev[key],
+          isPhaseAttempted: attempts
+        }
+      };
+    });
+
+    setCurrentPhase(newPhase);
+
+    const history = exercise.conversationHistory?.[newPhase] || [];
+    setCurrentConversationHistory(history);
+
+    console.log("[PHASE_CHANGE]", { from: currentPhase, to: newPhase, exercise: key });
+  }, [currentLecId, currentExId, currentPhase, exercisesState, isReviewMode]);
+
+  const handleContinuePhase = useCallback(() => {
+    const nextPhase = currentPhase + 1;
+
+    if (nextPhase > 3) {
+      console.warn("[CONTINUE_PHASE]", "Already at final phase");
+      return;
+    }
+
+    handlePhaseChange(nextPhase);
+
+    console.log("[CONTINUE_PHASE]", { from: currentPhase, to: nextPhase });
+  }, [currentPhase, handlePhaseChange]);
+
+  const handleNextExercise = useCallback(() => {
+    const key = `${currentLecId}-${currentExId}`;
+
+    setExercisesState(prev => ({
+      ...prev,
+      [key]: {
+        ...prev[key],
+        phase: 3,
+        isCompleted: true,
+        lastCompletionTime: Date.now()
+      }
+    }));
+
+    const next = findNextExercise(currentLecId, currentExId);
+
+    if (!next) {
+      console.log("[NEXT_EXERCISE]", "Course completed!");
+      setCurrentLecId("COMPLETED");
+      return;
+    }
+
+    handleNavigateToExercise(next.lecId, next.exId);
+
+    console.log("[NEXT_EXERCISE]", { from: key, to: `${next.lecId}-${next.exId}` });
+  }, [currentLecId, currentExId, exercisesState, handleNavigateToExercise]);
+
+  const handleReview = useCallback(() => {
+    const key = `${currentLecId}-${currentExId}`;
+
+    setExercisesState(prev => ({
+      ...prev,
+      [key]: {
+        ...prev[key],
+        phase: 3,
+        isCompleted: true,
+        lastCompletionTime: Date.now()
+      }
+    }));
+
+    setIsReviewMode(true);
+    setCurrentPhase(3);
+
+    console.log("[REVIEW_MODE]", { exercise: key, enabled: true });
+  }, [currentLecId, currentExId, exercisesState]);
+
+  const exitReviewMode = useCallback(() => {
+    setIsReviewMode(false);
+    setCurrentPhase(0);
+    setCurrentConversationHistory([]);
+    console.log("[REVIEW_MODE]", { enabled: false });
+  }, []);
+
   const lec = LECTURES.find(l => l.id === lecId);
   const ex = lec?.exercises.find(e => e.id === exId);
   const accent = lec?.accent || "#39ff14";
