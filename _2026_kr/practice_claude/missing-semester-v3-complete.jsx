@@ -2368,8 +2368,250 @@ function IndexPage({ phases, onSelect }) {
   );
 }
 
+// ============================================
+// ERROR HANDLING & UTILITY FUNCTIONS
+// ============================================
+
+const recoverFromCorruptedData = (rawData) => {
+  const recovered = {};
+
+  Object.entries(rawData).forEach(([key, exercise]) => {
+    try {
+      if (typeof exercise.phase !== 'number' || exercise.phase > 3) {
+        throw new Error(`Invalid phase: ${exercise.phase}`);
+      }
+      if (!Array.isArray(exercise.isPhaseAttempted) ||
+          exercise.isPhaseAttempted.length !== 4) {
+        throw new Error(`Invalid isPhaseAttempted`);
+      }
+      if (exercise.conversationHistory &&
+          typeof exercise.conversationHistory !== 'object') {
+        throw new Error(`Invalid conversationHistory`);
+      }
+
+      recovered[key] = exercise;
+    } catch (error) {
+      console.error("[CORRUPTED_EXERCISE]", { key, error: error.message });
+    }
+  });
+
+  return recovered;
+};
+
+const validateCurrentState = (exercisesState, lecId, exId, phase) => {
+  const key = `${lecId}-${exId}`;
+  const exercise = exercisesState[key];
+
+  if (!exercise) {
+    console.error("[STATE_INCONSISTENCY]", "EXERCISE_NOT_FOUND", { lecId, exId });
+    return { valid: true, correctedPhase: 0 };
+  }
+
+  const maxAttempted = exercise.isPhaseAttempted.findIndex(v => !v);
+  if (phase > maxAttempted + 1 && maxAttempted !== -1) {
+    console.error("[STATE_INCONSISTENCY]", "PHASE_OUT_OF_BOUNDS", {
+      requested: phase,
+      max: maxAttempted + 1
+    });
+    return { valid: true, correctedPhase: Math.min(phase, maxAttempted) };
+  }
+
+  return { valid: true };
+};
+
+const exponentialBackoffRetry = async (fn, maxRetries = 3, context = "") => {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const result = await fn();
+      if (attempt > 0) {
+        console.log(`[RETRY_SUCCESS] ${context} succeeded on attempt ${attempt + 1}`);
+      }
+      return { success: true, data: result };
+    } catch (error) {
+      const isLastAttempt = attempt === maxRetries - 1;
+
+      if (isLastAttempt) {
+        console.error(`[RETRY_EXHAUSTED] ${context} failed after ${maxRetries} attempts`);
+        return { success: false, error: error.message };
+      }
+
+      const delayMs = Math.pow(2, attempt) * 1000;
+      console.warn(`[RETRY_ATTEMPT] ${context} attempt ${attempt + 1}/${maxRetries}, retrying in ${delayMs}ms`);
+
+      await new Promise(resolve => setTimeout(resolve, delayMs));
+    }
+  }
+};
+
+const clearOldSessionData = () => {
+  try {
+    const stateJson = sessionStorage.getItem('ms2026-exercises');
+    if (!stateJson) {
+      return { removed: 0, kept: 0 };
+    }
+
+    const state = JSON.parse(stateJson);
+    const entries = Object.entries(state);
+    const sorted = entries.sort((a, b) => {
+      const timeA = a[1].lastVisited || 0;
+      const timeB = b[1].lastVisited || 0;
+      return timeA - timeB;
+    });
+
+    const keepCount = Math.ceil(sorted.length * 0.75);
+    const toRemoveCount = sorted.length - keepCount;
+
+    const cleaned = {};
+    sorted.slice(-keepCount).forEach(([key, value]) => {
+      cleaned[key] = value;
+    });
+
+    sessionStorage.setItem('ms2026-exercises', JSON.stringify(cleaned));
+
+    console.log("[CLEAR_DATA]", {
+      removed: toRemoveCount,
+      kept: keepCount,
+      totalBefore: sorted.length
+    });
+
+    return { removed: toRemoveCount, kept: keepCount };
+  } catch (error) {
+    console.error("[CLEAR_DATA_ERROR]", error.message);
+    return { removed: 0, kept: 0, error: error.message };
+  }
+};
+
+const validateExerciseExists = (lecId, exId) => {
+  const lecture = LECTURES.find(l => l.id === lecId);
+  if (!lecture) {
+    return { exists: false, reason: 'LECTURE_NOT_FOUND' };
+  }
+
+  const exercise = lecture.exercises.find(e => e.id === exId);
+  if (!exercise) {
+    return { exists: false, reason: 'EXERCISE_NOT_FOUND' };
+  }
+
+  return { exists: true, exercise };
+};
+
+const getAvailablePhases = (exercise, isReviewMode) => {
+  if (isReviewMode) {
+    return [true, true, true, true];
+  }
+
+  if (!exercise) {
+    return [true, false, false, false];
+  }
+
+  return [
+    true,
+    exercise.isPhaseAttempted[0],
+    exercise.isPhaseAttempted[1],
+    exercise.isPhaseAttempted[2]
+  ];
+};
+
+const findNextExercise = (currentLecId, currentExId) => {
+  const currentLecIndex = LECTURES.findIndex(l => l.id === currentLecId);
+  if (currentLecIndex === -1) return null;
+
+  const currentLec = LECTURES[currentLecIndex];
+  const currentExIndex = currentLec.exercises.findIndex(e => e.id === currentExId);
+
+  if (currentExIndex < currentLec.exercises.length - 1) {
+    return {
+      lecId: currentLecId,
+      exId: currentLec.exercises[currentExIndex + 1].id
+    };
+  }
+
+  if (currentLecIndex < LECTURES.length - 1) {
+    const nextLec = LECTURES[currentLecIndex + 1];
+    return {
+      lecId: nextLec.id,
+      exId: nextLec.exercises[0].id
+    };
+  }
+
+  return null;
+};
+
+const getSegmentColor = (phase) => {
+  switch(phase) {
+    case 0: return '#cbd5e0';
+    case 1: return '#fcd34d';
+    case 2: return '#fbbf24';
+    case 3: return '#48bb78';
+    default: return '#cbd5e0';
+  }
+};
+
+const PHASE_COLORS = {
+  0: {
+    bg: '#e8f0ff',
+    border: '#4299e1',
+    text: '#1a1a2e',
+    textSecondary: '#1a365d'
+  },
+  1: {
+    bg: '#fff5e6',
+    border: '#ed8936',
+    text: '#7c2d12',
+    textSecondary: '#7c2d12'
+  },
+  2: {
+    bg: '#e6f7ff',
+    border: '#00b4d8',
+    text: '#03045e',
+    textSecondary: '#03045e'
+  },
+  3: {
+    bg: '#e8f5e9',
+    border: '#48bb78',
+    text: '#1b5e20',
+    textSecondary: '#1b5e20'
+  }
+};
+
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 export default function App() {
+  // ============================================
+  // UNIFIED STATE MANAGEMENT
+  // ============================================
+  const [exercisesState, setExercisesState] = useState(() => {
+    try {
+      const stored = sessionStorage.getItem("ms2026-exercises");
+      if (!stored) {
+        console.log("[STATE_INIT] Fresh session - no previous data");
+        return {};
+      }
+
+      const parsed = JSON.parse(stored);
+      const recovered = recoverFromCorruptedData(parsed);
+
+      if (Object.keys(recovered).length < Object.keys(parsed).length) {
+        console.warn("[STATE_INIT] Recovered", Object.keys(recovered).length,
+                     "of", Object.keys(parsed).length, "exercises");
+      }
+
+      return recovered;
+    } catch (error) {
+      console.error("[STATE_INIT_ERROR]", error.message);
+      return {};
+    }
+  });
+
+  const [currentLecId, setCurrentLecId] = useState("1");
+  const [currentExId, setCurrentExId] = useState("1");
+  const [currentPhase, setCurrentPhase] = useState(0);
+  const [currentConversationHistory, setCurrentConversationHistory] = useState([]);
+  const [isReviewMode, setIsReviewMode] = useState(false);
+  const [notification, setNotification] = useState(null);
+
+  // ============================================
+  // LEGACY STATE (호환성 유지)
+  // ============================================
   const [page, setPage] = useState("index"); // "index" | "lecture" | "exercise"
   const [lecId, setLecId] = useState(null);
   const [exId, setExId] = useState(null);
@@ -2384,6 +2626,35 @@ export default function App() {
       return next;
     });
   }, []);
+
+  // ============================================
+  // PERSISTENCE: Auto-save to sessionStorage
+  // ============================================
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('ms2026-exercises', JSON.stringify(exercisesState));
+      console.log("[PERSIST] State saved to sessionStorage");
+    } catch (error) {
+      if (error.name === 'QuotaExceededError') {
+        console.error("[STORAGE_QUOTA_EXCEEDED]");
+        const result = clearOldSessionData();
+        showNotification(
+          'warning',
+          '저장소 공간 부족',
+          `${result.removed}개의 오래된 연습을 삭제했습니다.`
+        );
+      } else {
+        console.error("[STORAGE_ERROR]", error.message);
+      }
+    }
+  }, [exercisesState]);
+
+  const showNotification = (type, title, message, action = null) => {
+    setNotification({ type, title, message, action });
+    if (type !== 'error') {
+      setTimeout(() => setNotification(null), 5000);
+    }
+  };
 
   const lec = LECTURES.find(l => l.id === lecId);
   const ex = lec?.exercises.find(e => e.id === exId);
