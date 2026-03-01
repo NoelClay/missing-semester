@@ -3289,6 +3289,14 @@ export default function App() {
       {/* CRT scanline */}
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 9999, background: "repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.05) 1px, rgba(0,0,0,0.05) 2px)" }} />
 
+      {/* ERROR NOTIFICATION (NEW SYSTEM) */}
+      <div style={{ position: "fixed", top: "50px", left: "220px", right: 0, zIndex: 1000, pointerEvents: "auto" }}>
+        <ErrorNotification
+          notification={notification}
+          onDismiss={() => setNotification(null)}
+        />
+      </div>
+
       {/* SIDEBAR */}
       <div style={{ width: "200px", minWidth: "200px", borderRight: "1px solid #0e0e0e", background: "#010101", display: "flex", flexDirection: "column", flexShrink: 0 }}>
         {/* Logo */}
@@ -3375,6 +3383,18 @@ export default function App() {
           )}
         </div>
       </div>
+
+      {/* PROGRESS BAR (NEW SYSTEM - Bottom) */}
+      {page === "exercise" && (
+        <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100, backgroundColor: "#010101", borderTop: "1px solid #0d0d0d" }}>
+          <ProgressBar
+            exercisesState={exercisesState}
+            currentLecId={currentLecId}
+            currentExId={currentExId}
+            onNavigate={handleNavigateToExercise}
+          />
+        </div>
+      )}
     </div>
   );
 }
