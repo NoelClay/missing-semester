@@ -2122,16 +2122,16 @@ function SocraticView({ ex, accent, onDone }) {
   return (
     <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ padding: "8px 16px", background: "#030303", borderBottom: "1px solid #0e0e0e", display: "flex", justifyContent: "space-between", flexShrink: 0 }}>
-        <span style={{ fontSize: "9px", color: "#666666", fontFamily: "monospace", letterSpacing: "0.08em" }}>// SOCRATIC METHOD — 질문으로 탐구하세요</span>
-        <span style={{ fontSize: "9px", color: accent, fontFamily: "monospace" }}>turn {turn}/5</span>
+        <span style={{ fontSize: "11px", color: "#888888", fontFamily: "monospace", letterSpacing: "0.08em" }}>// SOCRATIC METHOD — 질문으로 탐구하세요</span>
+        <span style={{ fontSize: "11px", color: accent, fontFamily: "monospace" }}>turn {turn}/5</span>
       </div>
-      <div ref={chatRef} style={{ flex: 1, overflowY: "auto", padding: "14px 16px" }}>
+      <div ref={chatRef} style={{ flex: 1, overflowY: "auto", padding: "14px 16px 52px" }}>
         {msgs.map((m, i) => {
           const isUser = m.role === "user";
           return (
             <div key={i} style={{ display: "flex", justifyContent: isUser ? "flex-end" : "flex-start", marginBottom: "10px" }}>
               {!isUser && <div style={{ width: "22px", height: "22px", flexShrink: 0, background: "#050505", border: "1px solid " + accent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", color: accent, fontFamily: "monospace", marginRight: "8px", marginTop: "2px" }}>AI</div>}
-              <div style={{ maxWidth: "80%", background: isUser ? "#0a1a0a" : "#070707", border: "1px solid " + (isUser ? accent + "44" : "#151515"), padding: "9px 13px", color: isUser ? "#a0e0a0" : "#6a7a6a", fontSize: "12.5px", lineHeight: "1.65", fontFamily: "'IBM Plex Mono', monospace", whiteSpace: "pre-wrap" }}>{m.text}</div>
+              <div style={{ maxWidth: "80%", background: isUser ? "#0a1a0a" : "#070707", border: "1px solid " + (isUser ? accent + "44" : "#1a1a1a"), padding: "9px 13px", color: isUser ? "#b8e8b8" : "#9aaa9a", fontSize: "13px", lineHeight: "1.65", fontFamily: "'IBM Plex Mono', monospace", whiteSpace: "pre-wrap" }}>{m.text}</div>
               {isUser && <div style={{ width: "22px", height: "22px", flexShrink: 0, background: accent + "20", border: "1px solid " + accent + "44", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", color: accent, fontFamily: "monospace", marginLeft: "8px", marginTop: "2px" }}>ME</div>}
             </div>
           );
@@ -2176,10 +2176,10 @@ function FeynmanView({ ex, accent, onDone }) {
   };
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "18px 22px", overflow: "hidden" }}>
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "18px 22px 52px", overflow: "hidden" }}>
       <div style={{ background: "#050505", borderLeft: "3px solid " + accent, border: "1px solid " + accent + "33", padding: "14px", marginBottom: "14px", flexShrink: 0 }}>
-        <div style={{ fontSize: "9px", color: accent, fontFamily: "monospace", marginBottom: "7px", letterSpacing: "0.1em" }}>// FEYNMAN TECHNIQUE</div>
-        <div style={{ color: "#909090", fontSize: "13px", fontFamily: "'IBM Plex Mono', monospace", lineHeight: "1.65" }}>{ex.feynmanPrompt}</div>
+        <div style={{ fontSize: "11px", color: accent, fontFamily: "monospace", marginBottom: "7px", letterSpacing: "0.1em" }}>// FEYNMAN TECHNIQUE</div>
+        <div style={{ color: "#b0b8b0", fontSize: "14px", fontFamily: "'IBM Plex Mono', monospace", lineHeight: "1.65" }}>{ex.feynmanPrompt}</div>
       </div>
       {!feedback ? (
         <>
@@ -2211,7 +2211,7 @@ function ExerciseView({ lec, ex, phase, setPhase }) {
     <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
       {/* Header */}
       <div style={{ padding: "14px 22px 12px", borderBottom: "1px solid #0d0d0d", background: "#010101", flexShrink: 0 }}>
-        <div style={{ fontSize: "8px", color: "#505050", letterSpacing: "0.12em", marginBottom: "3px" }}>
+        <div style={{ fontSize: "11px", color: "#777777", letterSpacing: "0.12em", marginBottom: "3px" }}>
           LEC {lec.id} — {lec.date}
         </div>
         <h2 style={{ margin: "0 0 2px", fontSize: "16px", color: accent, fontFamily: "'IBM Plex Mono', monospace", fontWeight: "700" }}>{ex.title}</h2>
@@ -2221,19 +2221,19 @@ function ExerciseView({ lec, ex, phase, setPhase }) {
       {/* Content */}
       <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column", minHeight: 0 }}>
         {phase === PHASE.INTRO && (
-          <div style={{ flex: 1, overflowY: "auto", padding: "20px 24px" }}>
+          <div style={{ flex: 1, overflowY: "auto", padding: "20px 24px 52px 24px" }}>
             <div style={{ background: "#050505", border: "1px solid #151515", padding: "18px", marginBottom: "16px" }}>
-              <div style={{ fontSize: "9px", color: "#666666", fontFamily: "monospace", marginBottom: "12px", letterSpacing: "0.12em" }}>// ORIGINAL MIT EXERCISE</div>
-              <div style={{ fontSize: "13px", fontFamily: "'IBM Plex Mono', monospace", color: "#a0a8a0", lineHeight: "1.85" }}>
+              <div style={{ fontSize: "11px", color: "#888888", fontFamily: "monospace", marginBottom: "12px", letterSpacing: "0.12em" }}>// ORIGINAL MIT EXERCISE</div>
+              <div style={{ fontSize: "14px", fontFamily: "'IBM Plex Mono', monospace", color: "#b8c0b8", lineHeight: "1.85" }}>
                 {parseText(ex.problem, accent)}
               </div>
             </div>
             <div style={{ marginBottom: "18px" }}>
-              <div style={{ fontSize: "9px", color: "#666666", fontFamily: "monospace", marginBottom: "8px", letterSpacing: "0.12em" }}>// HINTS</div>
+              <div style={{ fontSize: "11px", color: "#888888", fontFamily: "monospace", marginBottom: "8px", letterSpacing: "0.12em" }}>// HINTS</div>
               {ex.hints.map((h, i) => (
                 <div key={i} style={{ display: "flex", gap: "10px", padding: "7px 10px", marginBottom: "3px", borderLeft: "2px solid " + accent + "44" }}>
-                  <span style={{ color: accent + "66", fontSize: "10px", fontFamily: "monospace", flexShrink: 0 }}>{String(i + 1).padStart(2, "0")}</span>
-                  <span style={{ color: "#777777", fontSize: "12px", fontFamily: "'IBM Plex Mono', monospace", lineHeight: "1.5" }}>{h}</span>
+                  <span style={{ color: accent + "88", fontSize: "11px", fontFamily: "monospace", flexShrink: 0 }}>{String(i + 1).padStart(2, "0")}</span>
+                  <span style={{ color: "#999999", fontSize: "13px", fontFamily: "'IBM Plex Mono', monospace", lineHeight: "1.5" }}>{h}</span>
                 </div>
               ))}
             </div>
@@ -2270,26 +2270,26 @@ function LecturePage({ lec, phases, setPhases, onSelectEx, onBack }) {
     <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
       {/* Header */}
       <div style={{ padding: "16px 22px", borderBottom: "1px solid #0d0d0d", background: "#010101", flexShrink: 0 }}>
-        <button onClick={onBack} style={{ background: "transparent", border: "1px solid #111", color: "#666666", padding: "4px 10px", cursor: "pointer", fontSize: "10px", fontFamily: "monospace", marginBottom: "12px" }}>← 목록으로</button>
+        <button onClick={onBack} style={{ background: "transparent", border: "1px solid #222", color: "#888888", padding: "4px 10px", cursor: "pointer", fontSize: "11px", fontFamily: "monospace", marginBottom: "12px" }}>← 목록으로</button>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <div style={{ width: "36px", height: "36px", border: "1px solid " + accent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", color: accent, fontFamily: "monospace", flexShrink: 0 }}>{lec.icon}</div>
           <div>
-            <div style={{ fontSize: "8px", color: "#505050", letterSpacing: "0.12em", marginBottom: "2px" }}>{lec.date}</div>
-            <h2 style={{ margin: 0, fontSize: "15px", color: accent, fontFamily: "'IBM Plex Mono', monospace", fontWeight: "700" }}>{lec.title}</h2>
-            <div style={{ fontSize: "10px", color: "#666666", marginTop: "2px", fontFamily: "monospace" }}>{lec.desc}</div>
+            <div style={{ fontSize: "10px", color: "#777777", letterSpacing: "0.12em", marginBottom: "2px" }}>{lec.date}</div>
+            <h2 style={{ margin: 0, fontSize: "16px", color: accent, fontFamily: "'IBM Plex Mono', monospace", fontWeight: "700" }}>{lec.title}</h2>
+            <div style={{ fontSize: "11px", color: "#888888", marginTop: "2px", fontFamily: "monospace" }}>{lec.desc}</div>
           </div>
         </div>
         <div style={{ marginTop: "12px", display: "flex", alignItems: "center", gap: "10px" }}>
-          <div style={{ flex: 1, height: "2px", background: "#0a0a0a" }}>
+          <div style={{ flex: 1, height: "2px", background: "#111" }}>
             <div style={{ height: "100%", width: (doneCount / allExIds.length * 100) + "%", background: accent, transition: "width 0.4s" }} />
           </div>
-          <span style={{ fontSize: "10px", color: "#666666", fontFamily: "monospace" }}>{doneCount}/{allExIds.length}</span>
+          <span style={{ fontSize: "11px", color: "#888888", fontFamily: "monospace" }}>{doneCount}/{allExIds.length}</span>
         </div>
       </div>
       {/* Exercise list */}
       <div style={{ flex: 1, overflowY: "auto", padding: "12px 16px" }}>
-        <div style={{ fontSize: "9px", color: "#505050", fontFamily: "monospace", marginBottom: "10px", letterSpacing: "0.1em" }}>
-          // MIT 2026 ORIGINAL EXERCISES — source: <span style={{ color: accent + "66" }}>{lec.url}</span>
+        <div style={{ fontSize: "11px", color: "#777777", fontFamily: "monospace", marginBottom: "10px", letterSpacing: "0.1em" }}>
+          // MIT 2026 ORIGINAL EXERCISES — source: <span style={{ color: accent + "88" }}>{lec.url}</span>
         </div>
         {lec.exercises.map((ex, i) => {
           const ph = phases[ex.id] || 0;
@@ -2297,15 +2297,15 @@ function LecturePage({ lec, phases, setPhases, onSelectEx, onBack }) {
           const inprog = ph > PHASE.INTRO && !done;
           return (
             <button key={ex.id} onClick={() => onSelectEx(ex.id)}
-              style={{ width: "100%", background: "#050505", border: "1px solid " + (done ? accent + "55" : inprog ? accent + "33" : "#0e0e0e"), borderRadius: "2px", padding: "14px 16px", cursor: "pointer", textAlign: "left", marginBottom: "6px", display: "flex", alignItems: "center", gap: "12px", transition: "all 0.15s" }}
+              style={{ width: "100%", background: "#050505", border: "1px solid " + (done ? accent + "55" : inprog ? accent + "33" : "#1a1a1a"), borderRadius: "2px", padding: "14px 16px", cursor: "pointer", textAlign: "left", marginBottom: "6px", display: "flex", alignItems: "center", gap: "12px", transition: "all 0.15s" }}
               onMouseEnter={e => e.currentTarget.style.borderColor = accent + "55"}
-              onMouseLeave={e => e.currentTarget.style.borderColor = done ? accent + "55" : inprog ? accent + "33" : "#0e0e0e"}>
-              <div style={{ width: "28px", height: "28px", flexShrink: 0, border: "1px solid " + (done ? accent : "#1a1a1a"), background: done ? accent + "20" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", color: done ? accent : "#2a2a2a", fontWeight: "bold", fontFamily: "monospace" }}>
+              onMouseLeave={e => e.currentTarget.style.borderColor = done ? accent + "55" : inprog ? accent + "33" : "#1a1a1a"}>
+              <div style={{ width: "28px", height: "28px", flexShrink: 0, border: "1px solid " + (done ? accent : "#333"), background: done ? accent + "20" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", color: done ? accent : "#666666", fontWeight: "bold", fontFamily: "monospace" }}>
                 {done ? "✓" : String(i + 1).padStart(2, "0")}
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: "12px", color: done ? "#3a5a3a" : inprog ? accent + "aa" : "#3a3a3a", fontWeight: "600", fontFamily: "'IBM Plex Mono', monospace", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{ex.title}</div>
-                <div style={{ fontSize: "10px", color: "#505050", marginTop: "2px", fontFamily: "monospace" }}>
+                <div style={{ fontSize: "13px", color: done ? "#6a9a6a" : inprog ? accent + "cc" : "#888888", fontWeight: "600", fontFamily: "'IBM Plex Mono', monospace", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{ex.title}</div>
+                <div style={{ fontSize: "11px", color: "#666666", marginTop: "2px", fontFamily: "monospace" }}>
                   {done ? "완료" : inprog ? "진행 중 — " + PHASE_LABELS[ph] : "미시작"}
                 </div>
               </div>
@@ -2326,15 +2326,15 @@ function IndexPage({ phases, onSelect }) {
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: "20px" }}>
       <div style={{ marginBottom: "20px" }}>
-        <div style={{ fontSize: "9px", color: "#39ff14", letterSpacing: "0.15em", marginBottom: "4px" }}>MIT MISSING SEMESTER 2026</div>
-        <div style={{ fontSize: "18px", color: "#3a5a3a", fontFamily: "'IBM Plex Mono', monospace", fontWeight: "700", marginBottom: "6px" }}>전체 진행률</div>
+        <div style={{ fontSize: "11px", color: "#39ff14", letterSpacing: "0.15em", marginBottom: "4px" }}>MIT MISSING SEMESTER 2026</div>
+        <div style={{ fontSize: "18px", color: "#5a8a5a", fontFamily: "'IBM Plex Mono', monospace", fontWeight: "700", marginBottom: "6px" }}>전체 진행률</div>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <div style={{ flex: 1, height: "3px", background: "#0a0a0a" }}>
+          <div style={{ flex: 1, height: "3px", background: "#111" }}>
             <div style={{ height: "100%", width: (totalDone / totalEx * 100) + "%", background: "#39ff14", transition: "width 0.5s" }} />
           </div>
-          <span style={{ fontSize: "12px", color: "#2a4a2a", fontFamily: "monospace" }}>{totalDone} / {totalEx}</span>
+          <span style={{ fontSize: "13px", color: "#5a8a5a", fontFamily: "monospace" }}>{totalDone} / {totalEx}</span>
         </div>
-        <div style={{ fontSize: "9px", color: "#484848", marginTop: "6px", fontFamily: "monospace" }}>
+        <div style={{ fontSize: "11px", color: "#666666", marginTop: "6px", fontFamily: "monospace" }}>
           소크라테스 + 파인만 학습법 // 연습문제 원본: missing.csail.mit.edu/2026
         </div>
       </div>
@@ -2350,14 +2350,14 @@ function IndexPage({ phases, onSelect }) {
             <div style={{ display: "flex", alignItems: "flex-start", gap: "14px" }}>
               <div style={{ width: "34px", height: "34px", border: "1px solid " + lec.accent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", color: lec.accent, fontFamily: "monospace", flexShrink: 0 }}>{lec.icon}</div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: "8px", color: "#505050", fontFamily: "monospace", letterSpacing: "0.1em", marginBottom: "2px" }}>{lec.date}</div>
-                <div style={{ fontSize: "13px", color: lec.accent, fontFamily: "'IBM Plex Mono', monospace", fontWeight: "700", marginBottom: "4px" }}>{lec.title}</div>
-                <div style={{ fontSize: "10px", color: "#666666", fontFamily: "monospace", marginBottom: "10px" }}>{lec.desc}</div>
+                <div style={{ fontSize: "10px", color: "#777777", fontFamily: "monospace", letterSpacing: "0.1em", marginBottom: "2px" }}>{lec.date}</div>
+                <div style={{ fontSize: "14px", color: lec.accent, fontFamily: "'IBM Plex Mono', monospace", fontWeight: "700", marginBottom: "4px" }}>{lec.title}</div>
+                <div style={{ fontSize: "11px", color: "#888888", fontFamily: "monospace", marginBottom: "10px" }}>{lec.desc}</div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <div style={{ flex: 1, height: "2px", background: "#0a0a0a" }}>
+                  <div style={{ flex: 1, height: "2px", background: "#111" }}>
                     <div style={{ height: "100%", width: pct + "%", background: lec.accent, transition: "width 0.4s" }} />
                   </div>
-                  <span style={{ fontSize: "9px", color: "#666666", fontFamily: "monospace", minWidth: "50px" }}>{done}/{exIds.length} ({pct}%)</span>
+                  <span style={{ fontSize: "11px", color: "#777777", fontFamily: "monospace", minWidth: "50px" }}>{done}/{exIds.length} ({pct}%)</span>
                 </div>
               </div>
             </div>
@@ -2579,10 +2579,13 @@ const PHASE_COLORS = {
 // ============================================
 
 const ProgressBar = ({ exercisesState, currentLecId, currentExId, onNavigate }) => {
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
   const getProgressSummary = () => {
     return LECTURES.map(lecture => ({
       lecId: lecture.id,
       lecTitle: lecture.title,
+      accent: lecture.accent,
       exercises: lecture.exercises.map(ex => ({
         exId: ex.id,
         exTitle: ex.title,
@@ -2592,54 +2595,103 @@ const ProgressBar = ({ exercisesState, currentLecId, currentExId, onNavigate }) 
   };
 
   const summary = getProgressSummary();
+  const totalEx = summary.reduce((s, l) => s + l.exercises.length, 0);
+  const totalDone = summary.reduce((s, l) => s + l.exercises.filter(e => e.phase === PHASE.DONE).length, 0);
+  const pct = totalEx > 0 ? Math.round(totalDone / totalEx * 100) : 0;
+
+  // Current lecture for compact view
+  const curLec = summary.find(l => l.lecId === currentLecId);
 
   return (
-    <div style={{
-      borderTop: '2px solid #e2e8f0',
-      padding: '16px',
-      backgroundColor: '#f8f9fa'
-    }}>
-      {summary.map(lecture => (
-        <div key={lecture.lecId} style={{ marginBottom: '16px' }}>
-          <div style={{
-            fontSize: '14px',
-            fontWeight: 'bold',
-            marginBottom: '8px',
-            color: '#1a1a2e'
-          }}>
-            Lecture {lecture.lecId}: {lecture.lecTitle}
-          </div>
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            {lecture.exercises.map(ex => {
-              const isCurrentEx = currentLecId === lecture.lecId &&
-                                 currentExId === ex.exId;
-              const [isHovered, setIsHovered] = React.useState(false);
+    <div style={{ backgroundColor: "#020202", borderTop: "1px solid #1a1a1a", fontFamily: "'IBM Plex Mono', monospace" }}>
+      {/* Collapsed strip — always visible */}
+      <div style={{ display: "flex", alignItems: "center", padding: "0 14px", height: "36px", gap: "12px" }}>
+        {/* Toggle button */}
+        <button
+          onClick={() => setIsExpanded(v => !v)}
+          style={{ background: "none", border: "none", cursor: "pointer", color: "#888", fontSize: "11px", padding: "0 4px", display: "flex", alignItems: "center", gap: "5px", flexShrink: 0 }}
+        >
+          <span style={{ fontSize: "9px", color: "#555" }}>{isExpanded ? "▼" : "▲"}</span>
+          <span style={{ color: "#666", fontSize: "10px" }}>진행</span>
+        </button>
 
+        {/* Progress bar */}
+        <div style={{ flex: 1, height: "3px", background: "#111", borderRadius: "2px", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: pct + "%", background: "#39ff14", transition: "width 0.4s", borderRadius: "2px" }} />
+        </div>
+
+        <span style={{ fontSize: "11px", color: "#777", flexShrink: 0, fontFamily: "monospace" }}>{totalDone}/{totalEx}</span>
+
+        {/* Current lecture dots (compact) */}
+        {curLec && (
+          <div style={{ display: "flex", gap: "4px", alignItems: "center", flexShrink: 0 }}>
+            {curLec.exercises.map(ex => {
+              const isCur = currentExId === ex.exId;
+              const isDone = ex.phase === PHASE.DONE;
               return (
                 <button
-                  key={`${lecture.lecId}-${ex.exId}`}
-                  onClick={() => onNavigate(lecture.lecId, ex.exId)}
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
+                  key={ex.exId}
+                  onClick={() => onNavigate(currentLecId, ex.exId)}
+                  title={ex.exTitle}
                   style={{
-                    width: '28px',
-                    height: '28px',
-                    borderRadius: '50%',
-                    border: isCurrentEx ? '3px solid #2d3748' : '1px solid #cbd5e0',
-                    backgroundColor: getSegmentColor(ex.phase),
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    transform: isHovered ? 'scale(1.15)' : 'scale(1)',
-                    boxShadow: isHovered ? '0 0 8px rgba(66, 153, 225, 0.5)' : 'none'
+                    width: isCur ? "10px" : "7px",
+                    height: isCur ? "10px" : "7px",
+                    borderRadius: "50%",
+                    border: isCur ? `2px solid ${curLec.accent}` : "none",
+                    backgroundColor: isDone ? curLec.accent : isCur ? curLec.accent + "60" : "#2a2a2a",
+                    cursor: "pointer",
+                    padding: 0,
+                    transition: "all 0.15s",
+                    flexShrink: 0
                   }}
-                  title={`${lecture.lecId}-${ex.exId}: ${ex.exTitle}`}
-                  aria-label={`Exercise ${lecture.lecId}-${ex.exId}: ${ex.exTitle}`}
                 />
               );
             })}
           </div>
+        )}
+      </div>
+
+      {/* Expanded panel */}
+      {isExpanded && (
+        <div style={{ maxHeight: "220px", overflowY: "auto", borderTop: "1px solid #111", padding: "12px 14px", display: "flex", flexDirection: "column", gap: "10px" }}>
+          {summary.map(lecture => (
+            <div key={lecture.lecId} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <span style={{ fontSize: "10px", color: lecture.accent, fontFamily: "monospace", flexShrink: 0, minWidth: "42px" }}>L{lecture.lecId}</span>
+              <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", flex: 1 }}>
+                {lecture.exercises.map(ex => {
+                  const isCur = currentLecId === lecture.lecId && currentExId === ex.exId;
+                  const isDone = ex.phase === PHASE.DONE;
+                  return (
+                    <button
+                      key={ex.exId}
+                      onClick={() => { onNavigate(lecture.lecId, ex.exId); setIsExpanded(false); }}
+                      title={ex.exTitle}
+                      style={{
+                        width: "22px",
+                        height: "22px",
+                        borderRadius: "50%",
+                        border: isCur ? `2px solid ${lecture.accent}` : `1px solid ${isDone ? lecture.accent + "60" : "#222"}`,
+                        backgroundColor: isDone ? lecture.accent + "30" : isCur ? "#111" : "#080808",
+                        cursor: "pointer",
+                        padding: 0,
+                        fontSize: "8px",
+                        color: isDone ? lecture.accent : "#444",
+                        transition: "all 0.15s",
+                        flexShrink: 0
+                      }}
+                    >
+                      {isDone ? "✓" : ""}
+                    </button>
+                  );
+                })}
+              </div>
+              <span style={{ fontSize: "10px", color: "#555", flexShrink: 0, minWidth: "30px", textAlign: "right" }}>
+                {lecture.exercises.filter(e => e.phase === PHASE.DONE).length}/{lecture.exercises.length}
+              </span>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 };
@@ -3303,20 +3355,20 @@ export default function App() {
         <div style={{ padding: "14px 12px", borderBottom: "1px solid #0e0e0e", flexShrink: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "3px" }}>
             <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#39ff14", boxShadow: "0 0 6px #39ff14" }} />
-            <span style={{ fontSize: "9px", color: "#39ff14", letterSpacing: "0.12em" }}>MISSING SEMESTER</span>
+            <span style={{ fontSize: "11px", color: "#39ff14", letterSpacing: "0.12em" }}>MISSING SEMESTER</span>
           </div>
-          <div style={{ fontSize: "8px", color: "#505050" }}>MIT IAP 2026</div>
+          <div style={{ fontSize: "10px", color: "#777777" }}>MIT IAP 2026</div>
           <div style={{ marginTop: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <div style={{ flex: 1, height: "2px", background: "#0a0a0a" }}>
+            <div style={{ flex: 1, height: "2px", background: "#1a1a1a" }}>
               <div style={{ height: "100%", width: (totalDone / totalEx * 100) + "%", background: "#39ff14", transition: "width 0.5s" }} />
             </div>
-            <span style={{ fontSize: "8px", color: "#666666", fontFamily: "monospace" }}>{totalDone}/{totalEx}</span>
+            <span style={{ fontSize: "10px", color: "#888888", fontFamily: "monospace" }}>{totalDone}/{totalEx}</span>
           </div>
         </div>
         {/* Nav */}
         <div style={{ flex: 1, overflowY: "auto", padding: "8px" }}>
           <button onClick={() => { setPage("index"); setLecId(null); setExId(null); }}
-            style={{ width: "100%", background: page === "index" ? "#070707" : "transparent", border: "1px solid " + (page === "index" ? "#39ff14" + "33" : "transparent"), padding: "8px 10px", cursor: "pointer", textAlign: "left", marginBottom: "4px", fontSize: "10px", color: page === "index" ? "#39ff14" : "#2a2a2a" }}>
+            style={{ width: "100%", background: page === "index" ? "#070707" : "transparent", border: "1px solid " + (page === "index" ? "#39ff14" + "33" : "transparent"), padding: "8px 10px", cursor: "pointer", textAlign: "left", marginBottom: "4px", fontSize: "12px", color: page === "index" ? "#39ff14" : "#666666" }}>
             ⌂ 전체 강의 목록
           </button>
           {LECTURES.map(l => {
@@ -3327,10 +3379,10 @@ export default function App() {
               <div key={l.id}>
                 <button onClick={() => { setLecId(l.id); setExId(null); setPage("lecture"); }}
                   style={{ width: "100%", background: isActive ? "#070707" : "transparent", border: "1px solid " + (isActive ? l.accent + "33" : "transparent"), padding: "7px 10px", cursor: "pointer", textAlign: "left", marginBottom: "2px", display: "flex", alignItems: "center", gap: "8px" }}>
-                  <span style={{ fontSize: "10px", color: l.accent, fontFamily: "monospace", width: "12px", flexShrink: 0 }}>{l.icon}</span>
+                  <span style={{ fontSize: "11px", color: l.accent, fontFamily: "monospace", width: "12px", flexShrink: 0 }}>{l.icon}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "9px", color: isActive ? l.accent : "#2a2a2a", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Lec {l.id}</div>
-                    <div style={{ fontSize: "8px", color: "#484848" }}>{done}/{exIds.length}</div>
+                    <div style={{ fontSize: "11px", color: isActive ? l.accent : "#777777", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Lec {l.id}</div>
+                    <div style={{ fontSize: "10px", color: "#666666" }}>{done}/{exIds.length}</div>
                   </div>
                 </button>
                 {isActive && page === "exercise" && lec && lec.exercises.map(e => {
@@ -3339,8 +3391,8 @@ export default function App() {
                   return (
                     <button key={e.id} onClick={() => { setExId(e.id); setPage("exercise"); }}
                       style={{ width: "100%", background: isEx ? "#050505" : "transparent", border: "none", padding: "5px 10px 5px 22px", cursor: "pointer", textAlign: "left", marginBottom: "1px", display: "flex", alignItems: "center", gap: "6px" }}>
-                      <span style={{ fontSize: "8px", color: ph === PHASE.DONE ? lec.accent : isEx ? lec.accent + "aa" : "#1a1a1a", fontFamily: "monospace" }}>{ph === PHASE.DONE ? "✓" : "·"}</span>
-                      <span style={{ fontSize: "9px", color: isEx ? lec.accent : ph === PHASE.DONE ? "#3a3a3a" : "#1a1a1a", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{e.title}</span>
+                      <span style={{ fontSize: "10px", color: ph === PHASE.DONE ? lec.accent : isEx ? lec.accent + "aa" : "#555555", fontFamily: "monospace" }}>{ph === PHASE.DONE ? "✓" : "·"}</span>
+                      <span style={{ fontSize: "11px", color: isEx ? lec.accent : ph === PHASE.DONE ? "#666666" : "#555555", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{e.title}</span>
                     </button>
                   );
                 })}
@@ -3349,7 +3401,7 @@ export default function App() {
           })}
         </div>
         {/* Footer */}
-        <div style={{ padding: "10px 12px", borderTop: "1px solid #0d0d0d", fontSize: "8px", color: "#484848", lineHeight: "1.7", flexShrink: 0 }}>
+        <div style={{ padding: "10px 12px", borderTop: "1px solid #1a1a1a", fontSize: "10px", color: "#666666", lineHeight: "1.7", flexShrink: 0 }}>
           Socratic + Feynman Method<br />
           원본 연습문제 © MIT
         </div>
@@ -3362,7 +3414,7 @@ export default function App() {
           <div style={{ display: "flex", gap: "5px" }}>
             {["#ff5f57", "#febc2e", "#28c840"].map((c, i) => <div key={i} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c + "80" }} />)}
           </div>
-          <div style={{ color: "#505050", fontSize: "10px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          <div style={{ color: "#888888", fontSize: "11px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {page === "index" ? "missing-semester/2026" : page === "lecture" ? `lec-${lecId}/${lec?.title}` : `lec-${lecId}/${ex?.title}`}
           </div>
           <div style={{ marginLeft: "auto" }}><Cursor color={accent} /></div>
