@@ -19,7 +19,7 @@
 - [ ] Task: Translate \`qa.md\`.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Translation' (Protocol in workflow.md)
 
-## Phase 3: Review and Finalization
+## Phase 3: Review and Finalization [checkpoint: e7b3ab4]
 - [x] Task: Verify links and formatting across all translated files.
 - [x] Task: Run Jekyll build and check for errors.
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Review and Finalization' (Protocol in workflow.md)
