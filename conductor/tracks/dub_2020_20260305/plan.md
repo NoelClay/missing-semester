@@ -1,6 +1,6 @@
 # Implementation Plan: 2020년 강의 한국어 더빙 진행
 
-## Phase 1: Preparation and Tooling
+## Phase 1: Preparation and Tooling [checkpoint: c5f12f1]
 - [x] Task: Create a metadata validation script for lecture notes.
     - [ ] Write failing tests to verify that every lecture note in `_2020_kr/` requires a valid YouTube video ID.
     - [x] Implement the validation script to check for existing and new video IDs.
