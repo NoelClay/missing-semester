@@ -1,9 +1,9 @@
 # Implementation Plan: Translate 2020 lecture notes into Korean
 
 ## Phase 1: Setup and Inventory
-- [ ] Task: List all 2020 lecture notes Markdown files.
-- [ ] Task: Create a tracking document for translation progress.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Setup and Inventory' (Protocol in workflow.md)
+- [x] Task: List all 2020 lecture notes Markdown files.
+- [x] Task: Create a tracking document for translation progress.
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Setup and Inventory' (Protocol in workflow.md)
 
 ## Phase 2: Translation
 - [ ] Task: Translate \`command-line.md\`.
