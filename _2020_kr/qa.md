@@ -9,7 +9,7 @@ date: 2020-01-30
 ready: true
 video:
   aspect: 56.25
-  id: Wz50FvGG6xU
+  id: kr_lec11_2020
 ---
 
 마지막 강의에서는 학생들이 제출한 질문들에 대해 답변하는 시간을 가졌다.

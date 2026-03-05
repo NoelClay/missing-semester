@@ -9,7 +9,7 @@ date: 2020-01-29
 ready: true
 video:
   aspect: 56.25
-  id: JZDt-PRq0uo
+  id: kr_lec10_2020
 ---
 
 ## 목차
