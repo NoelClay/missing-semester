@@ -9,7 +9,7 @@ date: 2020-01-13
 ready: true
 video:
   aspect: 56.25
-  id: Z56Jmr9Z34Q
+  id: kr_lec1_2020
 ---
 
 # 동기 (Motivation)

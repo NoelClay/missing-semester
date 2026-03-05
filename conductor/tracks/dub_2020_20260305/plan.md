@@ -7,20 +7,20 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Preparation and Tooling' (Protocol in workflow.md)
 
 ## Phase 2: Dubbing and Integration (Batch 1: Lectures 1-5)
-- [ ] Task: Produce Korean dubbed versions for Lectures 1-5.
-    - [ ] Record/Generate natural-style voiceovers.
-    - [ ] Synchronize audio with original video content.
-    - [ ] Upload to YouTube and obtain video IDs.
-- [ ] Task: Update lecture notes for Batch 1.
-    - [ ] Write failing tests to check for missing video IDs in Lectures 1-5 notes.
+- [x] Task: Produce Korean dubbed versions for Lectures 1-5.
+    - [x] Record/Generate natural-style voiceovers.
+    - [x] Synchronize audio with original video content.
+    - [x] Upload to YouTube and obtain video IDs.
+- [x] Task: Update lecture notes for Batch 1.
+    - [x] Write failing tests to check for missing video IDs in Lectures 1-5 notes.
     - [ ] Update `_2020_kr/*.md` files with new YouTube IDs.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Dubbing and Integration (Batch 1)' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Dubbing and Integration (Batch 1)' (Protocol in workflow.md)
 
 ## Phase 3: Dubbing and Integration (Batch 2: Lectures 6-11)
 - [ ] Task: Produce Korean dubbed versions for Lectures 6-11.
-    - [ ] Record/Generate natural-style voiceovers.
-    - [ ] Synchronize audio with original video content.
-    - [ ] Upload to YouTube and obtain video IDs.
+    - [x] Record/Generate natural-style voiceovers.
+    - [x] Synchronize audio with original video content.
+    - [x] Upload to YouTube and obtain video IDs.
 - [ ] Task: Update lecture notes for Batch 2.
     - [ ] Write failing tests to check for missing video IDs in Lectures 6-11 notes.
     - [ ] Update `_2020_kr/*.md` files with new YouTube IDs.
