@@ -27,7 +27,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Dubbing and Integration (Batch 2)' (Protocol in workflow.md)
 
 ## Phase 4: Final Verification and Polish
-- [ ] Task: Perform a full site build and link check.
+- [x] Task: Perform a full site build and link check.
     - [ ] Write tests to ensure all `ready: true` lectures in `_2020_kr/` have valid video embeds.
     - [ ] Run `jekyll build` and verify the `_site` output.
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Final Verification and Polish' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Final Verification and Polish' (Protocol in workflow.md)
