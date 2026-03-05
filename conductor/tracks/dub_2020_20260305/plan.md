@@ -16,7 +16,7 @@
     - [ ] Update `_2020_kr/*.md` files with new YouTube IDs.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Dubbing and Integration (Batch 1)' (Protocol in workflow.md)
 
-## Phase 3: Dubbing and Integration (Batch 2: Lectures 6-11)
+## Phase 3: Dubbing and Integration (Batch 2: Lectures 6-11) [checkpoint: d1b1f59]
 - [x] Task: Produce Korean dubbed versions for Lectures 6-11.
     - [x] Record/Generate natural-style voiceovers.
     - [x] Synchronize audio with original video content.
