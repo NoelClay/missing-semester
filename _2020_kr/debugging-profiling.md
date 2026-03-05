@@ -1,5 +1,6 @@
 ---
 layout: lecture
+permalink: /2020/kr/debugging-profiling/
 title: "디버깅 및 프로파일링 (Debugging and Profiling)"
 description: >
   로깅(logging), 디버거(debuggers), 정적 분석(static analysis)을 사용하여 프로그램을 디버깅하는 방법과 성능을 위해 코드를 프로파일링하는 방법을 배웁니다.

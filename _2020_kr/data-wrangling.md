@@ -1,5 +1,6 @@
 ---
 layout: lecture
+permalink: /2020/kr/data-wrangling/
 title: "데이터 정리 (Data Wrangling)"
 description: >
   sed, awk, 정규 표현식(regular expressions)과 같은 커맨드 라인 도구를 사용하여 데이터를 조작하고 변환하는 방법을 배웁니다.
@@ -53,7 +54,7 @@ ssh myserver journalctl
 
 방금 작성한 것은 간단한 **정규 표현식(regular expression)**이다. 정규 표현식은 텍스트를 패턴과 대조할 수 있게 해주는 강력한 구조이다. `s` 명령어는 `s/REGEX/SUBSTITUTION/` 형식을 띠는데, 여기서 `REGEX`는 찾고자 하는 정규 표현식이고 `SUBSTITUTION`은 일치하는 텍스트를 치환할 텍스트이다.
 
-(이 문법은 Vim [강의 노트](/2020/editors/#advanced-vim)의 "검색 및 치환" 섹션에서 본 것과 비슷하다는 것을 눈치챘을 것이다! 실제로 Vim은 `sed`의 치환 명령어와 유사한 검색 및 치환 문법을 사용한다. 한 가지 도구를 배우면 종종 다른 도구에도 능숙해지는 데 도움이 된다.)
+(이 문법은 Vim [강의 노트](/2020/kr/editors/#advanced-vim)의 "검색 및 치환" 섹션에서 본 것과 비슷하다는 것을 눈치챘을 것이다! 실제로 Vim은 `sed`의 치환 명령어와 유사한 검색 및 치환 문법을 사용한다. 한 가지 도구를 배우면 종종 다른 도구에도 능숙해지는 데 도움이 된다.)
 
 ## 정규 표현식 (Regular expressions)
 
@@ -159,7 +160,7 @@ ssh myserver journalctl
  | awk '{print $2}' | paste -sd,
 ```
 
-macOS를 사용 중이라면: 위 명령어는 macOS에 포함된 BSD `paste`에서는 작동하지 않을 수 있다. BSD와 GNU coreutils의 차이점 및 macOS에서 GNU coreutils를 설치하는 방법은 [쉘 도구 강의 연습 문제 4번](/2020/shell-tools/#exercises)을 참조하라.
+macOS를 사용 중이라면: 위 명령어는 macOS에 포함된 BSD `paste`에서는 작동하지 않을 수 있다. BSD와 GNU coreutils의 차이점 및 macOS에서 GNU coreutils를 설치하는 방법은 [쉘 도구 강의 연습 문제 4번](/2020/kr/shell-tools/#exercises)을 참조하라.
 
 `paste`부터 살펴보자. `-s`는 행들을 합치고, `-d`는 지정된 단일 문자 구분자(이 경우 `,`)를 사용하게 한다. 그런데 `awk`는 무엇을 하는 것일까?
 

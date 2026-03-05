@@ -1,5 +1,6 @@
 ---
 layout: lecture
+permalink: /2020/kr/security/
 title: "보안 및 암호학 (Security and Cryptography)"
 description: >
   해시(hashes)와 키 유도 함수(key derivation functions)와 같은 암호학적 기본 요소에 대해 배우고, Git과 SSH와 같은 도구들이 이를 어떻게 사용하는지 이해합니다.
@@ -145,7 +146,7 @@ verify(message: array<byte>, signature: array<byte>, 공개키) -> bool  (서명
 
 ## SSH
 
-우리는 [이전 강의](/2020/command-line/#remote-machines)에서 SSH와 SSH 키 사용법을 다루었다. 이제 암호학적 관점에서 이를 살펴보자.
+우리는 [이전 강의](/2020/kr/command-line/#remote-machines)에서 SSH와 SSH 키 사용법을 다루었다. 이제 암호학적 관점에서 이를 살펴보자.
 
 `ssh-keygen`을 실행하면 `public_key, private_key`라는 비대칭 키 쌍이 생성된다. 이는 운영체제에서 제공하는 엔트로피(하드웨어 이벤트 등으로부터 수집됨)를 사용하여 무작위로 생성된다. 공개키는 그대로 저장되지만(공개되어도 상관없으므로), 개인키는 디스크에 암호화된 상태로 저장되어야 한다. `ssh-keygen`은 사용자에게 암호 문구를 묻고, 이를 키 유도 함수(KDF)에 통과시켜 키를 생성한 뒤, 이 키로 개인키를 대칭 암호화한다.
 

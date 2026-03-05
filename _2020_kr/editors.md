@@ -1,5 +1,6 @@
 ---
 layout: lecture
+permalink: /2020/kr/editors/
 title: "에디터 (Vim)"
 description: >
   효율적인 코드 편집을 위해 설계된 강력한 텍스트 에디터인 Vim의 사용법을 배웁니다.
@@ -182,7 +183,7 @@ def main():
 
 Vim은 `~/.vimrc`라는 일반 텍스트 설정 파일(Vimscript 명령어 포함)을 통해 커스터마이징된다. 아마도 여러분이 켜고 싶은 기본적인 설정들이 아주 많을 것이다.
 
-우리는 시작점으로 사용할 수 있는 주석이 잘 달린 기본 설정을 제공한다. Vim의 독특한 기본 동작 중 일부를 수정해 주므로 이를 사용하는 것을 권장한다. **[여기](/2020/files/vimrc)에서 설정을 다운로드하여 `~/.vimrc`에 저장하라.**
+우리는 시작점으로 사용할 수 있는 주석이 잘 달린 기본 설정을 제공한다. Vim의 독특한 기본 동작 중 일부를 수정해 주므로 이를 사용하는 것을 권장한다. **[여기](/2020/kr/files/vimrc)에서 설정을 다운로드하여 `~/.vimrc`에 저장하라.**
 
 Vim은 고도로 커스터마이징 가능하며, 다양한 설정 옵션을 탐색해 볼 가치가 있다. GitHub에서 다른 사람들의 도트파일(dotfiles)을 보고 영감을 얻을 수 있다. 예: 강사들의 Vim 설정 ([Anish](https://github.com/anishathalye/dotfiles/blob/master/vimrc), [Jon](https://github.com/jonhoo/configs/blob/master/editor/.config/nvim/init.lua) (Neovim 사용), [Jose](https://github.com/JJGO/dotfiles/blob/master/vim/.vimrc)). 이 주제에 대한 좋은 블로그 포스트들도 많다. 다른 사람의 설정을 통째로 복사해서 붙여넣기보다는 읽어보고 이해한 뒤 필요한 것만 가져오도록 하라.
 
@@ -250,7 +251,7 @@ Vim의 강력함을 보여주는 몇 가지 예시이다. 이 모든 것들을 �
 - 매크로는 재귀적일 수 있다
     - 먼저 `q{문자}q` 로 레지스터를 비운다
     - 매크로를 기록하면서, 중간에 `@{문자}`를 넣어 자기 자신을 호출한다 (기록이 끝나기 전까지는 아무 동작도 안 함)
-- 예시: XML을 JSON으로 변환 ([파일](/2020/files/example-data.xml))
+- 예시: XML을 JSON으로 변환 ([파일](/2020/kr/files/example-data.xml))
     - "name" / "email" 키를 갖는 객체 배열로 변환
     - Python 프로그램을 쓴다?
     - sed / 정규표현식을 쓴다
@@ -287,7 +288,7 @@ Vim의 강력함을 보여주는 몇 가지 예시이다. 이 모든 것들을 �
 # 연습 문제 (Exercises)
 
 1. `vimtutor`를 완료하라. 참고: [80x24](https://en.wikipedia.org/wiki/VT100) 터미널 창에서 가장 보기 좋다.
-1. 우리의 [기본 vimrc](/2020/files/vimrc)를 다운로드하여 `~/.vimrc`에 저장하라. 주석이 잘 달린 파일을 (Vim으로!) 읽어보고, 새로운 설정으로 Vim의 외관과 동작이 어떻게 바뀌었는지 확인하라.
+1. 우리의 [기본 vimrc](/2020/kr/files/vimrc)를 다운로드하여 `~/.vimrc`에 저장하라. 주석이 잘 달린 파일을 (Vim으로!) 읽어보고, 새로운 설정으로 Vim의 외관과 동작이 어떻게 바뀌었는지 확인하라.
 1. 플러그인을 설치하고 설정해 보라: [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim).
    1. `mkdir -p ~/.vim/pack/vendor/start` 명령어로 플러그인 디렉토리를 만든다.
    1. 플러그인 다운로드: `cd ~/.vim/pack/vendor/start; git clone https://github.com/ctrlpvim/ctrlp.vim`
@@ -297,5 +298,5 @@ Vim의 강력함을 보여주는 몇 가지 예시이다. 이 모든 것들을 �
 1. 앞으로 한 달 동안 **모든** 텍스트 편집 작업에 Vim을 사용하라. 비효율적으로 느껴지는 작업이 있거나 "더 나은 방법"이 있을 것 같을 때마다 구글링을 해보라. 분명 더 나은 방법이 있을 것이다. 막히는 부분이 있다면 오피스 아워에 방문하거나 이메일을 보내달라.
 1. 다른 도구들도 Vim 바인딩을 사용하도록 설정하라 (위의 안내 참조).
 1. `~/.vimrc`를 더 커스터마이징하고 더 많은 플러그인을 설치해 보라.
-1. (고급) Vim 매크로를 사용해 XML을 JSON으로 변환해 보라 ([예제 파일](/2020/files/example-data.xml)). 스스로 해보되, 막히면 위의 [매크로](#macros) 섹션을 참고하라.
+1. (고급) Vim 매크로를 사용해 XML을 JSON으로 변환해 보라 ([예제 파일](/2020/kr/files/example-data.xml)). 스스로 해보되, 막히면 위의 [매크로](#macros) 섹션을 참고하라.
 EOF

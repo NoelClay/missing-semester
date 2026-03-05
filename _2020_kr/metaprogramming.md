@@ -1,5 +1,6 @@
 ---
 layout: lecture
+permalink: /2020/kr/metaprogramming/
 title: "메타프로그래밍 (Metaprogramming)"
 description: >
   빌드 시스템(build systems), 의존성 관리(dependency management), 테스트(testing) 및 지속적 통합(continuous integration)에 대해 배웁니다.

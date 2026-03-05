@@ -1,5 +1,6 @@
 ---
 layout: lecture
+permalink: /2020/kr/version-control/
 title: "버전 관리 (Git)"
 description: >
   Git의 데이터 모델과 버전 관리 및 협업을 위해 Git을 사용하는 방법을 배웁니다.

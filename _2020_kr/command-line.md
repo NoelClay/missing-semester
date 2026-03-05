@@ -1,5 +1,6 @@
 ---
 layout: lecture
+permalink: /2020/kr/command-line/
 title: "커맨드 라인 환경 (Command-line Environment)"
 description: >
   작업 제어(job control), 터미널 멀티플렉서(terminal multiplexer), 도트파일(dotfiles), 그리고 SSH를 이용한 원격 머신 사용법에 대해 배웁니다.

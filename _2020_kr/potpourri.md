@@ -1,5 +1,6 @@
 ---
 layout: lecture
+permalink: /2020/kr/potpourri/
 title: "포푸리 (Potpourri)"
 description: >
   키보드 리매핑(keyboard remapping), 데몬(daemons), 백업(backups), API 등 다양하고 유용한 주제들에 대해 배웁니다.

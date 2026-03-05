@@ -7,7 +7,7 @@
 | data-wrangling.md | _2020/data-wrangling.md | [x] Completed | Conductor | 2026-03-05 | - |
 | debugging-profiling.md | _2020/debugging-profiling.md | [x] Completed | Conductor | 2026-03-05 | - |
 | editors.md | _2020/editors.md | [x] Completed | Conductor | 2026-03-05 | - |
-| index.md | _2020/index.md | [ ] Not Started | Conductor | - | - |
+| index.md | _2020/index.md | [x] Completed | Conductor | 2026-03-05 | - |
 | metaprogramming.md | _2020/metaprogramming.md | [x] Completed | Conductor | 2026-03-05 | - |
 | potpourri.md | _2020/potpourri.md | [x] Completed | Conductor | 2026-03-05 | - |
 | qa.md | _2020/qa.md | [x] Completed | Conductor | 2026-03-05 | - |

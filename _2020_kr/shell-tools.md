@@ -1,5 +1,6 @@
 ---
 layout: lecture
+permalink: /2020/kr/shell-tools/
 title: "쉘 도구 및 스크립팅 (Shell Tools and Scripting)"
 description: >
   쉘 스크립트를 작성하는 방법과 강력한 커맨드 라인 도구들의 사용법을 배웁니다.
