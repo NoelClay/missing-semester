@@ -1,6 +1,6 @@
 # Implementation Plan: Translate 2020 lecture notes into Korean
 
-## Phase 1: Setup and Inventory
+## Phase 1: Setup and Inventory [checkpoint: 4b4801a]
 - [x] Task: List all 2020 lecture notes Markdown files.
 - [x] Task: Create a tracking document for translation progress.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Setup and Inventory' (Protocol in workflow.md)
