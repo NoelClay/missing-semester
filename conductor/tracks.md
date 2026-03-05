@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Translate 2020 lecture notes into Korean**
+- [x] **Track: Translate 2020 lecture notes into Korean**
   *Link: [./tracks/translate_2020_20260305/](./tracks/translate_2020_20260305/)*
