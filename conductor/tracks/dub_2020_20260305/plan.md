@@ -1,10 +1,10 @@
 # Implementation Plan: 2020년 강의 한국어 더빙 진행
 
 ## Phase 1: Preparation and Tooling
-- [ ] Task: Create a metadata validation script for lecture notes.
+- [x] Task: Create a metadata validation script for lecture notes.
     - [ ] Write failing tests to verify that every lecture note in `_2020_kr/` requires a valid YouTube video ID.
-    - [ ] Implement the validation script to check for existing and new video IDs.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Preparation and Tooling' (Protocol in workflow.md)
+    - [x] Implement the validation script to check for existing and new video IDs.
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Preparation and Tooling' (Protocol in workflow.md)
 
 ## Phase 2: Dubbing and Integration (Batch 1: Lectures 1-5)
 - [ ] Task: Produce Korean dubbed versions for Lectures 1-5.
