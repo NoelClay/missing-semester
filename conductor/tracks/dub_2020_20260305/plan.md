@@ -6,7 +6,7 @@
     - [x] Implement the validation script to check for existing and new video IDs.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Preparation and Tooling' (Protocol in workflow.md)
 
-## Phase 2: Dubbing and Integration (Batch 1: Lectures 1-5)
+## Phase 2: Dubbing and Integration (Batch 1: Lectures 1-5) [checkpoint: 10218e8]
 - [x] Task: Produce Korean dubbed versions for Lectures 1-5.
     - [x] Record/Generate natural-style voiceovers.
     - [x] Synchronize audio with original video content.
