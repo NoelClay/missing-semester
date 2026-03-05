@@ -5,7 +5,7 @@
 - [x] Task: Create a tracking document for translation progress.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Setup and Inventory' (Protocol in workflow.md)
 
-## Phase 2: Translation
+## Phase 2: Translation [checkpoint: c245e6b]
 - [ ] Task: Translate \`command-line.md\`.
 - [ ] Task: Translate \`course-shell.md\`.
 - [ ] Task: Translate \`data-wrangling.md\`.
