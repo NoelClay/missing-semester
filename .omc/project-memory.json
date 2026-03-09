@@ -1,0 +1,328 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1773043181023,
+  "projectRoot": "/media/namykim/EXT4/workspace/missingsemester",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Ruby",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "Gemfile"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "bundler",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "static"
+    ],
+    "gitBranches": {
+      "defaultBranch": "master",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "_2019": {
+      "path": "_2019",
+      "purpose": null,
+      "fileCount": 18,
+      "lastAccessed": 1773043181017,
+      "keyFiles": [
+        "automation.md",
+        "backups.md",
+        "command-line.md",
+        "course-overview.md",
+        "data-wrangling.md"
+      ]
+    },
+    "_2020": {
+      "path": "_2020",
+      "purpose": null,
+      "fileCount": 13,
+      "lastAccessed": 1773043181021,
+      "keyFiles": [
+        "command-line.md",
+        "course-shell.md",
+        "data-wrangling.md",
+        "debugging-profiling.md",
+        "editors-notes.txt"
+      ]
+    },
+    "_2020_kr": {
+      "path": "_2020_kr",
+      "purpose": null,
+      "fileCount": 12,
+      "lastAccessed": 1773043181022,
+      "keyFiles": [
+        "command-line.md",
+        "course-shell.md",
+        "data-wrangling.md",
+        "debugging-profiling.md",
+        "editors.md"
+      ]
+    },
+    "_2026": {
+      "path": "_2026",
+      "purpose": null,
+      "fileCount": 10,
+      "lastAccessed": 1773043181022,
+      "keyFiles": [
+        "agentic-coding.md",
+        "beyond-code.md",
+        "code-quality.md",
+        "command-line-environment.md",
+        "course-shell.md"
+      ]
+    },
+    "_2026_kr": {
+      "path": "_2026_kr",
+      "purpose": null,
+      "fileCount": 10,
+      "lastAccessed": 1773043181022,
+      "keyFiles": [
+        "agentic-coding.md",
+        "beyond-code.md",
+        "code-quality.md",
+        "command-line-environment.md",
+        "course-shell.md"
+      ]
+    },
+    "_includes": {
+      "path": "_includes",
+      "purpose": null,
+      "fileCount": 5,
+      "lastAccessed": 1773043181022,
+      "keyFiles": [
+        "head.html",
+        "nav.html",
+        "scaled_image.html",
+        "scaled_video.html",
+        "video.html"
+      ]
+    },
+    "_layouts": {
+      "path": "_layouts",
+      "purpose": null,
+      "fileCount": 4,
+      "lastAccessed": 1773043181022,
+      "keyFiles": [
+        "default.html",
+        "lecture.html",
+        "page.html",
+        "redirect.html"
+      ]
+    },
+    "_site": {
+      "path": "_site",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1773043181023,
+      "keyFiles": [
+        "404.html",
+        "CLAUDE.md",
+        "favicon.ico",
+        "index.html",
+        "robots.txt"
+      ]
+    },
+    "conductor": {
+      "path": "conductor",
+      "purpose": null,
+      "fileCount": 7,
+      "lastAccessed": 1773043181023,
+      "keyFiles": [
+        "index.md",
+        "product-guidelines.md",
+        "product.md",
+        "setup_state.json",
+        "tech-stack.md"
+      ]
+    },
+    "static": {
+      "path": "static",
+      "purpose": "Static files",
+      "fileCount": 0,
+      "lastAccessed": 1773043181023,
+      "keyFiles": []
+    },
+    "static/assets": {
+      "path": "static/assets",
+      "purpose": "Static assets",
+      "fileCount": 3,
+      "lastAccessed": 1773043181023,
+      "keyFiles": [
+        "apple-touch-icon.png",
+        "favicon-16x16.png",
+        "favicon-32x32.png"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "conductor/tracks/dub_2020_20260305/spec.md",
+      "accessCount": 3,
+      "lastAccessed": 1773044676608,
+      "type": "file"
+    },
+    {
+      "path": "conductor/tracks/dub_2020_20260305/plan.md",
+      "accessCount": 3,
+      "lastAccessed": 1773044677426,
+      "type": "file"
+    },
+    {
+      "path": "conductor/tracks.md",
+      "accessCount": 2,
+      "lastAccessed": 1773044547237,
+      "type": "file"
+    },
+    {
+      "path": "conductor/tech-stack.md",
+      "accessCount": 2,
+      "lastAccessed": 1773044547677,
+      "type": "file"
+    },
+    {
+      "path": "report.md",
+      "accessCount": 2,
+      "lastAccessed": 1773044677240,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 1,
+      "lastAccessed": 1773044388289,
+      "type": "file"
+    },
+    {
+      "path": "conductor/index.md",
+      "accessCount": 1,
+      "lastAccessed": 1773044392524,
+      "type": "file"
+    },
+    {
+      "path": "conductor/tracks/dub_2020_20260305/index.md",
+      "accessCount": 1,
+      "lastAccessed": 1773044394732,
+      "type": "file"
+    },
+    {
+      "path": "conductor/tracks/dub_2020_20260305/metadata.json",
+      "accessCount": 1,
+      "lastAccessed": 1773044395350,
+      "type": "file"
+    },
+    {
+      "path": "conductor/archive/translate_2020_20260305/index.md",
+      "accessCount": 1,
+      "lastAccessed": 1773044397937,
+      "type": "file"
+    },
+    {
+      "path": "conductor/archive/translate_2020_20260305/spec.md",
+      "accessCount": 1,
+      "lastAccessed": 1773044398159,
+      "type": "file"
+    },
+    {
+      "path": "conductor/archive/translate_2020_20260305/translation_progress.md",
+      "accessCount": 1,
+      "lastAccessed": 1773044398361,
+      "type": "file"
+    },
+    {
+      "path": "conductor/workflow.md",
+      "accessCount": 1,
+      "lastAccessed": 1773044401633,
+      "type": "file"
+    },
+    {
+      "path": "conductor/product-guidelines.md",
+      "accessCount": 1,
+      "lastAccessed": 1773044401895,
+      "type": "file"
+    },
+    {
+      "path": "conductor/tracks/dub_2020_20260305/validate_metadata.py",
+      "accessCount": 1,
+      "lastAccessed": 1773044405423,
+      "type": "file"
+    },
+    {
+      "path": "conductor/tracks/dub_2020_20260305/test_metadata.py",
+      "accessCount": 1,
+      "lastAccessed": 1773044405750,
+      "type": "file"
+    },
+    {
+      "path": "conductor/tracks/dub_2020_20260305/test_embeds.py",
+      "accessCount": 1,
+      "lastAccessed": 1773044409762,
+      "type": "file"
+    },
+    {
+      "path": "Gemfile",
+      "accessCount": 1,
+      "lastAccessed": 1773044416432,
+      "type": "file"
+    },
+    {
+      "path": "conductor/product.md",
+      "accessCount": 1,
+      "lastAccessed": 1773044547861,
+      "type": "file"
+    },
+    {
+      "path": "_2020",
+      "accessCount": 1,
+      "lastAccessed": 1773044691776,
+      "type": "directory"
+    },
+    {
+      "path": "_2020_kr",
+      "accessCount": 1,
+      "lastAccessed": 1773044692540,
+      "type": "directory"
+    },
+    {
+      "path": "dubbing/requirements.txt",
+      "accessCount": 1,
+      "lastAccessed": 1773044816573,
+      "type": "file"
+    },
+    {
+      "path": "dubbing/install.sh",
+      "accessCount": 1,
+      "lastAccessed": 1773044835856,
+      "type": "file"
+    },
+    {
+      "path": "dubbing/work_prompt.md",
+      "accessCount": 1,
+      "lastAccessed": 1773044902376,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

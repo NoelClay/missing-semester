@@ -1,0 +1,31 @@
+# ============================================================
+# 2020 Missing Semester Korean Dubbing Pipeline - Dependencies
+# ============================================================
+# USB-isolated environment: /media/namykim/EXT4
+# Python 3.10 @ ai_env/bin/python
+# Install: source /media/namykim/EXT4/setup_usb_env.sh && pip install -r requirements.txt
+# ============================================================
+
+# --- Video Download ---
+yt-dlp>=2024.1.0
+
+# --- Speech-to-Text (WhisperX) ---
+# NOTE: Install PyTorch FIRST via install.sh to prevent pip override.
+#       Then install whisperx with --no-deps.
+# torch and torchaudio are installed separately (CPU or CUDA).
+ctranslate2>=4.0.0
+faster-whisper>=1.0.0
+# whisperx>=3.1.0  # Install via: pip install --no-deps whisperx
+
+# --- Text-to-Speech ---
+edge-tts>=6.1.0
+
+# --- Subtitle Processing ---
+srt>=3.5.0
+
+# --- Audio Processing ---
+pydub>=0.25.1
+soundfile>=0.12.0
+
+# --- Numerical ---
+numpy>=1.24.0
