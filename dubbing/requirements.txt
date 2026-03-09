@@ -18,7 +18,9 @@ faster-whisper>=1.0.0
 # whisperx>=3.1.0  # Install via: pip install --no-deps whisperx
 
 # --- Text-to-Speech ---
-edge-tts>=6.1.0
+edge-tts>=6.1.0               # Fallback (free, monotone)
+google-genai>=1.0.0            # Gemini 2.5 Flash TTS (primary, expressive)
+openai>=1.0.0                  # gpt-4o-mini-tts (secondary fallback)
 
 # --- Subtitle Processing ---
 srt>=3.5.0
